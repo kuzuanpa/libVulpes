@@ -1,28 +1,33 @@
 buildscript {
     repositories {
-        mavenCentral()
+        mavenLocal()
         maven {
-            name = "forge"
-            url = "http://files.minecraftforge.net/maven"
+            name = "aliyun-public"
+            url = "https://maven.aliyun.com/nexus/content/groups/public/"
         }
         maven {
-            name = "sonatype"
-            url = "https://oss.sonatype.org/content/repositories/snapshots/"
+            name = "lss233-repo"
+            url = "https://lss233.littleservice.cn/repositories/forgedev"
         }
-    }
+        maven {
+            name = "gradle-plugin"
+            url = "https://maven.aliyun.com/repository/gradle-plugin"
+        }    
+}
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
-    }
+           classpath ('com.anatawa12.forge:ForgeGradle:1.2-1.0.+') {
+               changing = true
+           }
+       }
 }
 
 plugins {
-  id "com.gradle.build-scan" version "1.9"
-  id "com.matthewprenger.cursegradle" version "1.0.9"
-  id "se.bjurr.gitchangelog.git-changelog-gradle-plugin" version "1.50"
 }
 
 apply plugin: 'forge'
 apply from: "gradle/scripts/getbuildnumber.gradle"
+
+
 minecraft {
     version = "1.7.10-10.13.4.1614-1.7.10"
     runDir = "eclipse/assets"
@@ -47,16 +52,11 @@ clean {
 repositories {
     maven {
         name = "chickenbones"
-        url = "http://chickenbones.net/maven/"
+        url = "https://chickenbones.net/maven/"
     }
-     ivy {
-		name "CoFHCore"
-		url = "http://addons-origin.cursecdn.com/files/2246/919/"
-		artifactPattern 'http://addons-origin.cursecdn.com/files/2246/919/[module]-[revision].[ext]'
-	}
         ivy {
             name "industrialcraft-2"
-            artifactPattern "http://jenkins.ic2.player.to/job/IC2_experimental/827/artifact/build/libs/[module]-[revision].[ext]"
+            artifactPattern "https://jenkins.ic2.player.to/job/IC2_experimental/827/artifact/build/libs/[module]-[revision].[ext]"
         }
 }
 
@@ -68,10 +68,10 @@ dependencies {
       
     // real examples
     //compile 'com.mod-buildcraft:buildcraft:7.0.20:dev'  // adds buildcraft to the dev env
-    compile 'codechicken:CodeChickenLib:1.7.10-1.1.3.127:dev'
-    compile 'codechicken:CodeChickenCore:1.7.10-1.0.4.35:dev'
-    compile 'codechicken:NotEnoughItems:1.7.10-1.0.4.95:dev'
-    compile name: 'industrialcraft-2', version: '2.2.827-experimental-api', ext: 'jar'
+    //compile 'codechicken:CodeChickenLib:1.7.10-1.1.3.127:dev'
+    //compile 'codechicken:CodeChickenCore:1.7.10-1.0.4.35:dev'
+//    compile 'codechicken:NotEnoughItems:1.7.10-1.0.4.95:dev'
+    //compile name: 'industrialcraft-2', version: '2.2.827-experimental-api', ext: 'jar'
     
     // gotta get it manually now, RIP downloading from curseforge, their examples don't even work now
     //compile name: 'CoFHCore', version: '[1.7.10]3.0.3-303', ext: 'jar'
@@ -86,64 +86,24 @@ dependencies {
 processResources
 {
     // this will ensure that this task is redone when the versions change.
-    inputs.property "version", project.version
-    inputs.property "mcversion", project.minecraft.version
+   // inputs.property "version", project.version
+   // inputs.property "mcversion", project.minecraft.version
 
     // replace stuff in mcmod.info, nothing else
-    from(sourceSets.main.resources.srcDirs) {
-        include 'mcmod.info'
+    //from(sourceSets.main.resources.srcDirs) {
+     //   include 'mcmod.info'
                
         // replace version and mcversion
-        expand 'version':project.version, 'mcversion':project.minecraft.version
-    }
+   //     expand 'version':project.version, 'mcversion':project.minecraft.version
+  //  }
        
     // copy everything else, thats not the mcmod.info
-    from(sourceSets.main.resources.srcDirs) {
-        exclude 'mcmod.info'
-    }
+  //  from(sourceSets.main.resources.srcDirs) {
+   //     exclude 'mcmod.info'
+  //  }
 }
 
-curseforge{
-  if (project.hasProperty("thecursedkey")) {
-        apiKey = project.thecursedkey
-    }
-    else {
-    apiKey = ""
-    }
-  project {
-  //libVulpes
-    id = "236541"
-    changelog = file('changelog.html')
-    changelogType = 'html'
-    releaseType = "alpha"
-    addGameVersion minecraft.version
-    mainArtifact(jar) {
-      displayName = "LibVulpes ${project.version}-UNSTABLE build " + project.getBuildNumber() +  " for " + minecraft.version
-    }
-    addArtifact (deobfJar){
-    	 displayName = "LibVulpes ${project.version}-UNSTABLE-deobf build " + project.getBuildNumber() + " for " + minecraft.version
-    }
-   }
+task wrapper (type: Wrapper) {
+gradleVersion = '4.4.1'
 }
 
-task makeChangelog(type: se.bjurr.gitchangelog.plugin.gradle.GitChangelogTask) {
-    file = new File ("changelog.html")
-    untaggedName = "Current release ${project.version}"
-    fromCommit = startGitRev
-    toRef =  "HEAD"
-    gitHubIssuePattern = "nonada123";
-    templateContent = """
-{{#tags}}
-<h1> Highly untested and may break world</h1>
-  <h3>{{name}}</h3>
-  <ul>
-    {{#commits}}
-    <li> <a href="https://github.com/zmaster587/LibVulpes/commit/{{hash}}" target=_blank> {{{message}}}</a>
-</li>
-    {{/commits}}
-  </ul>
-{{/tags}}
-"""
-}
-
-tasks.build.dependsOn makeChangelog
