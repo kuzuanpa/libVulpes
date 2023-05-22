@@ -9,14 +9,17 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import cpw.mods.fml.common.FMLLog;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.oredict.OreDictionary;
 
+import org.apache.logging.log4j.Level;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
@@ -26,6 +29,8 @@ import zmaster587.libVulpes.interfaces.IRecipe;
 import zmaster587.libVulpes.recipe.NumberedOreDictStack;
 import zmaster587.libVulpes.recipe.RecipesMachine;
 import zmaster587.libVulpes.tile.TileEntityMachine;
+import eu.usrv.yamcore.auxiliary.ItemDescriptor;
+
 
 public class XMLRecipeLoader {
 
@@ -177,44 +182,34 @@ public class XMLRecipeLoader {
 	public Object parseItemType(Node node, boolean output) {
 		if(node.getNodeName().equals("itemStack")) {
 			String text = node.getTextContent();
-			String splitStr[];
+			String[] splitStr;
 			
-			//Backwards compat, " " used to be the delimiter
-			splitStr = text.contains(";") ? text.split(";") : text.split(" ");
-			String name = splitStr[0].trim();
-			
-			int meta = 0;
-			int size = 1;
-			//format: "name meta size"
-			if(splitStr.length > 1) {
-				try {
-					size = Integer.parseInt(splitStr[1].trim());
-				} catch( NumberFormatException e) {}
-			}
-			if(splitStr.length > 2) {
-				try {
+//NBTTag wouldn't contain ; So we use that.
+  		    splitStr = text.split(";");
+			String name="";
+			int size =1;
+			int meta=0;
+			String nbtText ="";
+			switch (splitStr.length) {
+				case 4:
+					nbtText= splitStr[3].trim();
+				case 3:
 					meta= Integer.parseInt(splitStr[2].trim());
-				} catch (NumberFormatException e) {}
+				case 2:
+					size= Integer.parseInt(splitStr[1].trim());
+				case 1:
+					name = splitStr[0].trim();
 			}
 
+			FMLLog.log(Level.FATAL,name+size+"/"+meta+"/"+nbtText+"/"+text);
 			ItemStack stack = null;
 			Block block = Block.getBlockFromName(name);
 			if(block == null) {
 
-				//Try getting item by name first
-				Item item = (Item) Item.itemRegistry.getObject(name);
-
-				if(item != null)
-					stack = new ItemStack(item, size, meta);
-				else {
-					try {
-
-						item = Item.getItemById(Integer.parseInt(name));
-						if(item != null)
-							stack = new ItemStack(item, size, meta);
-					} catch (NumberFormatException e) { return null;}
-
-				}
+				ItemDescriptor itemDesc = ItemDescriptor.fromString(name+":"+meta,true);
+				if (itemDesc == null) return null;
+				if (!nbtText.equals(""))stack = itemDesc.getItemStackwNBT(size, nbtText);
+				else stack = itemDesc.getItemStack(size);
 			}
 			else
 				stack = new ItemStack(block, size, meta);
