@@ -1,35 +1,27 @@
 package zmaster587.libVulpes.util;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
-import cpw.mods.fml.common.FMLLog;
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
+import eu.usrv.yamcore.auxiliary.ItemDescriptor;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.oredict.OreDictionary;
-
-import org.apache.logging.log4j.Level;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
-
 import zmaster587.libVulpes.LibVulpes;
 import zmaster587.libVulpes.interfaces.IRecipe;
 import zmaster587.libVulpes.recipe.NumberedOreDictStack;
 import zmaster587.libVulpes.recipe.RecipesMachine;
 import zmaster587.libVulpes.tile.TileEntityMachine;
-import eu.usrv.yamcore.auxiliary.ItemDescriptor;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.File;
+import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 
 
 public class XMLRecipeLoader {
@@ -201,18 +193,11 @@ public class XMLRecipeLoader {
 					name = splitStr[0].trim();
 			}
 
-			FMLLog.log(Level.FATAL,name+size+"/"+meta+"/"+nbtText+"/"+text);
 			ItemStack stack = null;
-			Block block = Block.getBlockFromName(name);
-			if(block == null) {
-
 				ItemDescriptor itemDesc = ItemDescriptor.fromString(name+":"+meta,true);
 				if (itemDesc == null) return null;
 				if (!nbtText.equals(""))stack = itemDesc.getItemStackwNBT(size, nbtText);
 				else stack = itemDesc.getItemStack(size);
-			}
-			else
-				stack = new ItemStack(block, size, meta);
 
 			return stack;
 		}
@@ -221,7 +206,7 @@ public class XMLRecipeLoader {
 			String splitStr[];
 			
 			//Backwards compat, " " used to be the delimiter
-			splitStr = text.contains(";") ? text.split(";") : text.split(" ");
+			splitStr =text.split(" ");
 			String name = splitStr[0].trim();
 			if(OreDictionary.doesOreNameExist(name)) {
 
@@ -252,10 +237,10 @@ public class XMLRecipeLoader {
 		else if(node.getNodeName().equals("fluidStack")) {
 			
 			String text = node.getTextContent();
-			String splitStr[];
+			String[] splitStr;
 			
 			//Backwards compat, " " used to be the delimiter
-			splitStr = text.contains(";") ? text.split(";") : text.split(" ");
+			splitStr =text.split(" ");
 			
 			Fluid fluid;
 			if((fluid = FluidRegistry.getFluid(splitStr[0].trim())) != null) {
