@@ -204,9 +204,9 @@ public class XMLRecipeLoader {
 		else if(node.getNodeName().equals("oreDict")) {
 			String text = node.getTextContent();
 			String splitStr[];
-			
-			//Backwards compat, " " used to be the delimiter
-			splitStr =text.split(" ");
+
+//NBTTag wouldn't contain ; So we use that.
+			splitStr =text.split(";");
 			String name = splitStr[0].trim();
 			if(OreDictionary.doesOreNameExist(name)) {
 
@@ -238,9 +238,9 @@ public class XMLRecipeLoader {
 			
 			String text = node.getTextContent();
 			String[] splitStr;
-			
-			//Backwards compat, " " used to be the delimiter
-			splitStr =text.split(" ");
+
+//NBTTag wouldn't contain ; So we use that.
+			splitStr =text.split(";");
 			
 			Fluid fluid;
 			if((fluid = FluidRegistry.getFluid(splitStr[0].trim())) != null) {
