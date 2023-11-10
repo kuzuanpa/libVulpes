@@ -6,8 +6,8 @@ buildscript {
             url = "https://maven.aliyun.com/nexus/content/groups/public/"
         }
         maven {
-            name = "lss233-repo"
-            url = "https://lss233.littleservice.cn/repositories/forgedev"
+            name = "forge"
+            url = "https://maven.minecraftforge.net/"
         }
         maven {
             name = "gradle-plugin"

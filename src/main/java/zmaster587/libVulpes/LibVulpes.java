@@ -239,6 +239,8 @@ public class LibVulpes {
 		materialRegistry.registerMaterial(new zmaster587.libVulpes.api.material.Material("Iridium", "pickaxe", 2, 0xdedcce, AllowedProducts.getProductByName("COIL").getFlagValue() | AllowedProducts.getProductByName("BLOCK").getFlagValue() | AllowedProducts.getProductByName("DUST").getFlagValue() | AllowedProducts.getProductByName("INGOT").getFlagValue() | AllowedProducts.getProductByName("NUGGET").getFlagValue() | AllowedProducts.getProductByName("PLATE").getFlagValue() | AllowedProducts.getProductByName("STICK").getFlagValue()));
 
 		materialRegistry.registerOres(tabLibVulpesOres, "libVulpes");
+		OreDictionary.registerOre("gemDilithium",MaterialRegistry.getItemStackFromMaterialAndType("Dilithium", AllowedProducts.getProductByName("CRYSTAL")));
+
 	}
 
 	@EventHandler
@@ -318,6 +320,7 @@ public class LibVulpes {
 		list.add(new BlockMeta(LibVulpesBlocks.blockHatch, 3));
 		list.add(new BlockMeta(LibVulpesBlocks.blockHatch, 12));
 		TileMultiBlock.addMapping('l', list);
+
 	}
 
 	//User Recipes
