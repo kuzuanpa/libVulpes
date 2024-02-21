@@ -43,6 +43,8 @@ apply from: "gradle/scripts/version.gradle"
 
 group= "zmaster587.libVulpes" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "LibVulpes"
+sourceCompatibility = 8
+targetCompatibility = 8
 
 clean {
     delete 'output'
@@ -50,6 +52,11 @@ clean {
 
 
 repositories {
+    maven {
+        name = "gt"
+        url = "https://gregtech.overminddl1.com/"
+    }
+
     maven {
         name = "chickenbones"
         url = "https://chickenbones.net/maven/"
@@ -80,6 +87,11 @@ dependencies {
     // for more info...
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
+
+    implementation "ic2:IC2Classic:1.2.1.8:dev"
+    implementation "codechicken:CodeChickenLib:1.7.10-1.1.3.140:dev"
+    implementation "codechicken:CodeChickenCore:1.7.10-1.0.7.47:dev"
+    implementation "codechicken:NotEnoughItems:1.7.10-1.0.5.120:dev"
 
 }
 
