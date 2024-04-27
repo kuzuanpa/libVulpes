@@ -1,5 +1,8 @@
 itemGroup.multiBlock=多方块机器组件
 item.Linker.name=连接器
+item.Projector.desc.0=潜行+右键: 打开投影机器选择UI
+item.Projector.desc.1=UI可用鼠标拖动
+item.Projector.desc.2=潜行+滚轮: 在机器之间切换
 
 tile.hatch.0.name=输入口
 tile.hatch.1.name=输出口

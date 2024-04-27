@@ -1,5 +1,8 @@
 itemGroup.multiBlock=Multi Block Machine Parts
 item.Linker.name=Linker
+item.Projector.desc.0=Shift right-click: opens machine selection UI
+item.Projector.desc.1=UI can be dragged using mouse
+item.Projector.desc.2=Shift-scroll: moves cross-section
 
 tile.hatch.0.name=Input Hatch
 tile.hatch.1.name=Output Hatch

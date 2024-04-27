@@ -1,5 +1,6 @@
 package zmaster587.libVulpes.items;
 
+import cpw.mods.fml.common.registry.LanguageRegistry;
 import io.netty.buffer.ByteBuf;
 
 import java.util.ArrayList;
@@ -29,6 +30,7 @@ import zmaster587.libVulpes.network.INetworkItem;
 import zmaster587.libVulpes.network.PacketHandler;
 import zmaster587.libVulpes.network.PacketItemModifcation;
 import zmaster587.libVulpes.tile.TileSchematic;
+import zmaster587.libVulpes.tile.multiblock.DummyTileMultiBlock;
 import zmaster587.libVulpes.tile.multiblock.TileMultiBlock;
 import zmaster587.libVulpes.tile.multiblock.TilePlaceholder;
 import zmaster587.libVulpes.util.BlockPosition;
@@ -80,6 +82,50 @@ public class ItemProjector extends Item implements IModularInventory, IButtonInv
 		}
 
 		String str = Item.getItemFromBlock(mainBlock).getItemStackDisplayName(new ItemStack(mainBlock)) + " x1\n";
+
+		for(Entry<Object, Integer> entry : map.entrySet()) {
+
+			List<BlockMeta> blockMeta = multiblock.getAllowableBlocks(entry.getKey());
+
+			if(blockMeta.isEmpty() || Item.getItemFromBlock(blockMeta.get(0).getBlock()) == null )
+				continue;
+			for(int i = 0; i < blockMeta.size(); i++) {
+				String itemStr  = Item.getItemFromBlock(blockMeta.get(i).getBlock()).getItemStackDisplayName(new ItemStack(blockMeta.get(i).getBlock(), 1, blockMeta.get(i).getMeta()));
+				if(!itemStr.contains("tile.")) {
+					str = str + itemStr;
+					str = str + " or ";
+				}
+			}
+
+			if(str.endsWith(" or ")) {
+				str = str.substring(0, str.length()-4);
+			}
+			str = str + " x" + entry.getValue() + "\n";
+		}
+
+		descriptionList.add(str);
+	}
+	public void registerDummy(Object[][][] structure, String name) {
+		DummyTileMultiBlock multiblock = new DummyTileMultiBlock(structure, name);
+		machineList.add(multiblock);
+		HashMap<Object, Integer> map = new HashMap<Object, Integer>();
+
+		Object stru[][][] = multiblock.getStructure();
+
+		for(int i = 0; i < stru.length; i++) {
+			for(int j = 0; j < stru[i].length; j++) {
+				for(int k = 0; k < stru[i][j].length; k++) {
+					Object o = stru[i][j][k];
+					if(!map.containsKey(o)) {
+						map.put(o, 1);
+					}
+					else
+						map.put(o, map.get(o) + 1);
+				}
+			}
+		}
+
+		String str = name;
 
 		for(Entry<Object, Integer> entry : map.entrySet()) {
 
@@ -290,9 +336,10 @@ public class ItemProjector extends Item implements IModularInventory, IButtonInv
 		List<ModuleBase> modules = new LinkedList<ModuleBase>();
 		List<ModuleBase> btns = new LinkedList<ModuleBase>();
 
-		for(int i = 0; 	i <	machineList.size(); i++) {
+
+		for(int i=0; i < machineList.size();i++) {
 			TileMultiBlock multiblock = machineList.get(i);
-			btns.add(new ModuleButton(60, 4 + i*24, i, LibVulpes.proxy.getLocalizedString(multiblock.getMachineName()), this,  zmaster587.libVulpes.inventory.TextureResources.buttonBuild));
+			btns.add(new ModuleButton(20+ i%2*60, 4 + (int)Math.floor(i/2)*24, i, LibVulpes.proxy.getLocalizedString(multiblock.getMachineName()), this,  zmaster587.libVulpes.inventory.TextureResources.buttonBuild));
 		}
 
 		ModuleContainerPan panningContainer = new ModuleContainerPan(5, 20, btns, new LinkedList<ModuleBase>(), TextureResources.starryBG, 160, 100, 0, 500);
@@ -439,8 +486,9 @@ public class ItemProjector extends Item implements IModularInventory, IButtonInv
 			List list, boolean bool) {
 		super.addInformation(stack, player, list, bool);
 
-		list.add("Shift right-click: opens machine selection interface");
-		list.add("Shift-scroll: moves cross-section");
+		list.add(LanguageRegistry.instance().getStringLocalization("item.Projector.desc.0"));
+		list.add(LanguageRegistry.instance().getStringLocalization("item.Projector.desc.1"));
+		list.add(LanguageRegistry.instance().getStringLocalization("item.Projector.desc.2"));
 
 		int id = getMachineId(stack);
 		if(id != -1) {

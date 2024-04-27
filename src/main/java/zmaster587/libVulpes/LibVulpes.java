@@ -28,6 +28,7 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
+import zmaster587.libVulpes.api.IDummyMultiBlockRegisterer;
 import zmaster587.libVulpes.api.LibVulpesBlocks;
 import zmaster587.libVulpes.api.LibVulpesItems;
 import zmaster587.libVulpes.api.material.AllowedProducts;
@@ -61,10 +62,7 @@ import zmaster587.libVulpes.tile.multiblock.hatch.TileOutputHatch;
 import zmaster587.libVulpes.util.XMLRecipeLoader;
 
 import java.io.*;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import java.util.logging.Logger;
 
 @Mod(modid="libVulpes",name="Vulpes library",version="@MAJOR@.@MINOR@.@REVIS@.@BUILD@",useMetadata=true, dependencies="before:gregtech;after:CoFHCore;after:BuildCraft|Core")
@@ -73,6 +71,7 @@ public class LibVulpes {
 	public static int time = 0;
 	private static HashMap<Class, String> userModifiableRecipes = new HashMap<Class, String>();
 
+	private static final ArrayList<IDummyMultiBlockRegisterer> dummyMultiBlockRegisterers = new ArrayList<>();
 	@Instance(value = "libVulpes")
 	public static LibVulpes instance;
 
@@ -321,6 +320,7 @@ public class LibVulpes {
 		list.add(new BlockMeta(LibVulpesBlocks.blockHatch, 12));
 		TileMultiBlock.addMapping('l', list);
 
+		dummyMultiBlockRegisterers.forEach(register->register.getDummyMultiBlocks().forEach((na,st)->((ItemProjector) LibVulpesItems.itemHoloProjector).registerDummy(st,na)));
 	}
 
 	//User Recipes
@@ -570,6 +570,9 @@ public class LibVulpes {
 		}
 	}
 
+	public void addDummyMultiBlockRegisterer(IDummyMultiBlockRegisterer registerer){
+		dummyMultiBlockRegisterers.add(registerer);
+	}
 
 
 	@SubscribeEvent

@@ -252,8 +252,7 @@ public class RecipesMachine {
 			else
 				recipe = new Recipe(outputItem, stack, outputFluidStacks, inputFluidStacks, timeRequired, power,oreDict);
 
-			if(recipes.contains(recipe)) 
-				LibVulpes.logger.info("Overwriting recipe " + recipes.remove(recipe));
+			//if(recipes.contains(recipe)) LibVulpes.logger.info("Overwriting recipe " + recipes.remove(recipe));
 			recipes.add(recipe);
 
 		} catch(ClassCastException e) {

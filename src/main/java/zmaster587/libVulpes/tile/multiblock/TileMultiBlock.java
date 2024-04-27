@@ -228,7 +228,7 @@ public class TileMultiBlock extends TileEntity {
 		completeStructure = complete;
 	}
 
-	public List<BlockMeta> getAllowableWildCardBlocks() {
+	public List<BlockMeta> getAllowableWildCardBlocks(Character wildCard) {
 		List<BlockMeta> list =new ArrayList<BlockMeta>();
 		return list;
 	}
@@ -384,11 +384,10 @@ public class TileMultiBlock extends TileEntity {
 
 
 	public List<BlockMeta> getAllowableBlocks(Object input) {
-		if(input instanceof Character && (Character)input == '*') {
-			return getAllowableWildCardBlocks();
-		}
-		else if(input instanceof Character  && charMapping.containsKey((Character)input)) {
+		if(input instanceof Character  && charMapping.containsKey((Character)input)) {
 			return charMapping.get((Character)input);
+		}else if(input instanceof Character) {
+			return getAllowableWildCardBlocks((Character)input);
 		}
 		else if(input instanceof String) { //OreDict entry
 			List<ItemStack> stacks = OreDictionary.getOres((String)input);
