@@ -570,7 +570,7 @@ public class LibVulpes {
 		}
 	}
 
-	public void addDummyMultiBlockRegisterer(IDummyMultiBlockRegisterer registerer){
+	public static void addDummyMultiBlockRegisterer(IDummyMultiBlockRegisterer registerer){
 		dummyMultiBlockRegisterers.add(registerer);
 	}
 
