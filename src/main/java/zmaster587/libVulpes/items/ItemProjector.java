@@ -1,6 +1,9 @@
 package zmaster587.libVulpes.items;
 
 import cpw.mods.fml.common.registry.LanguageRegistry;
+import gregapi.block.multitileentity.MultiTileEntityBlock;
+import gregapi.tileentity.base.TileEntityBase05Inventories;
+import gregapi.tileentity.machines.MultiTileEntityBasicMachine;
 import io.netty.buffer.ByteBuf;
 
 import java.util.ArrayList;
@@ -14,6 +17,7 @@ import com.mojang.realmsclient.gui.ChatFormatting;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.inventory.IInventory;
 import zmaster587.libVulpes.LibVulpes;
 import zmaster587.libVulpes.api.LibVulpesBlocks;
 import zmaster587.libVulpes.block.BlockMeta;
@@ -90,7 +94,7 @@ public class ItemProjector extends Item implements IModularInventory, IButtonInv
 			if(blockMeta.isEmpty() || Item.getItemFromBlock(blockMeta.get(0).getBlock()) == null )
 				continue;
 			for(int i = 0; i < blockMeta.size(); i++) {
-				String itemStr  = Item.getItemFromBlock(blockMeta.get(i).getBlock()).getItemStackDisplayName(new ItemStack(blockMeta.get(i).getBlock(), 1, blockMeta.get(i).getMeta()));
+				String itemStr = Item.getItemFromBlock(blockMeta.get(i).getBlock()).getItemStackDisplayName(new ItemStack(blockMeta.get(i).getBlock(), 1, blockMeta.get(i).getMeta()));
 				if(!itemStr.contains("tile.")) {
 					str = str + itemStr;
 					str = str + " or ";
@@ -133,9 +137,14 @@ public class ItemProjector extends Item implements IModularInventory, IButtonInv
 
 			if(blockMeta.isEmpty() || Item.getItemFromBlock(blockMeta.get(0).getBlock()) == null )
 				continue;
-			for(int i = 0; i < blockMeta.size(); i++) {
-				String itemStr  = Item.getItemFromBlock(blockMeta.get(i).getBlock()).getItemStackDisplayName(new ItemStack(blockMeta.get(i).getBlock(), 1, blockMeta.get(i).getMeta()));
-				if(!itemStr.contains("tile.")) {
+			for (BlockMeta meta : blockMeta) {
+				String itemStr = !meta.overrideName.equals("") ? meta.overrideName //Override Name
+						//GregTech6 compact
+						: meta.getBlock() instanceof MultiTileEntityBlock && ((MultiTileEntityBlock) meta.getBlock()).overrideTileEntity instanceof IInventory ?
+						((IInventory) ((MultiTileEntityBlock) meta.getBlock()).overrideTileEntity).getInventoryName()
+						//normal behavior
+						: Item.getItemFromBlock(meta.getBlock()).getItemStackDisplayName(new ItemStack(meta.getBlock(), 1, meta.getMeta()));
+				if (!itemStr.contains("tile.")) {
 					str = str + itemStr;
 					str = str + " or ";
 				}

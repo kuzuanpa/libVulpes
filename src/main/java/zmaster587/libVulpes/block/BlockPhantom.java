@@ -2,6 +2,7 @@ package zmaster587.libVulpes.block;
 
 import java.util.ArrayList;
 
+import net.minecraft.init.Blocks;
 import zmaster587.libVulpes.tile.TileSchematic;
 import zmaster587.libVulpes.tile.multiblock.TilePlaceholder;
 import net.minecraft.block.Block;
@@ -44,29 +45,11 @@ public class BlockPhantom extends Block {
 	}
 
 	@Override
-	public IIcon getIcon(IBlockAccess access, int x,
-			int y, int z, int side) {
-
-		TileEntity tile = access.getTileEntity(x, y, z);
-
-		if(tile instanceof TilePlaceholder) {
-			TilePlaceholder placeHolder = (TilePlaceholder)tile;
-
-			if(placeHolder.getReplacedBlock() != null)
-				return placeHolder.getReplacedBlock().getIcon(side, placeHolder.getReplacedBlockMeta());
-		}
-
-		return super.getIcon(access, x, y, z,
-				side);
-	}
-
-
-	@Override
 	public ItemStack getPickBlock(MovingObjectPosition target, World world,
 			int x, int y, int z, EntityPlayer player) {
 		TileEntity tile = world.getTileEntity(x, y, z);
 
-		if(tile != null && tile instanceof TilePlaceholder && ((TilePlaceholder)tile).getReplacedBlock() != null) {
+		if(tile instanceof TilePlaceholder && ((TilePlaceholder) tile).getReplacedBlock() != null) {
 			Block block = ((TilePlaceholder)tile).getReplacedBlock();
 			ItemStack stack = ((TilePlaceholder)tile).getReplacedBlock().getPickBlock(target, world, x, y, z, player);
 			if(stack != null) {
@@ -97,10 +80,13 @@ public class BlockPhantom extends Block {
 	public boolean isOpaqueCube() {
 		return false;
 	}
-
 	@Override
 	public boolean isReplaceable(IBlockAccess world, int x, int y, int z) {
 		return true;
+	}
+	public boolean renderAsNormalBlock()
+	{
+		return false;
 	}
 
 	@Override
