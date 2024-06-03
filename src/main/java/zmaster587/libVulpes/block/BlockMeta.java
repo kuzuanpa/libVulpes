@@ -50,4 +50,7 @@ public class BlockMeta {
 			return meta;
 		return 0;
 	}
+	public void setMeta(int meta) {
+		this.meta=meta;
+	}
 }

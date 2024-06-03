@@ -2,8 +2,13 @@ package zmaster587.libVulpes.items;
 
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import gregapi.block.multitileentity.MultiTileEntityBlock;
+import gregapi.block.multitileentity.MultiTileEntityRegistry;
+import gregapi.data.LH;
+import gregapi.tileentity.base.TileEntityBase04MultiTileEntities;
 import gregapi.tileentity.base.TileEntityBase05Inventories;
+import gregapi.tileentity.base.TileEntityBase09FacingSingle;
 import gregapi.tileentity.machines.MultiTileEntityBasicMachine;
+import gregapi.tileentity.notick.TileEntityBase03MultiTileEntities;
 import io.netty.buffer.ByteBuf;
 
 import java.util.ArrayList;
@@ -112,51 +117,50 @@ public class ItemProjector extends Item implements IModularInventory, IButtonInv
 	public void registerDummy(Object[][][] structure, String name) {
 		DummyTileMultiBlock multiblock = new DummyTileMultiBlock(structure, name);
 		machineList.add(multiblock);
-		HashMap<Object, Integer> map = new HashMap<Object, Integer>();
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
 
-		Object stru[][][] = multiblock.getStructure();
+		Object[][][] stru = multiblock.getStructure();
 
 		for(int i = 0; i < stru.length; i++) {
 			for(int j = 0; j < stru[i].length; j++) {
 				for(int k = 0; k < stru[i][j].length; k++) {
+					String str = "";
 					Object o = stru[i][j][k];
-					if(!map.containsKey(o)) {
-						map.put(o, 1);
+					List<BlockMeta> blockMeta = multiblock.getAllowableBlocks(o);
+
+					if(blockMeta.isEmpty() || Item.getItemFromBlock(blockMeta.get(0).getBlock()) == null )
+						continue;
+					for (BlockMeta meta : blockMeta) {
+						String gtTileStr="";
+						if(meta.GTTile instanceof TileEntityBase03MultiTileEntities)gtTileStr= LH.get(MultiTileEntityRegistry.getRegistry(((TileEntityBase03MultiTileEntities) meta.GTTile).getMultiTileEntityRegistryID()).mNameInternal+"."+((TileEntityBase03MultiTileEntities) meta.GTTile).getMultiTileEntityID());
+						if(meta.GTTile instanceof TileEntityBase04MultiTileEntities)gtTileStr= LH.get(MultiTileEntityRegistry.getRegistry(((TileEntityBase04MultiTileEntities) meta.GTTile).getMultiTileEntityRegistryID()).mNameInternal+"."+((TileEntityBase04MultiTileEntities) meta.GTTile).getMultiTileEntityID());
+						String itemStr = !meta.overrideName.equals("") ? meta.overrideName //Override Name
+								//GregTech6 compact
+								: !gtTileStr.equals("") ? gtTileStr
+								//normal behavior
+								: Item.getItemFromBlock(meta.getBlock()).getItemStackDisplayName(new ItemStack(meta.getBlock(), 1, meta.getMeta()));
+						if (itemStr!=null&&!itemStr.contains("tile.")) {
+							str = str + itemStr;
+							str = str + " or ";
+						}
+					}
+
+					if(str.endsWith(" or ")) {
+						str = str.substring(0, str.length()-4);
+					}
+
+
+					if(!map.containsKey(str)) {
+						map.put(str, 1);
 					}
 					else
-						map.put(o, map.get(o) + 1);
+						map.put(str, map.get(str) + 1);
 				}
 			}
 		}
-
-		String str = name;
-
-		for(Entry<Object, Integer> entry : map.entrySet()) {
-
-			List<BlockMeta> blockMeta = multiblock.getAllowableBlocks(entry.getKey());
-
-			if(blockMeta.isEmpty() || Item.getItemFromBlock(blockMeta.get(0).getBlock()) == null )
-				continue;
-			for (BlockMeta meta : blockMeta) {
-				String itemStr = !meta.overrideName.equals("") ? meta.overrideName //Override Name
-						//GregTech6 compact
-						: meta.getBlock() instanceof MultiTileEntityBlock && ((MultiTileEntityBlock) meta.getBlock()).overrideTileEntity instanceof IInventory ?
-						((IInventory) ((MultiTileEntityBlock) meta.getBlock()).overrideTileEntity).getInventoryName()
-						//normal behavior
-						: Item.getItemFromBlock(meta.getBlock()).getItemStackDisplayName(new ItemStack(meta.getBlock(), 1, meta.getMeta()));
-				if (!itemStr.contains("tile.")) {
-					str = str + itemStr;
-					str = str + " or ";
-				}
-			}
-
-			if(str.endsWith(" or ")) {
-				str = str.substring(0, str.length()-4);
-			}
-			str = str + " x" + entry.getValue() + "\n";
-		}
-
-		descriptionList.add(str);
+		StringBuilder builder = new StringBuilder("");
+		map.forEach((k,v)->builder.append(k).append("x ").append(v).append("\n"));
+		descriptionList.add(builder.toString());
 	}
 
 	@SubscribeEvent
@@ -210,7 +214,6 @@ public class ItemProjector extends Item implements IModularInventory, IButtonInv
 	private void RebuildStructure(World world, TileMultiBlock tile, ItemStack stack, int posX, int posY, int posZ, ForgeDirection orientation) {
 
 		int id = getMachineId(stack);
-		ForgeDirection direction = ForgeDirection.getOrientation(getDirection(stack));
 
 		TileMultiBlock multiblock = machineList.get(id);
 		Object[][][] structure;
@@ -218,7 +221,6 @@ public class ItemProjector extends Item implements IModularInventory, IButtonInv
 		clearStructure(world, tile, stack);
 
 		structure = multiblock.getStructure();
-		direction = orientation;
 
 		int y = getYLevel(stack);
 		int endNumber, startNumber;
@@ -244,9 +246,10 @@ public class ItemProjector extends Item implements IModularInventory, IButtonInv
 					else
 						block = multiblock.getAllowableBlocks(structure[y][z][x]);
 
-					int globalX = posX - x*direction.offsetZ + z*direction.offsetX;
-					int globalZ = posZ + (x* direction.offsetX)  + (z*direction.offsetZ);
+					int globalX = posX - x* orientation.offsetZ + z* orientation.offsetX;
+					int globalZ = posZ + (x* orientation.offsetX)  + (z* orientation.offsetZ);
 					int globalY = -y + structure.length + posY - 1;
+					block.stream().filter(b->b.GTTile instanceof TileEntityBase09FacingSingle).forEach(b->b.setMeta((byte)orientation.ordinal()));
 
 					if((world.isAirBlock(globalX, globalY, globalZ) || world.getBlock(globalX, globalY, globalZ).isReplaceable(world, globalX, globalY, globalZ)) && block.get(0).getBlock().getMaterial() != Material.air) {
 						//block = (Block)structure[y][z][x];
