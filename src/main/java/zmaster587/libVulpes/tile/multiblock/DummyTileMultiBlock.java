@@ -9,7 +9,7 @@ import zmaster587.libVulpes.block.BlockMeta;
 import java.util.List;
 
 public class DummyTileMultiBlock extends TileMultiBlock{
-        public static Object[][][] structure;
+        public Object[][][] structure;
         public String name;
 
         public DummyTileMultiBlock(Object[][][] structure, String name){
