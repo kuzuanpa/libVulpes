@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 import com.mojang.realmsclient.gui.ChatFormatting;
 
@@ -348,10 +349,11 @@ public class ItemProjector extends Item implements IModularInventory, IButtonInv
 		List<ModuleBase> modules = new LinkedList<ModuleBase>();
 		List<ModuleBase> btns = new LinkedList<ModuleBase>();
 
+		ArrayList<TileMultiBlock> displayList = machineList.stream().filter(TileMultiBlock::isVisibleInProjector).collect(Collectors.toCollection(ArrayList::new));
 
-		for(int i=0; i < machineList.size();i++) {
-			TileMultiBlock multiblock = machineList.get(i);
-			btns.add(new ModuleButton(20+ i%2*60, 4 + (int)Math.floor(i/2)*24, i, LibVulpes.proxy.getLocalizedString(multiblock.getMachineName()), this,  zmaster587.libVulpes.inventory.TextureResources.buttonBuild));
+		for(int i=0; i < displayList.size();i++) {
+			TileMultiBlock multiblock = displayList.get(i);
+			btns.add(new ModuleButton(20+ i%2*100, 4 + (int)Math.floor(i/2)*24, i, LibVulpes.proxy.getLocalizedString(multiblock.getMachineName()), this,  zmaster587.libVulpes.inventory.TextureResources.buttonBuild));
 		}
 
 		ModuleContainerPan panningContainer = new ModuleContainerPan(5, 20, btns, new LinkedList<ModuleBase>(), TextureResources.starryBG, 160, 100, 0, 500);

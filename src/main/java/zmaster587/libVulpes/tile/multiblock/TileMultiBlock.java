@@ -44,6 +44,7 @@ public class TileMultiBlock extends TileEntity {
 	protected boolean completeStructure, canRender;
 	protected byte timeAlive = 0;
 
+	public boolean isVisibleInProjector = true;
 	protected LinkedList<IInventory> itemInPorts = new LinkedList<IInventory>();
 	protected LinkedList<IInventory> itemOutPorts = new LinkedList<IInventory>();
 
@@ -75,6 +76,10 @@ public class TileMultiBlock extends TileEntity {
 	 */
 	public boolean isComplete() {
 		return completeStructure;
+	}
+
+	public boolean isVisibleInProjector(){
+		return isVisibleInProjector;
 	}
 
 	/**
