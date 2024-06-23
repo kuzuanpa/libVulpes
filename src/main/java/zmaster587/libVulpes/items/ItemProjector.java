@@ -115,8 +115,7 @@ public class ItemProjector extends Item implements IModularInventory, IButtonInv
 
 		descriptionList.add(str);
 	}
-	public void registerDummy(Object[][][] structure, String name) {
-		DummyTileMultiBlock multiblock = new DummyTileMultiBlock(structure, name);
+	public void registerDummy(DummyTileMultiBlock multiblock) {
 		machineList.add(multiblock);
 		HashMap<String, Integer> map = new HashMap<String, Integer>();
 

@@ -320,7 +320,7 @@ public class LibVulpes {
 		list.add(new BlockMeta(LibVulpesBlocks.blockHatch, 12));
 		TileMultiBlock.addMapping('l', list);
 
-		dummyMultiBlockRegisterers.forEach(register->register.getDummyMultiBlocks().forEach((na,st)->((ItemProjector) LibVulpesItems.itemHoloProjector).registerDummy(st,na)));
+		dummyMultiBlockRegisterers.forEach(register->register.getDummyMultiBlocks().forEach(d->((ItemProjector) LibVulpesItems.itemHoloProjector).registerDummy(d)));
 	}
 
 	//User Recipes
