@@ -1,11 +1,13 @@
 package zmaster587.libVulpes.util;
 
+import cpw.mods.fml.common.FMLLog;
 import eu.usrv.yamcore.auxiliary.ItemDescriptor;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.oredict.OreDictionary;
+import org.apache.logging.log4j.Level;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
@@ -228,7 +230,11 @@ public class XMLRecipeLoader {
 						}
 					}
 					else
-						ret = new NumberedOreDictStack(splitStr[0], number);
+					{
+						if(!OreDictionary.getOres(splitStr[0]).isEmpty())ret = new NumberedOreDictStack(splitStr[0], number);
+						else FMLLog.log(Level.ERROR,"Null Input Found: "+ text);
+					}
+
 				}
 
 				return ret;
