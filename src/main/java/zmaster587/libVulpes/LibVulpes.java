@@ -7,11 +7,8 @@ import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.SidedProxy;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLMissingMappingsEvent;
+import cpw.mods.fml.common.event.*;
 import cpw.mods.fml.common.event.FMLMissingMappingsEvent.MissingMapping;
-import cpw.mods.fml.common.event.FMLPostInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
@@ -319,10 +316,12 @@ public class LibVulpes {
 		list.add(new BlockMeta(LibVulpesBlocks.blockHatch, 3));
 		list.add(new BlockMeta(LibVulpesBlocks.blockHatch, 12));
 		TileMultiBlock.addMapping('l', list);
-
-		dummyMultiBlockRegisterers.forEach(register->register.getDummyMultiBlocks().forEach(d->((ItemProjector) LibVulpesItems.itemHoloProjector).registerDummy(d)));
 	}
+	@EventHandler
+	public void onFinish(FMLLoadCompleteEvent event) {
+		dummyMultiBlockRegisterers.forEach(register->register.getDummyMultiBlocks().forEach(d->((ItemProjector) LibVulpesItems.itemHoloProjector).registerDummy(d)));
 
+	}
 	//User Recipes
 	public void loadXMLRecipe(Class clazz) {
 		File file = new File(userModifiableRecipes.get(clazz));
