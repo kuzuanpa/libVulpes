@@ -68,7 +68,7 @@ public class LibVulpes {
 	public static int time = 0;
 	private static HashMap<Class, String> userModifiableRecipes = new HashMap<Class, String>();
 
-	private static final ArrayList<IDummyMultiBlockRegisterer> dummyMultiBlockRegisterers = new ArrayList<>();
+	public static final ArrayList<IDummyMultiBlockRegisterer> dummyMultiBlockRegisterers = new ArrayList<>();
 	@Instance(value = "libVulpes")
 	public static LibVulpes instance;
 
@@ -316,11 +316,6 @@ public class LibVulpes {
 		list.add(new BlockMeta(LibVulpesBlocks.blockHatch, 3));
 		list.add(new BlockMeta(LibVulpesBlocks.blockHatch, 12));
 		TileMultiBlock.addMapping('l', list);
-	}
-	@EventHandler
-	public void onFinish(FMLLoadCompleteEvent event) {
-		dummyMultiBlockRegisterers.forEach(register->register.getDummyMultiBlocks().forEach(d->((ItemProjector) LibVulpesItems.itemHoloProjector).registerDummy(d)));
-
 	}
 	//User Recipes
 	public void loadXMLRecipe(Class clazz) {
