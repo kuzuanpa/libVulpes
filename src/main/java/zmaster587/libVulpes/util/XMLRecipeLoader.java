@@ -161,7 +161,7 @@ public class XMLRecipeLoader {
 				if(outputList.isEmpty()) 
 					LibVulpes.logger.info("Output List emtpy in recipe " + recipeNum);
 				else {
-					LibVulpes.logger.info("Sucessfully added recipe to " + clazz.getName() + " for " + inputList.toString() + " -> " + outputList.toString());
+					//LibVulpes.logger.info("Sucessfully added recipe to " + clazz.getName() + " for " + inputList.toString() + " -> " + outputList.toString());
 					RecipesMachine.getInstance().addRecipe(clazz, outputList, time, energy, inputList);
 				}
 			} catch (Exception e) {
