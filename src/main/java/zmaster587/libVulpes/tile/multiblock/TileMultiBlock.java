@@ -8,6 +8,7 @@ import java.util.List;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import gregapi.tileentity.base.TileEntityBase09FacingSingle;
+import org.jetbrains.annotations.NotNull;
 import zmaster587.libVulpes.LibVulpes;
 import zmaster587.libVulpes.api.LibVulpesBlocks;
 import zmaster587.libVulpes.block.BlockMeta;
@@ -45,13 +46,13 @@ public class TileMultiBlock extends TileEntity {
 	protected byte timeAlive = 0;
 
 	public boolean isVisibleInProjector = true;
-	protected LinkedList<IInventory> itemInPorts = new LinkedList<IInventory>();
-	protected LinkedList<IInventory> itemOutPorts = new LinkedList<IInventory>();
+	protected LinkedList<IInventory> itemInPorts = new LinkedList<>();
+	protected LinkedList<IInventory> itemOutPorts = new LinkedList<>();
 
-	protected LinkedList<IFluidHandler> fluidInPorts = new LinkedList<IFluidHandler>();
-	protected LinkedList<IFluidHandler> fluidOutPorts = new LinkedList<IFluidHandler>();
+	protected LinkedList<IFluidHandler> fluidInPorts = new LinkedList<>();
+	protected LinkedList<IFluidHandler> fluidOutPorts = new LinkedList<>();
 
-	protected static HashMap<Character, List<BlockMeta>> charMapping = new HashMap<Character, List<BlockMeta>>();
+	protected static HashMap<Character, List<BlockMeta>> charMapping = new HashMap<>();
 
 	public TileMultiBlock() {
 		completeStructure = false;
@@ -235,7 +236,7 @@ public class TileMultiBlock extends TileEntity {
 	}
 
 	public List<BlockMeta> getAllowableWildCardBlocks(Character wildCard) {
-		List<BlockMeta> list =new ArrayList<BlockMeta>();
+		List<BlockMeta> list = new ArrayList<>();
 		return list;
 	}
 
@@ -272,12 +273,12 @@ public class TileMultiBlock extends TileEntity {
 		Object[][][] structure = getStructure();
 
 		Vector3F<Integer> offset = getControllerOffset(structure);
-		List<BlockPosition> replacableBlocks = new LinkedList<BlockPosition>();
+		List<BlockPosition> replacableBlocks = new LinkedList<>();
 
 		ForgeDirection front = getFrontDirection();
 
 		//Store tile entities for later processing so we don't risk the check failing halfway through leaving half the multiblock assigned
-		LinkedList<TileEntity> tiles = new LinkedList<TileEntity>();
+		@NotNull LinkedList<TileEntity> tiles = new LinkedList<>();
 
 		for(int y = 0; y < structure.length; y++) {
 			for(int z = 0; z < structure[0].length; z++) {
@@ -397,7 +398,7 @@ public class TileMultiBlock extends TileEntity {
 		}
 		else if(input instanceof String) { //OreDict entry
 			List<ItemStack> stacks = OreDictionary.getOres((String)input);
-			List<BlockMeta> list = new LinkedList<BlockMeta>();
+			List<BlockMeta> list = new LinkedList<>();
 			for(ItemStack stack : stacks) {
 				//stack.get
 				Block block = Block.getBlockFromItem(stack.getItem());
@@ -407,24 +408,24 @@ public class TileMultiBlock extends TileEntity {
 			return list;
 		}
 		else if(input instanceof Block) {
-			List<BlockMeta> list = new ArrayList<BlockMeta>();
+			List<BlockMeta> list = new ArrayList<>();
 			list.add(new BlockMeta((Block) input, BlockMeta.WILDCARD));
 			return list;
 		}
 		else if(input instanceof BlockMeta) {
-			List<BlockMeta> list = new ArrayList<BlockMeta>();
+			List<BlockMeta> list = new ArrayList<>();
 			list.add((BlockMeta) input);
 			return list;
 		}
 		else if(input instanceof Block[]) {
-			List<BlockMeta> list = new ArrayList<BlockMeta>();
+			List<BlockMeta> list = new ArrayList<>();
 			for(Block b : (Block[])input) list.add(new BlockMeta(b));
 			return list;
 		}
 		else if(input instanceof List) {
 			return (List<BlockMeta>)input;
 		}
-		List<BlockMeta> list = new ArrayList<BlockMeta>();
+		List<BlockMeta> list = new ArrayList<>();
 		return list;
 	}
 
@@ -474,7 +475,7 @@ public class TileMultiBlock extends TileEntity {
 			for(int z = 0; z < structure[0].length; z++) {
 				for(int x = 0; x< structure[0][0].length; x++) {
 					if(structure[y][z][x] instanceof Character && (Character)structure[y][z][x] == 'c')
-						return new Vector3F<Integer>(x, y, z);
+						return new Vector3F<>(x, y, z);
 				}
 			}
 		}

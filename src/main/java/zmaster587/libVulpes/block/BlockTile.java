@@ -14,6 +14,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+import org.jetbrains.annotations.NotNull;
 import zmaster587.libVulpes.LibVulpes;
 import zmaster587.libVulpes.util.IAdjBlockUpdate;
 
@@ -39,12 +40,12 @@ public class BlockTile extends RotatableBlock {
 		return this;
 	}
 
-	public Block setSideTexture(String textureName) {
+	public @NotNull Block setSideTexture(String textureName) {
 		textureSideName = textureName;
 		return this;
 	}
 
-	public Block setSideTexture(String textureName, String textureNameActive) {
+	public @NotNull Block setSideTexture(String textureName, String textureNameActive) {
 		textureSideName = textureName;
 		textureSideName_active = textureNameActive;
 		return this;
@@ -55,7 +56,7 @@ public class BlockTile extends RotatableBlock {
 		return this;
 	}
 
-	public Block setFrontTexture(String textureName, String textureNameActive) {
+	public @NotNull Block setFrontTexture(String textureName, String textureNameActive) {
 		textureFrontName = textureName;
 		textureFrontName_active = textureNameActive;
 		return this;
@@ -72,12 +73,12 @@ public class BlockTile extends RotatableBlock {
 		return this;
 	}
 
-	public Block setBottomTexture(String textureName) {
+	public @NotNull Block setBottomTexture(String textureName) {
 		textureBottomName = textureName;
 		return this;
 	}
 
-	public Block setBottomTexture(String textureName, String textureNameActive) {
+	public @NotNull Block setBottomTexture(String textureName, String textureNameActive) {
 		textureBottomName = textureName;
 		textureBottomName_active = textureNameActive;
 		return this;
@@ -88,7 +89,7 @@ public class BlockTile extends RotatableBlock {
 		return this;
 	}
 
-	public Block setRearTexture(String textureName, String textureNameActive) {
+	public @NotNull Block setRearTexture(String textureName, String textureNameActive) {
 		textureRearName = textureName;
 		textureRearName_active = textureNameActive;
 		return this;
@@ -138,7 +139,7 @@ public class BlockTile extends RotatableBlock {
 	
 	@SideOnly(Side.CLIENT)
 	@Override
-	public void registerBlockIcons(IIconRegister icons)
+	public void registerBlockIcons(@NotNull IIconRegister icons)
 	{
 		this.blockIcon = icons.registerIcon(this.getTextureName());
 		if(this.textureSideName == null)

@@ -3,6 +3,7 @@ package zmaster587.libVulpes.items;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlockWithMetadata;
 import net.minecraft.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 public class ItemBlockMeta extends  ItemBlockWithMetadata {
 
@@ -11,7 +12,7 @@ public class ItemBlockMeta extends  ItemBlockWithMetadata {
 	}
 
 	@Override
-	public String getUnlocalizedName(ItemStack stack) {
+	public @NotNull String getUnlocalizedName(ItemStack stack) {
 		return super.getUnlocalizedName(stack) + "." + stack.getItemDamage();
 	}
 

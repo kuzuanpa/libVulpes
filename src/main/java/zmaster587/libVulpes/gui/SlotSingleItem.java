@@ -5,6 +5,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 public class SlotSingleItem extends Slot {
 
@@ -28,7 +29,7 @@ public class SlotSingleItem extends Slot {
 	
 	
 	@Override
-	public boolean isItemValid(ItemStack stack)
+	public boolean isItemValid(@NotNull ItemStack stack)
 	{
 		return acceptedItem.isItemEqual(stack);
 	}

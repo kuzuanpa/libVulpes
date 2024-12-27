@@ -24,6 +24,8 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.inventory.IInventory;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import zmaster587.libVulpes.LibVulpes;
 import zmaster587.libVulpes.api.LibVulpesBlocks;
 import zmaster587.libVulpes.block.BlockMeta;
@@ -66,17 +68,17 @@ public class ItemProjector extends Item implements IModularInventory, IButtonInv
 	private static final String IDNAME = "machineId";
 
 	public ItemProjector() {
-		machineList = new ArrayList<TileMultiBlock>();
-		blockList = new ArrayList<BlockTile>();
-		descriptionList = new ArrayList<String>();
+		machineList = new ArrayList<>();
+		blockList = new ArrayList<>();
+		descriptionList = new ArrayList<>();
 	}
 
 	public void registerMachine(TileMultiBlock multiblock, BlockTile mainBlock) {
 		machineList.add(multiblock);
 		blockList.add(mainBlock);
-		HashMap<Object, Integer> map = new HashMap<Object, Integer>();
+		HashMap<Object, Integer> map = new HashMap<>();
 
-		Object structure[][][] = multiblock.getStructure();
+		Object[][][] structure = multiblock.getStructure();
 
 		for(int i = 0; i < structure.length; i++) {
 			for(int j = 0; j < structure[i].length; j++) {
@@ -117,7 +119,7 @@ public class ItemProjector extends Item implements IModularInventory, IButtonInv
 	}
 	public void registerDummy(DummyTileMultiBlock multiblock) {
 		machineList.add(multiblock);
-		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		HashMap<String, Integer> map = new HashMap<>();
 
 		Object[][][] stru = multiblock.getStructure();
 
@@ -165,7 +167,7 @@ public class ItemProjector extends Item implements IModularInventory, IButtonInv
 
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
-	public void mouseEvent(MouseEvent event) {
+	public void mouseEvent(@NotNull MouseEvent event) {
 		if(Minecraft.getMinecraft().thePlayer.isSneaking() && event.dwheel != 0) {
 			ItemStack stack = Minecraft.getMinecraft().thePlayer.getHeldItem();
 
@@ -211,12 +213,12 @@ public class ItemProjector extends Item implements IModularInventory, IButtonInv
 		}
 	}
 
-	private void RebuildStructure(World world, TileMultiBlock tile, ItemStack stack, int posX, int posY, int posZ, ForgeDirection orientation) {
+	private void RebuildStructure(@NotNull World world, TileMultiBlock tile, ItemStack stack, int posX, int posY, int posZ, ForgeDirection orientation) {
 
 		int id = getMachineId(stack);
 
 		TileMultiBlock multiblock = machineList.get(id);
-		Object[][][] structure;
+		Object[][] @Nullable [] structure;
 
 		clearStructure(world, tile, stack);
 
@@ -238,7 +240,7 @@ public class ItemProjector extends Item implements IModularInventory, IButtonInv
 				for(int x=0; x < structure[0][0].length; x++) {
 					List<BlockMeta> block;
 					if(structure[y][z][x] instanceof Character && (Character)structure[y][z][x] == 'c') {
-						block = new ArrayList<BlockMeta>();
+						block = new ArrayList<>();
 						block.add(new BlockMeta(blockList.get(id), orientation.ordinal()));
 					}
 					else if(multiblock.getAllowableBlocks(structure[y][z][x]).isEmpty())
@@ -331,7 +333,7 @@ public class ItemProjector extends Item implements IModularInventory, IButtonInv
 		return super.onItemRightClick(stack, world, player);
 	}
 
-	protected BlockPosition getControllerOffset(Object[][][] structure) {
+	protected @Nullable BlockPosition getControllerOffset(Object[][][] structure) {
 		for(int y = 0; y < structure.length; y++) {
 			for(int z = 0; z < structure[0].length; z++) {
 				for(int x = 0; x< structure[0][0].length; x++) {
@@ -345,8 +347,8 @@ public class ItemProjector extends Item implements IModularInventory, IButtonInv
 
 	@Override
 	public List<ModuleBase> getModules(int ID, EntityPlayer player) {
-		List<ModuleBase> modules = new LinkedList<ModuleBase>();
-		List<ModuleBase> btns = new LinkedList<ModuleBase>();
+		List<ModuleBase> modules = new LinkedList<>();
+		List<ModuleBase> btns = new LinkedList<>();
 
 		ArrayList<TileMultiBlock> displayList = machineList.stream().filter(TileMultiBlock::isVisibleInProjector).collect(Collectors.toCollection(ArrayList::new));
 
@@ -355,13 +357,13 @@ public class ItemProjector extends Item implements IModularInventory, IButtonInv
 			btns.add(new ModuleButton(20+ i%2*100, 4 + (int)Math.floor(i/2)*24, i, LibVulpes.proxy.getLocalizedString(multiblock.getMachineName()), this,  zmaster587.libVulpes.inventory.TextureResources.buttonBuild));
 		}
 
-		ModuleContainerPan panningContainer = new ModuleContainerPan(5, 20, btns, new LinkedList<ModuleBase>(), TextureResources.starryBG, 160, 100, 0, 500);
+		ModuleContainerPan panningContainer = new ModuleContainerPan(5, 20, btns, new LinkedList<>(), TextureResources.starryBG, 160, 100, 0, 500);
 		modules.add(panningContainer);
 		return modules;
 	}
 
 	@Override
-	public String getModularInventoryName() {
+	public @NotNull String getModularInventoryName() {
 		return "item.holoProjector.name";
 	}
 
@@ -393,7 +395,7 @@ public class ItemProjector extends Item implements IModularInventory, IButtonInv
 		stack.setTagCompound(nbt);
 	}
 
-	private int getMachineId(ItemStack stack) {
+	private int getMachineId(@NotNull ItemStack stack) {
 		if(stack.hasTagCompound()) {
 			return stack.getTagCompound().getInteger(IDNAME);
 		}
@@ -427,7 +429,7 @@ public class ItemProjector extends Item implements IModularInventory, IButtonInv
 			return -1;
 	}
 
-	private void setPrevMachineId(ItemStack stack, int id) {
+	private void setPrevMachineId(@NotNull ItemStack stack, int id) {
 		NBTTagCompound nbt;
 		if(stack.hasTagCompound()) {
 			nbt = stack.getTagCompound();
@@ -439,7 +441,7 @@ public class ItemProjector extends Item implements IModularInventory, IButtonInv
 		stack.setTagCompound(nbt);
 	}
 
-	private int getPrevMachineId(ItemStack stack) {
+	private int getPrevMachineId(@NotNull ItemStack stack) {
 		if(stack.hasTagCompound()) {
 			return stack.getTagCompound().getInteger(IDNAME + "Prev");
 		}
@@ -447,17 +449,17 @@ public class ItemProjector extends Item implements IModularInventory, IButtonInv
 			return -1;
 	}
 
-	private Vector3F<Integer> getBasePosition(ItemStack stack) {
+	private @Nullable Vector3F<Integer> getBasePosition(ItemStack stack) {
 		if(stack.hasTagCompound()) {
 			NBTTagCompound nbt = stack.getTagCompound();
-			Vector3F<Integer> vec = new Vector3F<Integer>(nbt.getInteger("x"), nbt.getInteger("y"), nbt.getInteger("z"));
+			Vector3F<Integer> vec = new Vector3F<>(nbt.getInteger("x"), nbt.getInteger("y"), nbt.getInteger("z"));
 			return vec;
 		}
 		else
 			return null;
 	}
 
-	private void setBasePosition(ItemStack stack, int x, int y, int z) {
+	private void setBasePosition(@NotNull ItemStack stack, int x, int y, int z) {
 		NBTTagCompound nbt;
 		if(stack.hasTagCompound()) {
 			nbt = stack.getTagCompound();
@@ -480,7 +482,7 @@ public class ItemProjector extends Item implements IModularInventory, IButtonInv
 			return -1;
 	}
 
-	public void setDirection(ItemStack stack, int dir) {
+	public void setDirection(@NotNull ItemStack stack, int dir) {
 		NBTTagCompound nbt;
 		if(stack.hasTagCompound()) {
 			nbt = stack.getTagCompound();
@@ -509,7 +511,7 @@ public class ItemProjector extends Item implements IModularInventory, IButtonInv
 			list.add(ChatFormatting.GREEN + LibVulpes.proxy.getLocalizedString(machineList.get(id).getMachineName()));
 			String str = descriptionList.get(id);
 
-			String strList[] = str.split("\n");
+			String[] strList = str.split("\n");
 
 			for(String s : strList)
 				list.add(s);
@@ -535,7 +537,7 @@ public class ItemProjector extends Item implements IModularInventory, IButtonInv
 
 	@Override
 	public void readDataFromNetwork(ByteBuf in, byte packetId,
-			NBTTagCompound nbt, ItemStack stack) {
+									@NotNull NBTTagCompound nbt, ItemStack stack) {
 		if(packetId == 0) {
 			nbt.setInteger(IDNAME, in.readInt());
 		}

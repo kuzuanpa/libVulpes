@@ -3,6 +3,8 @@ package zmaster587.libVulpes.tile.multiblock.hatch;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import zmaster587.libVulpes.inventory.modules.IModularInventory;
 import zmaster587.libVulpes.inventory.modules.ModuleBase;
 import zmaster587.libVulpes.inventory.modules.ModuleSlotArray;
@@ -136,8 +138,8 @@ public class TileInventoryHatch extends TilePointer implements ISidedInventory, 
 	}
 
 	@Override
-	public List<ModuleBase> getModules(int ID, EntityPlayer player) {
-		LinkedList<ModuleBase> modules = new LinkedList<ModuleBase>();
+	public @NotNull List<ModuleBase> getModules(int ID, EntityPlayer player) {
+		LinkedList<ModuleBase> modules = new LinkedList<>();
 
 		modules.add(new ModuleSlotArray(8, 18, this, 0, this.getSizeInventory()));
 
@@ -150,7 +152,7 @@ public class TileInventoryHatch extends TilePointer implements ISidedInventory, 
 	}
 
 	@Override
-	public String getModularInventoryName() {
+	public @Nullable String getModularInventoryName() {
 		return null;
 	}
 

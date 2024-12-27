@@ -1,5 +1,7 @@
 package zmaster587.libVulpes.util;
 
+import org.jetbrains.annotations.NotNull;
+
 public class BlockPosition  {
 	public int x,z;
 	public short y;
@@ -17,11 +19,11 @@ public class BlockPosition  {
 	 * @param dz z offset
 	 * @return a new object containing the coordinates of that offset
 	 */
-	public BlockPosition getPositionAtOffset(int dx, int dy, int dz) {
+	public @NotNull BlockPosition getPositionAtOffset(int dx, int dy, int dz) {
 		return new BlockPosition(dx + x, dy + y, dz + z);
 	}
 	
-	public double getDistance(BlockPosition otherPos) {
+	public double getDistance(@NotNull BlockPosition otherPos) {
 		return Math.sqrt(Math.pow(x-otherPos.x, 2) + Math.pow(y-otherPos.y, 2) + Math.pow(z-otherPos.z, 2));
 	}
 	
@@ -41,7 +43,7 @@ public class BlockPosition  {
 	}
 	
 	@Override
-	public String toString() {
+	public @NotNull String toString() {
 		return this.x + " " + this.y + " " + this.z;
 	}
 }

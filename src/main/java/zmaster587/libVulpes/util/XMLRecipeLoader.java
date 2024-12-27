@@ -8,6 +8,7 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.oredict.OreDictionary;
 import org.apache.logging.log4j.Level;
+import org.jetbrains.annotations.NotNull;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
@@ -106,7 +107,7 @@ public class XMLRecipeLoader {
 					continue;
 				}
 
-				List<Object> inputList = new LinkedList<Object>();
+				List<Object> inputList = new LinkedList<>();
 
 				for(int i = 0; i < inputNode.getChildNodes().getLength(); i++) {
 					Node node = inputNode.getChildNodes().item(i);
@@ -120,7 +121,7 @@ public class XMLRecipeLoader {
 						inputList.add(obj);
 				}
 
-				List<Object> outputList = new LinkedList<Object>();
+				List<Object> outputList = new LinkedList<>();
 
 				for(int i = 0; i < outputNode.getChildNodes().getLength(); i++) {
 					Node node = outputNode.getChildNodes().item(i);
@@ -205,7 +206,7 @@ public class XMLRecipeLoader {
 		}
 		else if(node.getNodeName().equals("oreDict")) {
 			String text = node.getTextContent();
-			String splitStr[];
+			String[] splitStr;
 
 //NBTTag wouldn't contain ; So we use that.
 			splitStr =text.split(";");
@@ -265,7 +266,7 @@ public class XMLRecipeLoader {
 	}
 
 
-	public static String writeRecipe(IRecipe recipe) {
+	public static String writeRecipe(@NotNull IRecipe recipe) {
 		int index = 0;
 		String string = "\t<Recipe timeRequired=\"" + recipe.getTime() + "\" power =\"" + recipe.getPower() + "\">\n" +
 				"\t\t<input>\n";

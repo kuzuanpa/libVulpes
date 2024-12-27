@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.jetbrains.annotations.NotNull;
 import zmaster587.libVulpes.api.LibVulpesBlocks;
 import zmaster587.libVulpes.api.LibVulpesItems;
 import net.minecraft.block.Block;
@@ -60,7 +61,7 @@ public class Material {
 	 * @param amount
 	 * @return Itemstack representing the product of this material, or null if nonexistant
 	 */
-	public ItemStack getProduct(AllowedProducts product, int amount) {
+	public @NotNull ItemStack getProduct(AllowedProducts product, int amount) {
 		/*ItemStack stack = OreDictionary.getOres(product.getName() + this.name()).get(0);
 			stack = stack.copy();
 			stack.stackSize = amount;
@@ -99,7 +100,7 @@ public class Material {
 	 * @param product
 	 * @return Itemstack of size 1 representing the product of this material, or null if nonexistant
 	 */
-	public ItemStack getProduct(AllowedProducts product) {
+	public ItemStack getProduct(@NotNull AllowedProducts product) {
 		return getProduct(product,1);
 	}
 

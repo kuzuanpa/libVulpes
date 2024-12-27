@@ -3,6 +3,7 @@ package zmaster587.libVulpes.inventory.modules;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jetbrains.annotations.NotNull;
 import org.lwjgl.opengl.GL11;
 
 import net.minecraft.client.gui.FontRenderer;
@@ -17,10 +18,10 @@ public class ModuleText extends ModuleBase {
 	float scale;
 	boolean alwaysOnTop;
 	
-	public ModuleText(int offsetX, int offsetY, String text, int color) {
+	public ModuleText(int offsetX, int offsetY, @NotNull String text, int color) {
 		super(offsetX, offsetY);
 
-		this.text = new ArrayList<String>();
+		this.text = new ArrayList<>();
 		scale = 1f;
 		setText(text);
 		this.color = color;
@@ -39,7 +40,7 @@ public class ModuleText extends ModuleBase {
 		scale = 1f;
 	}
 
-	public void setText(String text) {
+	public void setText(@NotNull String text) {
 
 		this.text.clear();
 		for(String str : text.split("\\n")) {

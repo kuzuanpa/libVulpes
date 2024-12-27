@@ -7,6 +7,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
+import org.jetbrains.annotations.NotNull;
 
 public abstract class TileInventoriedRFConsumerTank extends TileInventoriedRFConsumer implements IFluidHandler {
 
@@ -18,7 +19,7 @@ public abstract class TileInventoriedRFConsumerTank extends TileInventoriedRFCon
 	}
 	
 	@Override
-	public void writeToNBT(NBTTagCompound nbt) {
+	public void writeToNBT(@NotNull NBTTagCompound nbt) {
 		super.writeToNBT(nbt);
 		NBTTagCompound tanks = new NBTTagCompound();
 		tank.writeToNBT(tanks);
@@ -39,8 +40,8 @@ public abstract class TileInventoriedRFConsumerTank extends TileInventoriedRFCon
 	}
 
 	@Override
-	public FluidStack drain(ForgeDirection from, FluidStack resource,
-			boolean doDrain) {
+	public FluidStack drain(ForgeDirection from, @NotNull FluidStack resource,
+                            boolean doDrain) {
 		return tank.drain(resource.amount, doDrain);
 	}
 

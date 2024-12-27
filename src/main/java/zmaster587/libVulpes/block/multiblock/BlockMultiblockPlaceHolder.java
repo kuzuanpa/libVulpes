@@ -2,6 +2,7 @@ package zmaster587.libVulpes.block.multiblock;
 
 import java.util.ArrayList;
 
+import org.jetbrains.annotations.NotNull;
 import zmaster587.libVulpes.tile.multiblock.TileMultiBlock;
 import zmaster587.libVulpes.tile.multiblock.TilePlaceholder;
 import net.minecraft.block.Block;
@@ -48,16 +49,16 @@ public class BlockMultiblockPlaceHolder extends BlockContainer {
 
 	//Make sure to get the block this one is storing rather than the placeholder itself
 	@Override
-	public ItemStack getPickBlock(MovingObjectPosition target, World world,
-			int x, int y, int z, EntityPlayer player) {
+	public @NotNull ItemStack getPickBlock(MovingObjectPosition target, @NotNull World world,
+                                           int x, int y, int z, EntityPlayer player) {
 		TilePlaceholder tile = (TilePlaceholder)world.getTileEntity(x, y, z);
 		return new ItemStack(tile.getReplacedBlock(), 1,tile.getReplacedBlockMeta());
 	}
 
 	@Override
-	public ArrayList<ItemStack> getDrops(World world, int x, int y, int z,
-			int metadata, int fortune) {
-		return new ArrayList<ItemStack>();
+	public @NotNull ArrayList<ItemStack> getDrops(World world, int x, int y, int z,
+												  int metadata, int fortune) {
+		return new ArrayList<>();
 	}
 	
 	@Override
@@ -102,7 +103,7 @@ public class BlockMultiblockPlaceHolder extends BlockContainer {
 	}
 
 	@Override
-	public TileEntity createTileEntity(World world, int metadata) {
+	public @NotNull TileEntity createTileEntity(World world, int metadata) {
 		return new TilePlaceholder();
 	}
 

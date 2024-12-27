@@ -1,5 +1,7 @@
 package zmaster587.libVulpes.util;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -12,7 +14,7 @@ public class AdjacencyGraph<T> {
 	private HashMap<T, HashSet<T>> adjacencyMatrix;
 
 	public AdjacencyGraph() {
-		adjacencyMatrix = new HashMap<T, HashSet<T>>();
+		adjacencyMatrix = new HashMap<>();
 	}
 
 	/**
@@ -20,7 +22,7 @@ public class AdjacencyGraph<T> {
 	 * @param object object to add to the node
 	 * @param adjNodes any adjacent nodes
 	 */
-	public void add(T object, HashSet<T> adjNodes) {
+	public void add(T object, @NotNull HashSet<T> adjNodes) {
 		if(!contains(object)) {
 			adjacencyMatrix.put(object, adjNodes);
 			Iterator<T> iterator = adjNodes.iterator();
@@ -68,7 +70,7 @@ public class AdjacencyGraph<T> {
 	 * @return a hashset containing all block connected to node including itself
 	 */
 	public HashSet<T> getAllNodesConnectedToNode(T node) {
-		HashSet<T> removableNodes = new HashSet<T>();
+		HashSet<T> removableNodes = new HashSet<>();
 		getAllNodesConnectedToBlock(node, removableNodes);
 
 		return removableNodes;
@@ -82,7 +84,7 @@ public class AdjacencyGraph<T> {
 	private void getAllNodesConnectedToBlock(T node,HashSet<T> removableNodes) {
 
 		
-		Stack<T> stack = new Stack<T>();
+		Stack<T> stack = new Stack<>();
 		stack.push(node);
 		removableNodes.add(node);
 		
@@ -118,9 +120,9 @@ public class AdjacencyGraph<T> {
 	 * @param removableNodes HashSet containing visitedNodes
 	 * @return true if a path from from to to is found
 	 */
-	private boolean findPathToBlock(T from, T to, HashSet<T> removableNodes) {
+	private boolean findPathToBlock(T from, @NotNull T to, @NotNull HashSet<T> removableNodes) {
 
-		Stack<T> stack = new Stack<T>();
+		Stack<T> stack = new Stack<>();
 		stack.push(from);
 
 		while(!stack.isEmpty()) {
@@ -148,8 +150,8 @@ public class AdjacencyGraph<T> {
 	 * @param to node to find
 	 * @return true if a path from from to to is found
 	 */
-	public boolean doesPathExist(T from, T to) {
-		HashSet<T> pos = new HashSet<T>();
+	public boolean doesPathExist(T from, @NotNull T to) {
+		HashSet<T> pos = new HashSet<>();
 
 		return findPathToBlock(from, to, pos);
 	}

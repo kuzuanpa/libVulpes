@@ -7,6 +7,7 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ICrafting;
+import org.jetbrains.annotations.NotNull;
 
 public class ModuleRadioButton  extends ModuleBase {
 
@@ -135,7 +136,7 @@ public class ModuleRadioButton  extends ModuleBase {
 			FontRenderer font) {
 		super.renderBackground(gui, x, y, mouseX, mouseY, font);
 
-		for(ModuleToggleSwitch button : buttons) {
+		for(@NotNull ModuleToggleSwitch button : buttons) {
 			button.renderBackground(gui, x, y, mouseX, mouseY, font);
 		}
 	}

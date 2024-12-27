@@ -1,6 +1,7 @@
 package zmaster587.libVulpes.tile;
 
 import cofh.api.energy.IEnergyHandler;
+import org.jetbrains.annotations.NotNull;
 import zmaster587.libVulpes.api.IUniversalEnergy;
 import zmaster587.libVulpes.util.UniversalBattery;
 import net.minecraft.nbt.NBTTagCompound;
@@ -17,7 +18,7 @@ public abstract class TileEntityPowerMachine extends TileEntityMachine implement
 	}
 	
 	@Override
-	public void readFromNBT(NBTTagCompound nbt) {
+	public void readFromNBT(@NotNull NBTTagCompound nbt) {
 		super.readFromNBT(nbt);
 		energy.readFromNBT(nbt);
 	}

@@ -1,5 +1,6 @@
 package zmaster587.libVulpes.tile.energy;
 
+import org.jetbrains.annotations.NotNull;
 import zmaster587.libVulpes.Configuration;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.MinecraftForge;
@@ -14,7 +15,7 @@ public class TilePlugInputIC2 extends TilePlugOutputRF implements IEnergySink {
 	}
 	boolean tickedOnce = false;
 	@Override
-	public String getModularInventoryName() {
+	public @NotNull String getModularInventoryName() {
 		return "tile.IC2Plug.name";
 	}
 

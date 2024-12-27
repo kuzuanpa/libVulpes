@@ -2,6 +2,7 @@ package zmaster587.libVulpes.inventory;
 
 import java.util.List;
 
+import org.jetbrains.annotations.NotNull;
 import zmaster587.libVulpes.inventory.modules.IModularInventory;
 import zmaster587.libVulpes.inventory.modules.ModuleBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -138,7 +139,7 @@ public class ContainerModular extends Container {
 	 /**
      * merges provided ItemStack with the first avaliable one in the container/player inventory
      */
-    protected boolean mergeItemStack(ItemStack p_75135_1_, int p_75135_2_, int p_75135_3_, boolean p_75135_4_)
+    protected boolean mergeItemStack(@NotNull ItemStack p_75135_1_, int p_75135_2_, int p_75135_3_, boolean p_75135_4_)
     {
         boolean flag1 = false;
         int k = p_75135_2_;

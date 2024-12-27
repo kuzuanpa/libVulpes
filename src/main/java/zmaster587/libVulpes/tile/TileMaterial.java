@@ -1,5 +1,7 @@
 package zmaster587.libVulpes.tile;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import zmaster587.libVulpes.api.material.Material;
 import zmaster587.libVulpes.api.material.MaterialRegistry;
 import net.minecraft.nbt.NBTTagCompound;
@@ -9,7 +11,8 @@ import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 
 public class TileMaterial extends TilePointer {
 
-	Material materialType;
+	@Nullable
+    Material materialType;
 
 	public TileMaterial() {
 		super();
@@ -50,7 +53,7 @@ public class TileMaterial extends TilePointer {
 	}
 
 	@Override
-	public void readFromNBT(NBTTagCompound nbt) {
+	public void readFromNBT(@NotNull NBTTagCompound nbt) {
 		super.readFromNBT(nbt);
 		if(nbt.hasKey("material"))
 			materialType = MaterialRegistry.getMaterialFromName(nbt.getString("material"));

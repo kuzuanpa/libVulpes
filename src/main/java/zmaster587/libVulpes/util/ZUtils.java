@@ -4,6 +4,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import zmaster587.libVulpes.util.ZUtils.RedstoneState;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
@@ -43,7 +45,7 @@ public class ZUtils {
 			tag.setByte("redstoneState", (byte)this.ordinal());
 		}
 		
-		public static RedstoneState createFromNBT(NBTTagCompound tag) {
+		public static RedstoneState createFromNBT(@NotNull NBTTagCompound tag) {
 			return RedstoneState.values()[tag.getByte("redstoneState")];
 		}
 	}
@@ -124,7 +126,7 @@ public class ZUtils {
 	 * @param angle amount to rotate by
 	 * @return rotated bounding box in global coords
 	 */
-	public static AxisAlignedBB convertLocalBBToGlobal(AxisAlignedBB local, AxisAlignedBB global, Entity e, double angle) {
+	public static AxisAlignedBB convertLocalBBToGlobal(@NotNull AxisAlignedBB local, AxisAlignedBB global, Entity e, double angle) {
 		AxisAlignedBB rotatedLocal = rotateAABB(local, angle);
 
 		return AxisAlignedBB.getBoundingBox(e.posX + rotatedLocal.minX, e.posY + rotatedLocal.minY, e.posZ + rotatedLocal.minZ, rotatedLocal.maxX + e.posX, rotatedLocal.maxY + e.posY, rotatedLocal.maxZ + e.posZ);
@@ -142,7 +144,7 @@ public class ZUtils {
 
 	}
 
-	public static boolean isInvEmpty(ItemStack[] stack) {
+	public static boolean isInvEmpty(ItemStack @Nullable [] stack) {
 		boolean empty = true;
 		if(stack == null)
 			return true;
@@ -167,7 +169,7 @@ public class ZUtils {
 		return false;
 	}
 
-	public static boolean doesArrayContains(int[] object, Object object2) {
+	public static boolean doesArrayContains(int @NotNull [] object, Object object2) {
 		for(Object obj : object) {
 			if(obj.equals(object2))
 				return true;
@@ -306,7 +308,7 @@ public class ZUtils {
 		}
 	}
 
-	public static ItemStack getFirstItemInInv(ItemStack i[]) {
+	public static @Nullable ItemStack getFirstItemInInv(ItemStack[] i) {
 		for(ItemStack stack : i)
 			if(stack != null) return stack;
 		return null;
@@ -318,7 +320,7 @@ public class ZUtils {
 		return inv.getSizeInventory();
 	}
 
-	public static int getContinuousBlockLength(World world, ForgeDirection direction, int startx, int starty, int startz, int maxDist, Block block) {
+	public static int getContinuousBlockLength(@NotNull World world, ForgeDirection direction, int startx, int starty, int startz, int maxDist, Block block) {
 		int dist = 0;
 		for(int i = 0; i < maxDist; i++) {
 			if(world.getBlock(startx + (i*direction.offsetX), starty + (i*direction.offsetY), startz + (i*direction.offsetZ)) != block) 
@@ -330,7 +332,7 @@ public class ZUtils {
 		return dist;
 	}
 	
-	public static int getContinuousBlockLength(World world, ForgeDirection direction, int startx, int starty, int startz, int maxDist, Block[] blocks) {
+	public static int getContinuousBlockLength(@NotNull World world, ForgeDirection direction, int startx, int starty, int startz, int maxDist, Block @NotNull [] blocks) {
 		int dist = 0;
 		for(int i = 0; i < maxDist; i++) {
 			Block blockchecked = world.getBlock(startx + (i*direction.offsetX), starty + (i*direction.offsetY), startz + (i*direction.offsetZ));

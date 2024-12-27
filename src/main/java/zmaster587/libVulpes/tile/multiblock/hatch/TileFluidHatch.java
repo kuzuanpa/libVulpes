@@ -18,6 +18,7 @@ import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidContainerItem;
 import net.minecraftforge.fluids.IFluidHandler;
+import org.jetbrains.annotations.NotNull;
 import zmaster587.libVulpes.gui.CommonResources;
 import zmaster587.libVulpes.inventory.modules.IModularInventory;
 import zmaster587.libVulpes.inventory.modules.ModuleBase;
@@ -106,8 +107,8 @@ public class TileFluidHatch extends TilePointer implements IFluidHandler, IModul
 	}
 
 	@Override
-	public List<ModuleBase> getModules(int ID, EntityPlayer player) {
-		List<ModuleBase> list = new ArrayList<ModuleBase>();
+	public @NotNull List<ModuleBase> getModules(int ID, EntityPlayer player) {
+		List<ModuleBase> list = new ArrayList<>();
 
 		list.add(new ModuleSlotArray(45, 18, this, 0, 1));
 		list.add(new ModuleSlotArray(45, 54, this, 1, 2));

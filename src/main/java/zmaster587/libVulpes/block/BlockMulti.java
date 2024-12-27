@@ -12,10 +12,11 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.NotNull;
 
 public class BlockMulti extends Block {
 
-	public BlockMulti(Material mat) {
+	public BlockMulti(@NotNull Material mat) {
 		super(mat);
 	}
 

@@ -1,5 +1,6 @@
 package zmaster587.libVulpes.client;
 
+import org.jetbrains.annotations.NotNull;
 import org.lwjgl.opengl.GL11;
 
 import zmaster587.libVulpes.tile.TileModelRender;
@@ -118,7 +119,7 @@ public class RendererModelBlock  extends TileEntitySpecialRenderer implements II
 	}
 
 	@Override
-	public void renderItem(ItemRenderType type, ItemStack item, Object... data) {
+	public void renderItem(ItemRenderType type, @NotNull ItemStack item, Object... data) {
 		Block block = Block.getBlockFromItem(item.getItem());
 		
 		if(ItemRenderType.INVENTORY == type) {

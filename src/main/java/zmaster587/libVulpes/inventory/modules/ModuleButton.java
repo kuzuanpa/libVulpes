@@ -25,11 +25,11 @@ public class ModuleButton extends ModuleBase {
 
 	protected int bgColor;
 	String text, tooltipText;
-	ResourceLocation buttonImages[];
+	ResourceLocation[] buttonImages;
 	protected boolean visible = true, enabled = true;
 	protected String sound;
 
-	public ModuleButton(int offsetX, int offsetY, int buttonId, String text, IButtonInventory tile, ResourceLocation buttonImages[]) {
+	public ModuleButton(int offsetX, int offsetY, int buttonId, String text, IButtonInventory tile, ResourceLocation[] buttonImages) {
 		super(offsetX, offsetY);
 		this.tile = tile;
 		this.buttonImages = buttonImages;
@@ -44,19 +44,19 @@ public class ModuleButton extends ModuleBase {
 		color = 0xFF22FF22; // Lime green
 	}
 
-	public ModuleButton(int offsetX, int offsetY, int buttonId, String text, IButtonInventory tile, ResourceLocation buttonImages[], String tooltipText) {
+	public ModuleButton(int offsetX, int offsetY, int buttonId, String text, IButtonInventory tile, ResourceLocation[] buttonImages, String tooltipText) {
 		this(offsetX, offsetY, buttonId, text, tile, buttonImages);
 		this.tooltipText = tooltipText;
 	}
 
 
-	public ModuleButton(int offsetX, int offsetY, int buttonId, String text, IButtonInventory tile, ResourceLocation buttonImages[], int sizeX, int sizeY) {
+	public ModuleButton(int offsetX, int offsetY, int buttonId, String text, IButtonInventory tile, ResourceLocation[] buttonImages, int sizeX, int sizeY) {
 		this(offsetX, offsetY, buttonId, text, tile, buttonImages);
 		this.sizeX = sizeX;
 		this.sizeY = sizeY;
 	}
 
-	public ModuleButton(int offsetX, int offsetY, int buttonId, String text, IButtonInventory tile, ResourceLocation buttonImages[], String tooltipText, int sizeX, int sizeY) {
+	public ModuleButton(int offsetX, int offsetY, int buttonId, String text, IButtonInventory tile, ResourceLocation[] buttonImages, String tooltipText, int sizeX, int sizeY) {
 		this(offsetX, offsetY, buttonId, text, tile, buttonImages,sizeX, sizeY);
 		this.tooltipText = tooltipText;
 	}
@@ -157,7 +157,7 @@ public class ModuleButton extends ModuleBase {
 	@SideOnly(Side.CLIENT)
 	public List<GuiButton> addButtons(int x, int y) {
 
-		List<GuiButton> list = new LinkedList<GuiButton>();
+		List<GuiButton> list = new LinkedList<>();
 
 		button = new GuiImageButton(buttonId, x + offsetX, y + offsetY, sizeX, sizeY, buttonImages);
 
@@ -199,7 +199,7 @@ public class ModuleButton extends ModuleBase {
 		if(tooltipText != null) {
 
 			if( isMouseOver(mouseX, mouseY) ) {
-				List<String> list = new LinkedList<String>();
+				List<String> list = new LinkedList<>();
 				for(String str : tooltipText.split("\n")) {
 
 					list.add(str);

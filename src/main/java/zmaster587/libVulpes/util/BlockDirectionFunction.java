@@ -1,10 +1,11 @@
 package zmaster587.libVulpes.util;
 
 import net.minecraft.nbt.NBTTagCompound;
+import org.jetbrains.annotations.NotNull;
 
 public class BlockDirectionFunction {
 
-	byte states[] = new byte[6];
+	byte[] states = new byte[6];
 	byte maxNumStates;
 	
 	public BlockDirectionFunction(int maxStates) {
@@ -35,7 +36,7 @@ public class BlockDirectionFunction {
 		nbt.setByteArray("BDFstates", states);
 	}
 	
-	public void readFromNBT(NBTTagCompound nbt) {
+	public void readFromNBT(@NotNull NBTTagCompound nbt) {
 		if(nbt.hasKey("BDFstates"))
 			states = nbt.getByteArray("BDFstates");
 	}

@@ -5,6 +5,7 @@ import java.util.List;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityFurnace;
+import org.jetbrains.annotations.NotNull;
 import zmaster587.libVulpes.inventory.TextureResources;
 import zmaster587.libVulpes.inventory.modules.ModuleBase;
 import zmaster587.libVulpes.inventory.modules.ModuleProgress;
@@ -25,7 +26,7 @@ public class TileCoalGenerator extends TileInventoriedForgePowerMachine {
 	}
 	
 	@Override
-	public List<ModuleBase> getModules(int ID, EntityPlayer player) {
+	public @NotNull List<ModuleBase> getModules(int ID, EntityPlayer player) {
 		List<ModuleBase> modules = super.getModules(ID, player);
 		
 		modules.add(new ModuleSlotArray(40, 40, this, 0, 1));

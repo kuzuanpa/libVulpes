@@ -25,6 +25,7 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
+import org.jetbrains.annotations.NotNull;
 import zmaster587.libVulpes.api.IDummyMultiBlockRegisterer;
 import zmaster587.libVulpes.api.LibVulpesBlocks;
 import zmaster587.libVulpes.api.LibVulpesItems;
@@ -66,7 +67,7 @@ import java.util.logging.Logger;
 public class LibVulpes {
 	public static Logger logger = Logger.getLogger("libVulpes");
 	public static int time = 0;
-	private static HashMap<Class, String> userModifiableRecipes = new HashMap<Class, String>();
+	private static HashMap<Class, String> userModifiableRecipes = new HashMap<>();
 
 	public static final ArrayList<IDummyMultiBlockRegisterer> dummyMultiBlockRegisterers = new ArrayList<>();
 	@Instance(value = "libVulpes")
@@ -75,7 +76,7 @@ public class LibVulpes {
 	@SidedProxy(clientSide="zmaster587.libVulpes.client.ClientProxy", serverSide="zmaster587.libVulpes.common.CommonProxy")
 	public static CommonProxy proxy;
 
-	private static CreativeTabs tabMultiblock = new CreativeTabs("multiBlock") {
+	private static @NotNull CreativeTabs tabMultiblock = new CreativeTabs("multiBlock") {
 		@Override
 		public Item getTabIconItem() {
 			return LibVulpesItems.itemLinker;// AdvancedRocketryItems.itemSatelliteIdChip;
@@ -159,7 +160,7 @@ public class LibVulpes {
 		GameRegistry.registerBlock(LibVulpesBlocks.blockEliteMotor, LibVulpesBlocks.blockEliteMotor.getUnlocalizedName());
 		
 		//populate lists
-		Block motors[] = { LibVulpesBlocks.blockMotor, LibVulpesBlocks.blockAdvancedMotor, LibVulpesBlocks.blockEnhancedMotor, LibVulpesBlocks.blockEliteMotor };
+		Block[] motors = { LibVulpesBlocks.blockMotor, LibVulpesBlocks.blockAdvancedMotor, LibVulpesBlocks.blockEnhancedMotor, LibVulpesBlocks.blockEliteMotor };
 		LibVulpesBlocks.motors = motors;
 
 		//Register Tile
@@ -282,48 +283,48 @@ public class LibVulpes {
 		//Init TileMultiblock
 
 		//Item output
-		List<BlockMeta> list = new LinkedList<BlockMeta>();
+		List<BlockMeta> list = new LinkedList<>();
 		list.add(new BlockMeta(LibVulpesBlocks.blockHatch, 1));
 		list.add(new BlockMeta(LibVulpesBlocks.blockHatch, 9));
 		TileMultiBlock.addMapping('O', list);
 
 		//Item Inputs
-		list = new LinkedList<BlockMeta>();
+		list = new LinkedList<>();
 		list.add(new BlockMeta(LibVulpesBlocks.blockHatch, 0));
 		list.add(new BlockMeta(LibVulpesBlocks.blockHatch, 8));
 		TileMultiBlock.addMapping('I', list);
 
 		//Power input
-		list = new LinkedList<BlockMeta>();
+		list = new LinkedList<>();
 		list.add(new BlockMeta(LibVulpesBlocks.blockRFBattery, BlockMeta.WILDCARD));
 		if(LibVulpesBlocks.blockIC2Plug != null)
 			list.add(new BlockMeta(LibVulpesBlocks.blockIC2Plug, BlockMeta.WILDCARD));
 		TileMultiBlock.addMapping('P', list);
 
 		//Power output
-		list = new LinkedList<BlockMeta>();
+		list = new LinkedList<>();
 		list.add(new BlockMeta(LibVulpesBlocks.blockRFOutput, BlockMeta.WILDCARD));
 		TileMultiBlock.addMapping('p', list);
 
 		//Liquid input
-		list = new LinkedList<BlockMeta>();
+		list = new LinkedList<>();
 		list.add(new BlockMeta(LibVulpesBlocks.blockHatch, 2));
 		list.add(new BlockMeta(LibVulpesBlocks.blockHatch, 10));
 		TileMultiBlock.addMapping('L', list);
 
 		//Liquid output
-		list = new LinkedList<BlockMeta>();
+		list = new LinkedList<>();
 		list.add(new BlockMeta(LibVulpesBlocks.blockHatch, 3));
 		list.add(new BlockMeta(LibVulpesBlocks.blockHatch, 12));
 		TileMultiBlock.addMapping('l', list);
 	}
 	//User Recipes
-	public void loadXMLRecipe(Class clazz) {
+	public void loadXMLRecipe(@NotNull Class clazz) {
 		File file = new File(userModifiableRecipes.get(clazz));
 		if(!file.exists()) {
 			try {
 			file.createNewFile();
-			BufferedReader inputStream = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/assets/libvulpes/defaultrecipe.xml")));
+			@NotNull BufferedReader inputStream = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/assets/libvulpes/defaultrecipe.xml")));
 			
 
 				if(inputStream != null) {

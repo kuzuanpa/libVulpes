@@ -11,6 +11,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
+import org.jetbrains.annotations.NotNull;
 import zmaster587.libVulpes.block.BlockMeta;
 import zmaster587.libVulpes.tile.multiblock.TilePlaceholder;
 
@@ -21,7 +22,7 @@ public class TileSchematic extends TilePlaceholder {
 	List<BlockMeta> possibleBlocks;
 
 	public TileSchematic() {
-		possibleBlocks = new ArrayList<BlockMeta>();
+		possibleBlocks = new ArrayList<>();
 	}
 
 	@Override
@@ -87,7 +88,7 @@ public class TileSchematic extends TilePlaceholder {
 	}
 
 	@Override
-	public void writeToNBT(NBTTagCompound nbt) {
+	public void writeToNBT(@NotNull NBTTagCompound nbt) {
 		super.writeToNBT(nbt);
 		nbt.setInteger("timeAlive", timeAlive);
 

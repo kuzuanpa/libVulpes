@@ -4,6 +4,7 @@ package zmaster587.libVulpes.inventory.modules;
 import java.util.Arrays;
 import java.util.List;
 
+import org.jetbrains.annotations.NotNull;
 import zmaster587.libVulpes.client.util.ProgressBarImage;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -118,7 +119,7 @@ public class ModuleProgress extends ModuleBase {
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void renderBackground(GuiContainer gui, int x, int y, int mouseX, int mouseY , FontRenderer font) {
+	public void renderBackground(@NotNull GuiContainer gui, int x, int y, int mouseX, int mouseY , FontRenderer font) {
 		progressBar.renderProgressBar(x + offsetX, y + offsetY,getProgress(), gui);
 	}
 }

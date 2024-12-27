@@ -15,6 +15,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.AdvancedModelLoader;
 import net.minecraftforge.client.model.IModelCustom;
 import net.minecraftforge.common.util.ForgeDirection;
+import org.jetbrains.annotations.NotNull;
 
 public class TileModelRender extends TileEntity {
 	
@@ -70,7 +71,7 @@ public class TileModelRender extends TileEntity {
 	}
 	
 	@Override
-	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
+	public void onDataPacket(NetworkManager net, @NotNull S35PacketUpdateTileEntity pkt) {
 		type = pkt.func_148857_g().getInteger("type");
 	}
 	
@@ -81,14 +82,14 @@ public class TileModelRender extends TileEntity {
 		nbt.setInteger("type", type);
 	}
 	
-	public void readFromNBT(NBTTagCompound nbt) {
+	public void readFromNBT(@NotNull NBTTagCompound nbt) {
 		
 		super.readFromNBT(nbt);
 		
 		type = nbt.getInteger("type");
 	}
 
-	public void setType(models model) {
+	public void setType(@NotNull models model) {
 		type = model.ordinal();
 	}
 }

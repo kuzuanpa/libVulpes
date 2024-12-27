@@ -28,7 +28,7 @@ public class ItemOreProduct extends Item {
 		setMaxDamage(0);
 		this.outputType = outputType;
 		setTextureName("libvulpes:" + outputType);
-		properties = new HashMap<Integer, Material>();
+		properties = new HashMap<>();
 	}
 
 	public void registerItem(int meta, Material ore) {

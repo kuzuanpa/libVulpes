@@ -3,6 +3,7 @@ package zmaster587.libVulpes.inventory.modules;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.jetbrains.annotations.NotNull;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
@@ -43,7 +44,7 @@ public class ModuleContainerPan extends ModuleBase {
 		this(offsetX, offsetY, moduleList, staticModules, backdrop, screenSizeX, screenSizeY, 16, 16, 0, 0);
 	}
 
-	public ModuleContainerPan(int offsetX, int offsetY, List<ModuleBase> moduleList, List<ModuleBase> staticModules, ResourceLocation backdrop, int screenSizeX, int screenSizeY, int paddingX, int paddingY) {
+	public ModuleContainerPan(int offsetX, int offsetY, @NotNull List<ModuleBase> moduleList, List<ModuleBase> staticModules, ResourceLocation backdrop, int screenSizeX, int screenSizeY, int paddingX, int paddingY) {
 		this(offsetX, offsetY, moduleList, staticModules, backdrop, screenSizeX, screenSizeY, paddingX, paddingY, 0, 0);
 	}
 
@@ -56,9 +57,9 @@ public class ModuleContainerPan extends ModuleBase {
 		this.screenSizeX = screenSizeX;
 		this.screenSizeY = screenSizeY;
 
-		buttonList = new LinkedList<GuiButton>();
-		staticButtonList = new LinkedList<GuiButton>();
-		slotList = new LinkedList<Slot>();
+		buttonList = new LinkedList<>();
+		staticButtonList = new LinkedList<>();
+		slotList = new LinkedList<>();
 
 		this.backdrop = backdrop;
 
@@ -103,7 +104,7 @@ public class ModuleContainerPan extends ModuleBase {
 			staticButtonList.addAll(module.addButtons(x, y));
 		}
 
-		return new LinkedList<GuiButton>();
+		return new LinkedList<>();
 	}
 
 	public void setOffset(int x, int y) {
@@ -143,8 +144,8 @@ public class ModuleContainerPan extends ModuleBase {
 	}
 	
 	@Override
-	public List<Slot> getSlots(Container container) {
-		List<Slot> list = new LinkedList<Slot>();
+	public @NotNull List<Slot> getSlots(Container container) {
+		List<Slot> list = new LinkedList<>();
 
 		for(ModuleBase module : this.moduleList) {
 			list.addAll(module.getSlots(container));
@@ -165,7 +166,7 @@ public class ModuleContainerPan extends ModuleBase {
 		for(ModuleBase module : moduleList)
 			module.actionPerform(button);
 
-		for(ModuleBase module : staticModuleList)
+		for(@NotNull ModuleBase module : staticModuleList)
 			module.actionPerform(button);
 	}
 
@@ -181,7 +182,7 @@ public class ModuleContainerPan extends ModuleBase {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void renderForeground(int guiOffsetX, int guiOffsetY, int mouseX, int mouseY, float zLevel,
-			GuiContainer gui, FontRenderer font) {
+								 @NotNull GuiContainer gui, FontRenderer font) {
 
 		//Handle scrolling
 		int d;
@@ -192,7 +193,7 @@ public class ModuleContainerPan extends ModuleBase {
 
 		setUpScissor(gui, offsetX + guiOffsetX, guiOffsetY + offsetY, offsetX + screenSizeX, offsetY + screenSizeY);
 
-		for(ModuleBase module : moduleList)
+		for(@NotNull ModuleBase module : moduleList)
 			module.renderForeground(guiOffsetX, guiOffsetY, mouseX, mouseY, zLevel, gui, font);
 
 		for(ModuleBase module : staticModuleList)
@@ -212,7 +213,7 @@ public class ModuleContainerPan extends ModuleBase {
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void onMouseClicked(GuiModular gui,int x, int y, int button) {
+	public void onMouseClicked(@NotNull GuiModular gui, int x, int y, int button) {
 		super.onMouseClicked(gui, x, y, button);
 
 		ScaledResolution scaledresolution = new ScaledResolution(Minecraft.getMinecraft(), Minecraft.getMinecraft().displayWidth, Minecraft.getMinecraft().displayHeight);
@@ -227,11 +228,11 @@ public class ModuleContainerPan extends ModuleBase {
 		//Handles buttons (mostly vanilla copy)
 		if(button == 0 && isMouseInBounds(0, 0, x, y)) {
 
-			List<GuiButton> fullButtonList = new LinkedList<GuiButton>();
+			List<GuiButton> fullButtonList = new LinkedList<>();
 			fullButtonList.addAll(buttonList);
 			fullButtonList.addAll(staticButtonList);
 
-			for(GuiButton button2 : fullButtonList) {
+			for(@NotNull GuiButton button2 : fullButtonList) {
 				if(button2.mousePressed(Minecraft.getMinecraft(), scaledX, scaledY)) {
 					ActionPerformedEvent.Pre event = new ActionPerformedEvent.Pre(gui, button2, buttonList);
 					if(MinecraftForge.EVENT_BUS.post(event))
@@ -297,7 +298,7 @@ public class ModuleContainerPan extends ModuleBase {
 
 		if(isMouseInBounds(0, 0, x, y) ) {
 
-			ScaledResolution scaledresolution = new ScaledResolution(Minecraft.getMinecraft(), Minecraft.getMinecraft().displayWidth, Minecraft.getMinecraft().displayHeight);
+			@NotNull ScaledResolution scaledresolution = new ScaledResolution(Minecraft.getMinecraft(), Minecraft.getMinecraft().displayWidth, Minecraft.getMinecraft().displayHeight);
 			int i = scaledresolution.getScaledWidth();
 			int j = scaledresolution.getScaledHeight();
 			final int k = Mouse.getX() * i / Minecraft.getMinecraft().displayWidth;

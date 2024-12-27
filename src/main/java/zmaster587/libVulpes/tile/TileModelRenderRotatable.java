@@ -1,5 +1,6 @@
 package zmaster587.libVulpes.tile;
 
+import org.jetbrains.annotations.NotNull;
 import zmaster587.libVulpes.block.BlockRotatableModel;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -32,13 +33,13 @@ public class TileModelRenderRotatable extends TileModelRender {
 	}
 	
 	@Override
-	public void writeToNBT(NBTTagCompound nbt) {
+	public void writeToNBT(@NotNull NBTTagCompound nbt) {
 		super.writeToNBT(nbt);
 		nbt.setInteger("dir", rotation.ordinal());
 	}
 	
 	@Override
-	public void readFromNBT(NBTTagCompound nbt) {
+	public void readFromNBT(@NotNull NBTTagCompound nbt) {
 		super.readFromNBT(nbt);
 		
 		rotation = ForgeDirection.values()[nbt.getInteger("dir")];

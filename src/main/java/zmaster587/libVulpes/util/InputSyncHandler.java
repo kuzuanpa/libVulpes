@@ -19,7 +19,7 @@ import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerLoggedOutEvent;
 
 public class InputSyncHandler {
 
-	public static HashMap<EntityPlayer, Boolean> spaceDown = new HashMap<EntityPlayer, Boolean>();
+	public static HashMap<EntityPlayer, Boolean> spaceDown = new HashMap<>();
 	
 
 	public static boolean isSpaceDown(EntityPlayer player) {

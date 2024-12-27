@@ -2,6 +2,7 @@ package zmaster587.libVulpes.block;
 
 import java.util.List;
 
+import org.jetbrains.annotations.NotNull;
 import zmaster587.libVulpes.api.material.AllowedProducts;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -53,7 +54,7 @@ public class BlockOre extends Block implements INamedMetaBlock {
 	}
 
 	@Override
-	public String getUnlocalizedName(int itemDamage) {
+	public @NotNull String getUnlocalizedName(int itemDamage) {
 		return  "material." + ores[itemDamage].getUnlocalizedName();
 	}
 }

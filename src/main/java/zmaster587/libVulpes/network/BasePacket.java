@@ -7,6 +7,7 @@ import com.google.common.collect.BiMap;
 import com.google.common.collect.ImmutableBiMap;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import org.jetbrains.annotations.NotNull;
 
 public abstract class BasePacket {
 	public static final String CHANNEL = "advancedRocketry";
@@ -18,8 +19,8 @@ public abstract class BasePacket {
 		idMap = builder.build();
 	}
 
-	public static BasePacket constructPacket(int packetId) throws ProtocolException, InstantiationException, IllegalAccessException {
-		Class<? extends BasePacket> clazz = idMap.get(Integer.valueOf(packetId));
+	public static @NotNull BasePacket constructPacket(int packetId) throws ProtocolException, InstantiationException, IllegalAccessException {
+		Class<? extends BasePacket> clazz = idMap.get(packetId);
 		if(clazz == null){
 			throw new ProtocolException("Protocol Exception!  Unknown Packet Id!");
 		} else {

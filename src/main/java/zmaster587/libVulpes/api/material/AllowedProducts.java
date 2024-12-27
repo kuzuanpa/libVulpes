@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import net.minecraft.block.Block;
+import org.jetbrains.annotations.NotNull;
 
 public class AllowedProducts {
 	
@@ -29,7 +30,7 @@ public class AllowedProducts {
 		product.flagValue = currentFlagValue;
 		product.name = name;
 		currentFlagValue++;
-		MaterialRegistry.productBlockListMapping.put(product, new ArrayList<Block>());
+		MaterialRegistry.productBlockListMapping.put(product, new ArrayList<>());
 		map.put(name, product);
 		list.add(product);
 	}
@@ -43,8 +44,8 @@ public class AllowedProducts {
 	}
 	
 	private static short currentFlagValue = 1;
-	private static HashMap<String, AllowedProducts> map = new HashMap<String, AllowedProducts>();
-	private static List<AllowedProducts> list = new LinkedList<AllowedProducts>();
+	private static HashMap<String, AllowedProducts> map = new HashMap<>();
+	private static List<AllowedProducts> list = new LinkedList<>();
 	/*DUST,
 	INGOT,
 	CRYSTAL,
@@ -87,7 +88,7 @@ public class AllowedProducts {
 		return (getFlagValue() & flag) != 0;
 	}
 	
-	public String getName() {
+	public @NotNull String getName() {
 		return this.name.equalsIgnoreCase("stick") ? "rod" : this.name;
 	}
 

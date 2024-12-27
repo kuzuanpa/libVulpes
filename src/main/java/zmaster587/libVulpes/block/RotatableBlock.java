@@ -1,5 +1,6 @@
 package zmaster587.libVulpes.block;
 
+import org.jetbrains.annotations.NotNull;
 import zmaster587.libVulpes.util.ZUtils;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -22,7 +23,7 @@ public class RotatableBlock extends Block {
 	
 	
 	@Override
-	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack) {
+	public void onBlockPlacedBy(@NotNull World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack) {
 		
 		world.setBlockMetadataWithNotify(x, y, z, ZUtils.getDirectionFacing(entity.rotationYaw), 2);
 	}

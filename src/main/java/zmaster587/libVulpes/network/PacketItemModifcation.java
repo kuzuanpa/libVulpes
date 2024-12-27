@@ -2,6 +2,7 @@ package zmaster587.libVulpes.network;
 
 import java.io.IOException;
 
+import org.jetbrains.annotations.NotNull;
 import zmaster587.libVulpes.interfaces.INetworkEntity;
 import zmaster587.libVulpes.util.INetworkMachine;
 import cpw.mods.fml.relauncher.Side;
@@ -77,7 +78,7 @@ public class PacketItemModifcation extends BasePacket {
 		read(buffer, true);
 	}
 
-	public void read(PacketBuffer in, boolean server) {
+	public void read(@NotNull PacketBuffer in, boolean server) {
 		//DEBUG:
 		World world;
 		world = DimensionManager.getWorld(in.readInt());

@@ -2,6 +2,7 @@ package zmaster587.libVulpes.client;
 
 import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
+import org.jetbrains.annotations.Nullable;
 
 public class ResourceIcon implements IIcon {
 
@@ -81,7 +82,7 @@ public class ResourceIcon implements IIcon {
 	}
 
 	@Override
-	public String getIconName() {
+	public @Nullable String getIconName() {
 		return null;
 	}
 

@@ -3,6 +3,7 @@ package zmaster587.libVulpes.inventory.modules;
 import java.util.List;
 
 import cpw.mods.fml.common.FMLCommonHandler;
+import org.jetbrains.annotations.NotNull;
 import zmaster587.libVulpes.inventory.TextureResources;
 import zmaster587.libVulpes.util.BlockDirectionFunction;
 import net.minecraft.client.gui.FontRenderer;
@@ -15,12 +16,12 @@ import net.minecraftforge.common.util.ForgeDirection;
 public class ModuleBlockSideSelector extends ModuleBase implements IButtonInventory {
 
 	private IGuiCallback callback;
-	private ModuleButton buttons[];
+	private ModuleButton[] buttons;
 	private BlockDirectionFunction bdf;
-	private String text[];
+	private String[] text;
 
-	private static final String directions[] = {"Bottom: ", "Top: ", "North: ", "South ", "West: ", "East: "};
-	private static final int colors[] = {0x00DD00, 0xDD0000, 0x0000DD, 0xDDDD00, 0xDD00DD, 0x00DDDD};
+	private static final String[] directions = {"Bottom: ", "Top: ", "North: ", "South ", "West: ", "East: "};
+	private static final int[] colors = {0x00DD00, 0xDD0000, 0x0000DD, 0xDDDD00, 0xDD00DD, 0x00DDDD};
 
 	public ModuleBlockSideSelector(int offsetX, int offsetY, IGuiCallback callback, String ... stateNames) {
 		super(offsetX, offsetY);
@@ -83,7 +84,7 @@ public class ModuleBlockSideSelector extends ModuleBase implements IButtonInvent
 		return bdf.getState(side);
 	}
 
-	public void setStateForSide(EnumFacing side, int state) {
+	public void setStateForSide(@NotNull EnumFacing side, int state) {
 		setStateForSide(side.ordinal(), state);
 	}
 
@@ -100,7 +101,7 @@ public class ModuleBlockSideSelector extends ModuleBase implements IButtonInvent
 		bdf.writeToNBT(nbt);
 	}
 
-	public void readFromNBT(NBTTagCompound nbt) {
+	public void readFromNBT(@NotNull NBTTagCompound nbt) {
 		bdf.readFromNBT(nbt);
 
 		if(FMLCommonHandler.instance().getSide().isClient()) 

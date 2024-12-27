@@ -10,6 +10,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.util.ForgeDirection;
+import org.jetbrains.annotations.NotNull;
 import zmaster587.libVulpes.api.IUniversalEnergy;
 import zmaster587.libVulpes.inventory.modules.IModularInventory;
 import zmaster587.libVulpes.inventory.modules.ModuleBase;
@@ -25,8 +26,8 @@ public abstract class TileEntityForgeProducer extends TileEntity implements IMod
 
 
 	@Override
-	public List<ModuleBase> getModules(int ID, EntityPlayer player) {
-		LinkedList<ModuleBase> modules = new LinkedList<ModuleBase>();
+	public @NotNull List<ModuleBase> getModules(int ID, EntityPlayer player) {
+		LinkedList<ModuleBase> modules = new LinkedList<>();
 		modules.add(new ModulePower(18, 20, energy));
 		
 		return modules;
@@ -93,7 +94,7 @@ public abstract class TileEntityForgeProducer extends TileEntity implements IMod
 			TileEntity tile = worldObj.getTileEntity(xCoord + dir.offsetX, yCoord + dir.offsetY, zCoord + dir.offsetZ);
 
 			if(tile instanceof IEnergyReceiver) {
-				IEnergyReceiver handle = (IEnergyReceiver)tile;
+				@NotNull IEnergyReceiver handle = (IEnergyReceiver)tile;
 				energy.extractEnergy(handle.receiveEnergy(dir.getOpposite(), energy.getEnergyStored(), false), false);
 			}
 		}

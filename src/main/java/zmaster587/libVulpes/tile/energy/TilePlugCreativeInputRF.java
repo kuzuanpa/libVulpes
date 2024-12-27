@@ -2,6 +2,7 @@ package zmaster587.libVulpes.tile.energy;
 
 import cofh.api.energy.IEnergyHandler;
 import cofh.api.energy.IEnergyReceiver;
+import org.jetbrains.annotations.NotNull;
 import zmaster587.libVulpes.util.CreativeBattery;
 import zmaster587.libVulpes.util.UniversalBattery;
 import net.minecraft.tileentity.TileEntity;
@@ -43,7 +44,7 @@ public class TilePlugCreativeInputRF extends TilePlugBase implements IEnergyHand
 
 
 	@Override
-	public String getModularInventoryName() {
+	public @NotNull String getModularInventoryName() {
 		return "tile.creativePowerBattery.name";
 	}
 	

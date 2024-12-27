@@ -1,5 +1,6 @@
 package zmaster587.libVulpes.gui;
 
+import org.jetbrains.annotations.NotNull;
 import org.lwjgl.opengl.GL11;
 
 import net.minecraft.client.Minecraft;
@@ -80,7 +81,7 @@ public class GuiImageButton extends GuiButton {
 
 			GL11.glEnable(GL11.GL_BLEND);
 			GL11.glDisable(GL11.GL_ALPHA_TEST);
-			Tessellator tessellator = Tessellator.instance;
+			@NotNull Tessellator tessellator = Tessellator.instance;
 			tessellator.startDrawingQuads();
 			tessellator.addVertexWithUV(xPosition, yPosition + height, (double)this.zLevel, 0, 1);
 			tessellator.addVertexWithUV(xPosition + width, yPosition + height, (double)this.zLevel, 1, 1);

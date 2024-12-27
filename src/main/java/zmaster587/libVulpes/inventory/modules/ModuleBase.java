@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.jetbrains.annotations.NotNull;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
@@ -42,7 +43,7 @@ public abstract class ModuleBase {
 	protected ModuleBase(int offsetX, int offsetY) {
 		this.offsetX = offsetX;
 		this.offsetY = offsetY;
-		slotList = new LinkedList<Slot>();
+		slotList = new LinkedList<>();
 		enabled = true;
 		visible = true;
 	}
@@ -208,7 +209,7 @@ public abstract class ModuleBase {
 	 */
 	@SideOnly(Side.CLIENT)
 	public List<GuiButton> addButtons(int x, int y) {
-		return new LinkedList<GuiButton>();
+		return new LinkedList<>();
 	}
 
 	/**
@@ -224,7 +225,7 @@ public abstract class ModuleBase {
 	 * @return List of slots to add to this module
 	 */
 	public List<Slot> getSlots(Container container) {
-		return new LinkedList<Slot>();
+		return new LinkedList<>();
 	}
 
 	/**
@@ -242,7 +243,7 @@ public abstract class ModuleBase {
 		GL11.glDisable(GL11.GL_LIGHTING);
 		GL11.glDisable(GL11.GL_DEPTH_TEST);
 		int k = 0;
-		Iterator iterator = textList.iterator();
+		@NotNull Iterator iterator = textList.iterator();
 
 		while (iterator.hasNext())
 		{

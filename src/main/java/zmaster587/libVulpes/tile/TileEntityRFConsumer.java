@@ -1,5 +1,6 @@
 package zmaster587.libVulpes.tile;
 
+import org.jetbrains.annotations.NotNull;
 import zmaster587.libVulpes.Configuration;
 import zmaster587.libVulpes.api.IUniversalEnergy;
 import zmaster587.libVulpes.util.UniversalBattery;
@@ -21,7 +22,7 @@ public abstract class TileEntityRFConsumer extends TileEntity implements IEnergy
 	}
 	
 	@Override
-	public void writeToNBT(NBTTagCompound nbt) {
+	public void writeToNBT(@NotNull NBTTagCompound nbt) {
 		super.writeToNBT(nbt);
 		energy.writeToNBT(nbt);
 	}

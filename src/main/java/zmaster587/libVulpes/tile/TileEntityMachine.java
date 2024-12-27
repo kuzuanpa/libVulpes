@@ -1,6 +1,7 @@
 package zmaster587.libVulpes.tile;
 
 
+import org.jetbrains.annotations.NotNull;
 import zmaster587.libVulpes.util.UniversalBattery;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
@@ -18,7 +19,7 @@ public abstract class TileEntityMachine extends TileEntity implements ISidedInve
 	
 	protected UniversalBattery energy;
 	
-	protected ItemStack inv[];
+	protected ItemStack[] inv;
 	
 	protected int progress, totalTime;
 	
@@ -50,7 +51,7 @@ public abstract class TileEntityMachine extends TileEntity implements ISidedInve
 	}
 	
 	@Override 
-	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
+	public void onDataPacket(NetworkManager net, @NotNull S35PacketUpdateTileEntity pkt) {
 		this.readFromNBT(pkt.func_148857_g());
 	}
 	

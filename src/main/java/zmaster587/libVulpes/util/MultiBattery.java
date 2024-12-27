@@ -3,13 +3,14 @@ package zmaster587.libVulpes.util;
 import java.util.LinkedList;
 
 import net.minecraftforge.common.util.ForgeDirection;
+import org.jetbrains.annotations.NotNull;
 import zmaster587.libVulpes.api.IUniversalEnergy;
 
 public class MultiBattery implements IUniversalEnergy {
 
 	//Note: as of writing there should never be a need to save this
 	
-	protected LinkedList<IUniversalEnergy> batteries = new LinkedList<IUniversalEnergy>();
+	protected LinkedList<IUniversalEnergy> batteries = new LinkedList<>();
 	
 	public void addBattery(IUniversalEnergy battery) {
 		batteries.add(battery);
@@ -27,7 +28,7 @@ public class MultiBattery implements IUniversalEnergy {
 	public int extractEnergy(int amt, boolean simulate) {
 		int amtExtracted = 0;
 		
-		for(IUniversalEnergy battery : batteries)
+		for(@NotNull IUniversalEnergy battery : batteries)
 			amtExtracted += battery.extractEnergy(amt, simulate);
 		
 		return amtExtracted;

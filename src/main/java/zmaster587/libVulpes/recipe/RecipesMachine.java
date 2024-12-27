@@ -6,6 +6,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import zmaster587.libVulpes.LibVulpes;
 import zmaster587.libVulpes.interfaces.IRecipe;
 import net.minecraft.block.Block;
@@ -29,18 +31,18 @@ public class RecipesMachine {
 		public Recipe() {}
 
 		public Recipe(List<ItemStack> output, LinkedList<LinkedList<ItemStack>> input, int completionTime, int powerReq, Map<Integer, String> oreDict) {
-			this.output = new LinkedList<ItemStack>();
+			this.output = new LinkedList<>();
 			this.output.addAll(output);
 
-			this.input = new LinkedList<LinkedList<ItemStack>>();
+			this.input = new LinkedList<>();
 		
 			this.input.addAll(input);
 
 			this.completionTime = completionTime;
 			this.power = powerReq;
 
-			this.fluidInput = new LinkedList<FluidStack>();
-			this.fluidOutput = new LinkedList<FluidStack>();
+			this.fluidInput = new LinkedList<>();
+			this.fluidOutput = new LinkedList<>();
 			
 			this.inputOreDict = oreDict;
 		}
@@ -64,7 +66,7 @@ public class RecipesMachine {
 			return input;
 		}
 		
-		public String getOreDictString(int slot) { return inputOreDict == null ? null : inputOreDict.get(slot); }
+		public @Nullable String getOreDictString(int slot) { return inputOreDict == null ? null : inputOreDict.get(slot); }
 
 		@Override
 		public List<FluidStack> getFluidIngredients() {
@@ -83,7 +85,7 @@ public class RecipesMachine {
 
 		@Override
 		public List<ItemStack> getOutput() {
-			ArrayList<ItemStack> stack = new ArrayList<ItemStack>();
+			ArrayList<ItemStack> stack = new ArrayList<>();
 
 			for(ItemStack i : output) {
 				stack.add(i.copy());
@@ -94,7 +96,7 @@ public class RecipesMachine {
 
 		@Override
 		public List<FluidStack> getFluidOutputs() {
-			ArrayList<FluidStack> stack = new ArrayList<FluidStack>();
+			ArrayList<FluidStack> stack = new ArrayList<>();
 
 			for(FluidStack i : fluidOutput) {
 				stack.add(i.copy());
@@ -103,10 +105,10 @@ public class RecipesMachine {
 			return stack;
 		}
 
-		public IRecipe getRecipeAsAllItemsOnly() {
+		public @NotNull IRecipe getRecipeAsAllItemsOnly() {
 			Recipe recipe = new Recipe(output, input, completionTime, power, null);
 
-			for(FluidStack stack : getFluidIngredients()) {
+			for(@NotNull FluidStack stack : getFluidIngredients()) {
 				FluidRegistry.getFluidID(stack.getFluid());
 
 				Block block = stack.getFluid().getBlock();
@@ -114,7 +116,7 @@ public class RecipesMachine {
 				if(block == null) {
 					for(FluidContainerRegistry.FluidContainerData container : FluidContainerRegistry.getRegisteredFluidContainerData()) {
 						if(container.fluid.containsFluid(stack)) {
-							LinkedList<ItemStack> list = new LinkedList<ItemStack>();
+							LinkedList<ItemStack> list = new LinkedList<>();
 							list.add(container.filledContainer.copy());
 							recipe.input.add(list);
 							break;
@@ -122,7 +124,7 @@ public class RecipesMachine {
 					}
 				}
 				else {
-					LinkedList<ItemStack> list = new LinkedList<ItemStack>();
+					LinkedList<ItemStack> list = new LinkedList<>();
 					ItemStack stack2 = new ItemStack(block);
 					stack2.stackSize = stack.amount;
 					list.add(stack2);
@@ -178,10 +180,10 @@ public class RecipesMachine {
 
 	public HashMap<Class<Object>, List<IRecipe>> recipeList;
 
-	private static RecipesMachine instance = new RecipesMachine();
+	private static @NotNull RecipesMachine instance = new RecipesMachine();
 
 	public RecipesMachine() {
-		recipeList = new HashMap<Class<Object>, List<IRecipe>>();
+		recipeList = new HashMap<>();
 	}
 
 	public static RecipesMachine getInstance() { return instance; }
@@ -193,18 +195,18 @@ public class RecipesMachine {
 	public void addRecipe(Class clazz , Object[] out, int timeRequired, int power, Object ... inputs) {
 		List<IRecipe> recipes = getRecipes(clazz);
 		if(recipes == null) {
-			recipes = new LinkedList<IRecipe>();
+			recipes = new LinkedList<>();
 			recipeList.put(clazz,recipes);
 		}
 
 
-		LinkedList<LinkedList<ItemStack>> stack = new LinkedList<LinkedList<ItemStack>>();
-		Map<Integer, String> oreDict = new HashMap<Integer, String>();
-		ArrayList<FluidStack> inputFluidStacks = new ArrayList<FluidStack>();
+		LinkedList<LinkedList<ItemStack>> stack = new LinkedList<>();
+		Map<Integer, String> oreDict = new HashMap<>();
+		ArrayList<FluidStack> inputFluidStacks = new ArrayList<>();
 
 		try {
 			for(int i = 0; i < inputs.length; i++) {
-				LinkedList<ItemStack> innerList = new LinkedList<ItemStack>();
+				LinkedList<ItemStack> innerList = new LinkedList<>();
 				if(inputs[i] != null) {
 					if(inputs[i] instanceof String) {
 						oreDict.put(i, ((String)inputs[i]));
@@ -236,8 +238,8 @@ public class RecipesMachine {
 				if(!innerList.isEmpty())
 				stack.add(innerList);
 			}
-			ArrayList<ItemStack> outputItem = new ArrayList<ItemStack>();
-			ArrayList<FluidStack> outputFluidStacks = new ArrayList<FluidStack>();
+			ArrayList<ItemStack> outputItem = new ArrayList<>();
+			ArrayList<FluidStack> outputFluidStacks = new ArrayList<>();
 
 			for(Object outputObject : out) {
 				if(outputObject instanceof ItemStack)
@@ -282,10 +284,10 @@ public class RecipesMachine {
 	
 	public void addRecipe(Class clazz , List<Object> out, int timeRequired, int power, List<Object> inputs) {
 		
-		Object outputs[] = new Object[out.size()];
+		Object[] outputs = new Object[out.size()];
 		outputs = out.toArray(outputs);
 		
-		Object inputs2[] = new Object[inputs.size()];
+		Object[] inputs2 = new Object[inputs.size()];
 		inputs2 = inputs.toArray(inputs2);
 		
 		addRecipe(clazz, outputs, timeRequired, power, inputs2);

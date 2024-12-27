@@ -1,5 +1,6 @@
 package zmaster587.libVulpes.inventory.modules;
 
+import org.jetbrains.annotations.NotNull;
 import zmaster587.libVulpes.inventory.TextureResources;
 import zmaster587.libVulpes.util.IconResource;
 import net.minecraft.client.gui.FontRenderer;
@@ -22,8 +23,8 @@ public class ModuleTexturedLimitedSlotArray extends ModuleLimitedSlotArray {
 	}
 	
 	@Override
-	public void renderBackground(GuiContainer gui, int x, int y, int mouseX, int mouseY,
-			FontRenderer font) {
+	public void renderBackground(@NotNull GuiContainer gui, int x, int y, int mouseX, int mouseY,
+                                 FontRenderer font) {
 		
 		if(iconResource != null) {
 			if(iconResource.getResourceLocation() != null)

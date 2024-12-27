@@ -2,6 +2,7 @@ package zmaster587.libVulpes.render;
 
 import java.util.StringTokenizer;
 
+import org.jetbrains.annotations.NotNull;
 import org.lwjgl.opengl.GL11;
 
 import cpw.mods.fml.relauncher.Side;
@@ -417,7 +418,7 @@ public class RenderHelper {
 		tess.addVertex(xMax, yMax, zMax + width);
 	}	
 	
-	public static void renderNorthFace(Tessellator tess, double zMin, double xMin, double yMin, double xMax, double yMax) {
+	public static void renderNorthFace(@NotNull Tessellator tess, double zMin, double xMin, double yMin, double xMax, double yMax) {
 		//north
 		tess.setNormal(0, 0, 1);
 		tess.addVertex(xMin, yMax, zMin);
@@ -426,7 +427,7 @@ public class RenderHelper {
 		tess.addVertex(xMin, yMin, zMin);
 	}
 	
-	public static void renderNorthFaceEndpoints(Tessellator tess, double width, double xMin, double yMin, double zMin, double xMax, double yMax, double zMax) {
+	public static void renderNorthFaceEndpoints(@NotNull Tessellator tess, double width, double xMin, double yMin, double zMin, double xMax, double yMax, double zMax) {
 		//north
 		tess.addVertex(xMin, yMin + width, zMin);
 		tess.addVertex(xMax, yMax + width, zMax);
@@ -478,7 +479,7 @@ public class RenderHelper {
 		tess.addVertex(xMin, yMax, zMin);
 	}
 	
-	public static void renderWestFaceEndpoints(Tessellator tess, double width, double xMin, double yMin, double zMin, double xMax, double yMax, double zMax) {
+	public static void renderWestFaceEndpoints(@NotNull Tessellator tess, double width, double xMin, double yMin, double zMin, double xMax, double yMax, double zMax) {
 		//west
 		tess.addVertex(xMin, yMin + width, zMin);
 		tess.addVertex(xMin, yMin - width, zMax);
@@ -508,7 +509,7 @@ public class RenderHelper {
 		
 	}
 	
-	public static void renderNorthFaceWithUV(Tessellator tess, double zMin, double xMin, double yMin, double xMax, double yMax, double uMin, double uMax, double vMin, double vMax) {
+	public static void renderNorthFaceWithUV(@NotNull Tessellator tess, double zMin, double xMin, double yMin, double xMax, double yMax, double uMin, double uMax, double vMin, double vMax) {
 		//north
 		tess.setNormal(0, 0, 1);
 		tess.addVertexWithUV(xMin, yMax, zMin, uMin, vMin);
@@ -545,7 +546,7 @@ public class RenderHelper {
 		tess.addVertexWithUV(xMin, yMax, zMin, uMin, vMin);
 	}
 	
-	public static void renderCubeWithUV(Tessellator tess, double xMin, double yMin, double zMin, double xMax, double yMax, double zMax, double uMin, double uMax, double vMin, double vMax) {
+	public static void renderCubeWithUV(@NotNull Tessellator tess, double xMin, double yMin, double zMin, double xMax, double yMax, double zMax, double uMin, double uMax, double vMin, double vMax) {
 		
 		
 		renderTopFaceWithUV(tess, yMax, xMin, zMin, xMax, zMax, uMin, uMax,vMin, vMax);

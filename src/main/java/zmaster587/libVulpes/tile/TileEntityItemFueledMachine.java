@@ -1,6 +1,7 @@
 package zmaster587.libVulpes.tile;
 
 import net.minecraft.nbt.NBTTagCompound;
+import org.jetbrains.annotations.NotNull;
 
 public abstract class TileEntityItemFueledMachine extends TileEntityMachine {
 	protected int fuelTime, maxFuelTime;
@@ -32,7 +33,7 @@ public abstract class TileEntityItemFueledMachine extends TileEntityMachine {
 	public boolean isBurningFuel() { return fuelTime > 0; }
 	
 	@Override
-	public void writeToNBT(NBTTagCompound nbt) {
+	public void writeToNBT(@NotNull NBTTagCompound nbt) {
 		super.writeToNBT(nbt);
 		
 		nbt.setInteger("fuelTime", fuelTime);

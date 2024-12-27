@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.jetbrains.annotations.NotNull;
 import zmaster587.libVulpes.gui.CommonResources;
 import zmaster587.libVulpes.inventory.modules.IModularInventory;
 import zmaster587.libVulpes.inventory.modules.ModuleBase;
@@ -20,7 +21,7 @@ public class GuiModular extends GuiContainer {
 	String unlocalizedName;
 	boolean hasSlots;
 
-	public GuiModular(EntityPlayer playerInv, List<ModuleBase> modules, IModularInventory modularInv, boolean includePlayerInv, boolean includeHotBar, String name) {
+	public GuiModular(EntityPlayer playerInv, @NotNull List<ModuleBase> modules, IModularInventory modularInv, boolean includePlayerInv, boolean includeHotBar, String name) {
 		super(new ContainerModular(playerInv, modules,modularInv, includePlayerInv, includeHotBar));
 		this.modules = modules;
 		unlocalizedName = name;
@@ -118,8 +119,8 @@ public class GuiModular extends GuiContainer {
 		}
 	}
 
-	public List<Rectangle> getExtraAreasCovered() {
-		List<Rectangle> list = new LinkedList<Rectangle>();
+	public @NotNull List<Rectangle> getExtraAreasCovered() {
+		List<Rectangle> list = new LinkedList<>();
 		
 		for(ModuleBase module : modules) {
 				list.add(new Rectangle((width - xSize) / 2 + module.offsetX, (height - ySize) / 2 + module.offsetY, module.getSizeX(), module.getSizeY()));

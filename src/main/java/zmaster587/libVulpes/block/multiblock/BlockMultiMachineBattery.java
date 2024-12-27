@@ -1,5 +1,6 @@
 package zmaster587.libVulpes.block.multiblock;
 
+import org.jetbrains.annotations.Nullable;
 import zmaster587.libVulpes.LibVulpes;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
@@ -31,7 +32,7 @@ public class BlockMultiMachineBattery extends BlockMultiblockStructure {
 	}
 
 	@Override
-	public TileEntity createTileEntity(World world, int meta) {
+	public @Nullable TileEntity createTileEntity(World world, int meta) {
 		try {
 			return tileClass.newInstance();
 		} catch (Exception e) {

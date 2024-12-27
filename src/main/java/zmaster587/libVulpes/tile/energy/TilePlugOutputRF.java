@@ -4,6 +4,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 import cofh.api.energy.IEnergyHandler;
 import cofh.api.energy.IEnergyReceiver;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class TilePlugOutputRF extends TilePlugBase implements IEnergyHandler {
 
@@ -27,7 +29,7 @@ public class TilePlugOutputRF extends TilePlugBase implements IEnergyHandler {
 		super.updateEntity();
 
 		if(!worldObj.isRemote) {
-			for(ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS) {
+			for(@NotNull ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS) {
 				TileEntity tile = worldObj.getTileEntity(xCoord + dir.offsetX, yCoord + dir.offsetY, zCoord + dir.offsetZ);
 
 				if(tile instanceof IEnergyReceiver) {
@@ -40,12 +42,12 @@ public class TilePlugOutputRF extends TilePlugBase implements IEnergyHandler {
 	}
 
 	@Override
-	public String getModularInventoryName() {
+	public @NotNull String getModularInventoryName() {
 		return "tile.rfOutput.name";
 	}
 
 	@Override
-	public String getInventoryName() {
+	public @Nullable String getInventoryName() {
 		return "";
 	}
 

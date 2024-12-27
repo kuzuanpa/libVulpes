@@ -8,6 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import org.jetbrains.annotations.Nullable;
 
 public class SlotArmor extends Slot {
 	
@@ -31,7 +32,7 @@ public class SlotArmor extends Slot {
 	/**
 	 * Check if the stack is a valid item for this slot. Always true beside for the armor slots.
 	 */
-	public boolean isItemValid(ItemStack p_75214_1_)
+	public boolean isItemValid(@Nullable ItemStack p_75214_1_)
 	{
 		if (p_75214_1_ == null) return false;
 		return p_75214_1_.getItem().isValidArmor(p_75214_1_, armorType, player);

@@ -10,6 +10,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
+import org.jetbrains.annotations.NotNull;
 
 public class ItemIngredient extends Item {
 	
@@ -50,7 +51,7 @@ public class ItemIngredient extends Item {
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void registerIcons(IIconRegister par1IconRegister) {
+	public void registerIcons(@NotNull IIconRegister par1IconRegister) {
 		icons = new IIcon[numIngots];
 		String fullName = super.getUnlocalizedName().replaceFirst("item\\.", "");
 		String namespace = fullName.split(":")[0];
@@ -63,7 +64,7 @@ public class ItemIngredient extends Item {
 
 	public void registerItemStacks() {
 		for(int i = 0; i < numIngots; i++) {
-			ItemStack stack = new ItemStack(this, 1, i);
+			@NotNull ItemStack stack = new ItemStack(this, 1, i);
 			GameRegistry.registerCustomItemStack(getUnlocalizedName(stack), stack);
 		}
 	}

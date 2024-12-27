@@ -1,5 +1,6 @@
 package zmaster587.libVulpes.block.multiblock;
 
+import org.jetbrains.annotations.NotNull;
 import zmaster587.libVulpes.tile.IMultiblock;
 import zmaster587.libVulpes.tile.multiblock.TileMultiBlock;
 import net.minecraft.block.Block;
@@ -16,7 +17,7 @@ import net.minecraftforge.common.util.ForgeDirection;
  */
 public class BlockMultiblockStructure extends Block {
 
-	protected BlockMultiblockStructure(Material material) {
+	protected BlockMultiblockStructure(@NotNull Material material) {
 		super(material);
 	}
 

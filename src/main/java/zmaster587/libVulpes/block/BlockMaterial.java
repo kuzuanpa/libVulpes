@@ -3,6 +3,7 @@ package zmaster587.libVulpes.block;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jetbrains.annotations.NotNull;
 import zmaster587.libVulpes.block.multiblock.BlockMultiblockStructure;
 import zmaster587.libVulpes.tile.TileMaterial;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -22,10 +23,10 @@ public class BlockMaterial extends BlockMultiblockStructure {
 
 	String side, poles;
 	IIcon sideIcon, polesIcon;
-	public zmaster587.libVulpes.api.material.Material[] ores = new zmaster587.libVulpes.api.material.Material[16];
+	public zmaster587.libVulpes.api.material.Material @NotNull [] ores = new zmaster587.libVulpes.api.material.Material[16];
 	
 
-	public BlockMaterial(net.minecraft.block.material.Material mat, String side, String poles) {
+	public BlockMaterial(net.minecraft.block.material.@NotNull Material mat, String side, String poles) {
 		super(mat);
 		this.side = side;
 		this.poles = poles;
@@ -33,7 +34,7 @@ public class BlockMaterial extends BlockMultiblockStructure {
 	}
 
 	@Override
-	public int colorMultiplier(IBlockAccess access, int x, int y, int z) {
+	public int colorMultiplier(@NotNull IBlockAccess access, int x, int y, int z) {
 		TileEntity tile = access.getTileEntity(x, y, z);
 
 		int color = super.colorMultiplier(access, x, y, z);
@@ -72,7 +73,7 @@ public class BlockMaterial extends BlockMultiblockStructure {
 	}
 
 	@Override
-	public void registerBlockIcons(IIconRegister register) {
+	public void registerBlockIcons(@NotNull IIconRegister register) {
 		sideIcon = register.registerIcon(side);
 		polesIcon = register.registerIcon(poles);
 	}
@@ -85,7 +86,7 @@ public class BlockMaterial extends BlockMultiblockStructure {
 	@Override
 	public ArrayList<ItemStack> getDrops(World world, int x, int y, int z,
 			int metadata, int fortune) {
-		ArrayList<ItemStack> list = new ArrayList<ItemStack>();
+		ArrayList<ItemStack> list = new ArrayList<>();
 
 
 		return list;

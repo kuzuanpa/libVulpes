@@ -6,6 +6,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import cpw.mods.fml.relauncher.Side;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import zmaster587.libVulpes.interfaces.IRecipe;
 import zmaster587.libVulpes.recipe.RecipesMachine;
 import zmaster587.libVulpes.util.ZUtils;
@@ -204,7 +206,7 @@ public abstract class TileMultiblockMachine extends TileMultiPowerConsumer {
 
 	//TODO: improve recipe checks
 	//Attempt to get a valid recipe given the inputs, null if none found
-	protected IRecipe getRecipe(List<IRecipe> set) {
+	protected @Nullable IRecipe getRecipe(@NotNull List<IRecipe> set) {
 
 		for(IRecipe recipe : set) {
 
@@ -445,9 +447,9 @@ public abstract class TileMultiblockMachine extends TileMultiPowerConsumer {
 
 
 	//Must be overridden or an NPE will occur
-	public List<IRecipe> getMachineRecipeList() {
+	public @NotNull List<IRecipe> getMachineRecipeList() {
 		List<IRecipe> list = RecipesMachine.getInstance().getRecipes(this.getClass());
-		return list != null ? list : new LinkedList<IRecipe>();
+		return list != null ? list : new LinkedList<>();
 	}
 
 	//Called by inventory blocks that are part of the structure
@@ -457,7 +459,7 @@ public abstract class TileMultiblockMachine extends TileMultiPowerConsumer {
 		//If we are already processing something don't bother
 
 		if(!invCheckFlag && outputItemStacks == null && outputFluidStacks == null) {
-			IRecipe recipe;
+			@Nullable IRecipe recipe;
 
 			if(enabled && (recipe = getRecipe(getMachineRecipeList())) != null && canProcessRecipe(recipe)) {
 				consumeItems(recipe);
@@ -504,7 +506,7 @@ public abstract class TileMultiblockMachine extends TileMultiPowerConsumer {
 		}
 
 		if(outputFluidStacks != null) {
-			NBTTagList list = new NBTTagList();
+			@NotNull NBTTagList list = new NBTTagList();
 			for(FluidStack stack : outputFluidStacks) {
 				if(stack != null) {
 					NBTTagCompound tag = new NBTTagCompound();
@@ -517,12 +519,12 @@ public abstract class TileMultiblockMachine extends TileMultiPowerConsumer {
 	}
 
 	@Override
-	public void readFromNBT(NBTTagCompound nbt) {
+	public void readFromNBT(@NotNull NBTTagCompound nbt) {
 		super.readFromNBT(nbt);
 
 		//Load output items being processed if applicable
 		if(nbt.hasKey("outputItems")) {
-			outputItemStacks = new LinkedList<ItemStack>();
+			outputItemStacks = new LinkedList<>();
 			NBTTagList list = nbt.getTagList("outputItems", 10);
 
 			for(int i = 0; i < list.tagCount(); i++) {
@@ -534,7 +536,7 @@ public abstract class TileMultiblockMachine extends TileMultiPowerConsumer {
 
 		//Load output fluids being processed if applicable
 		if(nbt.hasKey("outputFluids")) {
-			outputFluidStacks = new LinkedList<FluidStack>();
+			outputFluidStacks = new LinkedList<>();
 			NBTTagList list = nbt.getTagList("outputFluids", 10);
 
 			for(int i = 0; i < list.tagCount(); i++) {

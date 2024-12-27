@@ -4,6 +4,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.NotNull;
 import zmaster587.libVulpes.util.BlockPosition;
 import zmaster587.libVulpes.util.ZUtils;
 
@@ -38,7 +39,7 @@ public class InventoryCompat {
 		return tile != null && tile instanceof IInventory && (ZUtils.numEmptySlots((IInventory)tile) > 0 || ZUtils.doesInvHaveRoom(item, (IInventory)tile));
 	}
 	
-	public static boolean canInjectItems(IInventory tile, ItemStack item) {
+	public static boolean canInjectItems(IInventory tile, @NotNull ItemStack item) {
 		
 		return (ZUtils.numEmptySlots((IInventory)tile) > 0 || ZUtils.doesInvHaveRoom(item, (IInventory)tile));
 	}

@@ -7,6 +7,7 @@ import io.netty.channel.ChannelHandler.Sharable;
 
 import java.util.EnumMap;
 
+import org.jetbrains.annotations.NotNull;
 import zmaster587.libVulpes.LibVulpes;
 
 import com.google.common.collect.Maps;
@@ -107,7 +108,7 @@ public class PacketHandler {
 		}
 
 		@Override
-		public void decodeInto(ChannelHandlerContext ctx, ByteBuf data, BasePacket packet) {
+		public void decodeInto(@NotNull ChannelHandlerContext ctx, ByteBuf data, BasePacket packet) {
 
 
 			switch (FMLCommonHandler.instance().getEffectiveSide()) {

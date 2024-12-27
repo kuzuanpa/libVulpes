@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Locale;
 
 import cpw.mods.fml.common.registry.GameRegistry;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import zmaster587.libVulpes.api.LibVulpesItems;
 import zmaster587.libVulpes.block.BlockCoil;
 import zmaster587.libVulpes.block.BlockMetalBlock;
@@ -23,17 +25,17 @@ import net.minecraftforge.oredict.OreDictionary;
 
 public class MaterialRegistry {
 
-	static HashMap<Object, MixedMaterial> mixedMaterialList = new HashMap<Object, MixedMaterial>();
+	static @NotNull HashMap<Object, MixedMaterial> mixedMaterialList = new HashMap<>();
 	static HashMap<AllowedProducts, List<Block>> productBlockListMapping;
-	static List<MaterialRegistry> registries = new LinkedList<MaterialRegistry>();
+	static List<MaterialRegistry> registries = new LinkedList<>();
 
-	public HashMap<String, zmaster587.libVulpes.api.material.Material> strToMaterial = new HashMap<String, zmaster587.libVulpes.api.material.Material>();
-	public List<zmaster587.libVulpes.api.material.Material> materialList = new LinkedList<zmaster587.libVulpes.api.material.Material>();
+	public HashMap<String, zmaster587.libVulpes.api.material.Material> strToMaterial = new HashMap<>();
+	public List<zmaster587.libVulpes.api.material.Material> materialList = new LinkedList<>();
 	public Item[] oreProducts;
 
 
 	public MaterialRegistry() {
-		productBlockListMapping = new HashMap<AllowedProducts, List<Block>>();
+		productBlockListMapping = new HashMap<>();
 		registries.add(this);
 	}
 
@@ -145,7 +147,7 @@ public class MaterialRegistry {
 		return productBlockListMapping.get(product);
 	}
 
-	public Block getBlockForProduct(AllowedProducts product, zmaster587.libVulpes.api.material.Material material, int index) {
+	public @Nullable Block getBlockForProduct(AllowedProducts product, zmaster587.libVulpes.api.material.Material material, int index) {
 		for(Block block : productBlockListMapping.get(product) ) {
 			if(((BlockOre)block).ores[index] == material)
 				return block;
@@ -190,7 +192,7 @@ public class MaterialRegistry {
 	 * @param product
 	 * @return an itemstack of size one containing the product with the given material, or null if one does not exist
 	 */
-	public static ItemStack getItemStackFromMaterialAndType(String material,AllowedProducts product) {
+	public static @Nullable ItemStack getItemStackFromMaterialAndType(String material, AllowedProducts product) {
 		return getItemStackFromMaterialAndType(material, product,1);
 	}
 
@@ -200,7 +202,7 @@ public class MaterialRegistry {
 	 * @param amount stackSize
 	 * @return an itemstack of stackSize amount containing the product with the given material, or null if one does not exist
 	 */
-	public static ItemStack getItemStackFromMaterialAndType(String ore,AllowedProducts product, int amount) {
+	public static @Nullable ItemStack getItemStackFromMaterialAndType(String ore, AllowedProducts product, int amount) {
 		for(MaterialRegistry  registry : registries) {
 			zmaster587.libVulpes.api.material.Material ore2 = registry.strToMaterial.get(ore);
 
@@ -214,7 +216,7 @@ public class MaterialRegistry {
 	 * Registers a mixed material or allow to automate recipe registration
 	 * @param material new mixed material to create
 	 */
-	public static void registerMixedMaterial(MixedMaterial material) {
+	public static void registerMixedMaterial(@NotNull MixedMaterial material) {
 		if(material.getInput() instanceof ItemStack)
 			mixedMaterialList.put( new ItemStackMapping((ItemStack) material.getInput()), material);
 		else
@@ -239,7 +241,7 @@ public class MaterialRegistry {
 
 	public static int getColorFromItemMaterial(ItemStack stack) {
 
-		zmaster587.libVulpes.api.material.Material material = getMaterialFromItemStack(stack);
+		zmaster587.libVulpes.api.material.@Nullable Material material = getMaterialFromItemStack(stack);
 		if(material == null) {
 			return 0x7a7a7a;
 			/*Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.locationItemsTexture);
@@ -291,7 +293,7 @@ public class MaterialRegistry {
 	}
 
 	public static List<zmaster587.libVulpes.api.material.Material> getAllMaterials() {
-		List<zmaster587.libVulpes.api.material.Material> list = new LinkedList<zmaster587.libVulpes.api.material.Material>();
+		List<zmaster587.libVulpes.api.material.Material> list = new LinkedList<>();
 		for(MaterialRegistry registry : registries) {
 			list.addAll(registry.materialList);
 		}

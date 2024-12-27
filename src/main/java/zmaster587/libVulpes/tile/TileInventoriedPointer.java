@@ -107,7 +107,7 @@ public class TileInventoriedPointer extends TilePointer implements IInventoryMul
 		if(e != null && e instanceof ISidedInventory)
 			return ((ISidedInventory)e).getAccessibleSlotsFromSide(var1);
 		else if(e != null && e instanceof ISidedInventory) {
-			int slots[] = new int[((IInventory)e).getSizeInventory()];
+			int[] slots = new int[((IInventory)e).getSizeInventory()];
 			
 			for(int i = 0; i < slots.length; i++)
 			{

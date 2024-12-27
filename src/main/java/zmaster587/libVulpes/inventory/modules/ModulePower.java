@@ -3,6 +3,7 @@ package zmaster587.libVulpes.inventory.modules;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.jetbrains.annotations.NotNull;
 import org.lwjgl.opengl.GL11;
 
 import cpw.mods.fml.relauncher.Side;
@@ -31,7 +32,7 @@ public class ModulePower extends ModuleBase {
 	}
 
 	@Override
-	public void renderBackground(GuiContainer gui, int x, int y, int mouseX, int mouseY, FontRenderer font) {
+	public void renderBackground(@NotNull GuiContainer gui, int x, int y, int mouseX, int mouseY, FontRenderer font) {
 		super.renderBackground(gui, x, y, mouseX, mouseY, font);
 
 		//Power bar background
@@ -48,13 +49,13 @@ public class ModulePower extends ModuleBase {
 
 	@SideOnly(Side.CLIENT)
 	@Override
-	public void renderForeground (int guiOffsetX, int guiOffsetY, int mouseX, int mouseY, float zLevel, GuiContainer gui, FontRenderer font) {
+	public void renderForeground (int guiOffsetX, int guiOffsetY, int mouseX, int mouseY, float zLevel, GuiContainer gui, @NotNull FontRenderer font) {
 
 		int relativeX = mouseX - offsetX;
 		int relativeY = mouseY - offsetY;
 
 		if( relativeX > 0 && relativeX < barXSize && relativeY > 0 && relativeY < barYSize) {
-			List<String> list = new LinkedList<String>();
+			List<String> list = new LinkedList<>();
 			list.add(tile.getEnergyStored() + " / " + tile.getMaxEnergyStored() + " Power");
 
 			this.drawTooltip(gui, list, mouseX, mouseY, zLevel, font);
@@ -91,7 +92,7 @@ public class ModulePower extends ModuleBase {
 	}
 
 	@Override
-	public void sendChanges(Container container, ICrafting crafter, int variableId, int localId) {
+	public void sendChanges(Container container, @NotNull ICrafting crafter, int variableId, int localId) {
 
 		if(localId == 0) {
 			int data = (tile.getEnergyStored() & 0xFFFF);

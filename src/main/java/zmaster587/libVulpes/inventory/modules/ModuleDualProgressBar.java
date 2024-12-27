@@ -3,6 +3,7 @@ package zmaster587.libVulpes.inventory.modules;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.jetbrains.annotations.NotNull;
 import zmaster587.libVulpes.client.util.ProgressBarImage;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -33,8 +34,8 @@ public class ModuleDualProgressBar extends ModuleProgress {
 	
 	@Override
 	@SideOnly(Side.CLIENT)
-	protected List<String> getToolTip() {
-		List<String> modifiedList = new LinkedList<String>();
+	protected @NotNull List<String> getToolTip() {
+		List<String> modifiedList = new LinkedList<>();
 		
 		for(String string : tooltip) {
 			int centerPoint = progress.getTotalProgress(id);
@@ -49,8 +50,8 @@ public class ModuleDualProgressBar extends ModuleProgress {
 	
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void renderBackground(GuiContainer gui, int x, int y, int mouseX,
-			int mouseY, FontRenderer font) {
+	public void renderBackground(@NotNull GuiContainer gui, int x, int y, int mouseX,
+								 int mouseY, FontRenderer font) {
 		
 		float totalProgress = progress.getTotalProgress(id)/100f;
 		float randomnessFactor = progress.getProgress(id)/100f;

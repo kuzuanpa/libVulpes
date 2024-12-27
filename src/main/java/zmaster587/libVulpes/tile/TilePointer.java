@@ -1,5 +1,7 @@
 package zmaster587.libVulpes.tile;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import zmaster587.libVulpes.interfaces.ILinkableTile;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -33,7 +35,7 @@ public class TilePointer extends TileEntity implements IMultiblock, ILinkableTil
 
 	public boolean onLinkStart(ItemStack item, TileEntity entity, EntityPlayer player, World world) {
 		if(hasMaster()) {
-			TileEntity master = this.getMasterBlock();
+			@Nullable TileEntity master = this.getMasterBlock();
 			if(master instanceof ILinkableTile) {
 				return ((ILinkableTile)master).onLinkStart(item, master, player, world);
 			}
@@ -99,7 +101,7 @@ public class TilePointer extends TileEntity implements IMultiblock, ILinkableTil
 	}
 
 	@Override
-	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
+	public void onDataPacket(NetworkManager net, @NotNull S35PacketUpdateTileEntity pkt) {
 
 		if(this.worldObj.isRemote)
 		{
@@ -115,7 +117,7 @@ public class TilePointer extends TileEntity implements IMultiblock, ILinkableTil
 	}
 
 	@Override
-	public TileEntity getMasterBlock() {
+	public @Nullable TileEntity getMasterBlock() {
 		if(hasMaster()) {
 			if(masterBlock == null || masterBlock.isInvalid())
 				masterBlock = this.worldObj.getTileEntity(masterX, masterY, masterZ);

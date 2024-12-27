@@ -1,5 +1,6 @@
 package zmaster587.libVulpes.inventory.modules;
 
+import org.jetbrains.annotations.NotNull;
 import org.lwjgl.opengl.GL11;
 
 import cpw.mods.fml.relauncher.Side;
@@ -21,13 +22,13 @@ public class ModuleSlotButton extends ModuleButton {
 
 	ItemStack stack;
 
-	public ModuleSlotButton(int offsetX, int offsetY, int buttonId, IButtonInventory tile, ItemStack slotDisplay) {
+	public ModuleSlotButton(int offsetX, int offsetY, int buttonId, IButtonInventory tile, @NotNull ItemStack slotDisplay) {
 		
 		super(offsetX, offsetY, buttonId , "", tile, TextureResources.buttonNull, slotDisplay.getDisplayName() ,16,16);
 		stack = slotDisplay;
 	}
 	
-	public ModuleSlotButton(int offsetX, int offsetY, int buttonId, IButtonInventory tile, ItemStack slotDisplay, String extraDisplay ) {
+	public ModuleSlotButton(int offsetX, int offsetY, int buttonId, IButtonInventory tile, @NotNull ItemStack slotDisplay, String extraDisplay ) {
 
 		super(offsetX, offsetY, buttonId , "", tile, TextureResources.buttonNull, slotDisplay.getDisplayName() + " \n" + extraDisplay,16,16);
 		stack = slotDisplay;

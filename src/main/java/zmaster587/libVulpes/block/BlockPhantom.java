@@ -3,6 +3,7 @@ package zmaster587.libVulpes.block;
 import java.util.ArrayList;
 
 import net.minecraft.init.Blocks;
+import org.jetbrains.annotations.NotNull;
 import zmaster587.libVulpes.tile.TileSchematic;
 import zmaster587.libVulpes.tile.multiblock.TilePlaceholder;
 import net.minecraft.block.Block;
@@ -18,7 +19,7 @@ import net.minecraft.world.World;
 
 public class BlockPhantom extends Block {
 
-	public BlockPhantom(Material mat) {
+	public BlockPhantom(@NotNull Material mat) {
 		super(mat);
 	}
 
@@ -35,7 +36,7 @@ public class BlockPhantom extends Block {
 	@Override
 	public ArrayList<ItemStack> getDrops(World world, int x, int y, int z,
 			int metadata, int fortune) {
-		return new ArrayList<ItemStack>();
+		return new ArrayList<>();
 	}
 
 

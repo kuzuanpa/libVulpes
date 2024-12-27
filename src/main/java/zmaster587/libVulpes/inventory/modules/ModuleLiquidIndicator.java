@@ -56,7 +56,7 @@ public class ModuleLiquidIndicator extends ModuleBase {
 
 	@Override
 	public void onChangeRecieved(int slot, int value) {
-		FluidTankInfo info[] = tile.getTankInfo(ForgeDirection.UNKNOWN);
+		FluidTankInfo[] info = tile.getTankInfo(ForgeDirection.UNKNOWN);
 
 		if(slot == 2) {
 			if(info[0].fluid == null && value != invalidFluid) {
@@ -142,7 +142,7 @@ public class ModuleLiquidIndicator extends ModuleBase {
 		int xSize = 12;
 
 		if( relativeX > 0 && relativeX < xSize && relativeY > 0 && relativeY < ySize) {
-			List<String> list = new LinkedList<String>();
+			List<String> list = new LinkedList<>();
 			FluidStack fluidStack = tile.getTankInfo(ForgeDirection.UNKNOWN)[0].fluid;
 
 			if(fluidStack!= null) {

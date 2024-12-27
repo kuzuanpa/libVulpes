@@ -5,10 +5,12 @@ import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class EmbeddedInventory implements ISidedInventory {
 
-		protected ItemStack inv[];
+		protected ItemStack[] inv;
 		
 		public EmbeddedInventory(int size) {
 			inv = new ItemStack[size];
@@ -18,7 +20,7 @@ public class EmbeddedInventory implements ISidedInventory {
 
 			nbt.setInteger("size", inv.length);
 
-			NBTTagList list = new NBTTagList();
+			@NotNull NBTTagList list = new NBTTagList();
 			for(int i = 0; i < inv.length; i++)
 			{
 				ItemStack stack = inv[i];
@@ -61,7 +63,7 @@ public class EmbeddedInventory implements ISidedInventory {
 		}
 
 		@Override
-		public ItemStack decrStackSize(int slot, int amt) {
+		public @Nullable ItemStack decrStackSize(int slot, int amt) {
 			ItemStack stack = inv[slot];
 			if(stack != null) {
 				ItemStack stack2 = stack.splitStack(Math.min(amt, stack.stackSize));
@@ -117,7 +119,7 @@ public class EmbeddedInventory implements ISidedInventory {
 		@Override
 		public int[] getAccessibleSlotsFromSide(int side) {
 
-			int array[] = new int[inv.length];
+			int[] array = new int[inv.length];
 
 			for(int i = 0; i < inv.length; i++) {
 				array[i] = i;

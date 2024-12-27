@@ -2,6 +2,7 @@ package zmaster587.libVulpes.items;
 
 import java.util.List;
 
+import org.jetbrains.annotations.NotNull;
 import zmaster587.libVulpes.interfaces.ILinkableTile;
 import zmaster587.libVulpes.tile.IMultiblock;
 import zmaster587.libVulpes.util.BlockPosition;
@@ -65,7 +66,7 @@ public class ItemLinker extends Item {
 
 		return nbt.getInteger("MasterY");
 	}
-	public static int getMasterZ(ItemStack itemStack) {
+	public static int getMasterZ(@NotNull ItemStack itemStack) {
 		NBTTagCompound nbt = itemStack.getTagCompound();
 		nbt = nbt.getCompoundTag("MasterPos");
 
@@ -143,7 +144,7 @@ public class ItemLinker extends Item {
 
 	@Override
 	public ItemStack onItemRightClick(ItemStack stack, World world,
-			EntityPlayer player) {
+                                      @NotNull EntityPlayer player) {
 
 		if(player.isSneaking()) {
 			resetPosition(stack);
@@ -170,7 +171,7 @@ public class ItemLinker extends Item {
 		return false;
 	}
 
-	protected void applySettings(ItemStack itemStack, ILinkableTile pad, EntityPlayer player, World world) {
+	protected void applySettings(@NotNull ItemStack itemStack, ILinkableTile pad, EntityPlayer player, World world) {
 		if(!isSet(itemStack)) 
 			pad.onLinkStart(itemStack, (TileEntity)pad, player, world);
 		else

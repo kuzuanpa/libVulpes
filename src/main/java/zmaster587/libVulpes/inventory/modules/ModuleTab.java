@@ -4,6 +4,7 @@ import java.util.List;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import org.jetbrains.annotations.NotNull;
 import zmaster587.libVulpes.inventory.GuiModular;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
@@ -14,7 +15,7 @@ public class ModuleTab extends ModuleBase implements IButtonInventory {
 
 	private int tab;
 	IGuiCallback gameObject;
-	private ModuleButton buttons[];
+	private ModuleButton[] buttons;
 	
 	public ModuleTab(int offsetX, int offsetY,int startingId, IGuiCallback object, int numTabs, String[] tabText, ResourceLocation[][] textures) {
 		super(offsetX, offsetY);
@@ -56,7 +57,7 @@ public class ModuleTab extends ModuleBase implements IButtonInventory {
 	public void actionPerform(GuiButton button) {
 		super.actionPerform(button);
 		
-		for(ModuleButton button2 : buttons)
+		for(@NotNull ModuleButton button2 : buttons)
 			button2.actionPerform(button);
 	}
 	

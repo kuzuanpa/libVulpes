@@ -1,5 +1,6 @@
 package zmaster587.libVulpes.network;
 
+import org.jetbrains.annotations.NotNull;
 import zmaster587.libVulpes.util.InputSyncHandler;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
@@ -40,7 +41,7 @@ public class PacketChangeKeyState extends BasePacket {
 	}
 
 	@Override
-	public void executeServer(EntityPlayerMP player) {
+	public void executeServer(@NotNull EntityPlayerMP player) {
 		InputSyncHandler.updateKeyPress(player, key, state);
 	}
 

@@ -5,6 +5,7 @@ import java.util.List;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
+import org.jetbrains.annotations.Nullable;
 
 public interface IRecipe {
 	public List<ItemStack> getOutput();
@@ -19,5 +20,5 @@ public interface IRecipe {
 	
 	public int getPower();
 
-	public String getOreDictString(int i);
+	public @Nullable String getOreDictString(int i);
 }

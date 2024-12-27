@@ -3,6 +3,7 @@ package zmaster587.libVulpes.block.multiblock;
 import java.util.List;
 import java.util.Random;
 
+import org.jetbrains.annotations.NotNull;
 import zmaster587.libVulpes.LibVulpes;
 import zmaster587.libVulpes.inventory.GuiHandler;
 import zmaster587.libVulpes.tile.TilePointer;
@@ -104,7 +105,7 @@ public class BlockHatch extends BlockMultiblockStructure {
 	}
 
 	@Override
-	public void breakBlock(World world, int x, int y, int z, Block block, int meta) {
+	public void breakBlock(@NotNull World world, int x, int y, int z, Block block, int meta) {
 
 		TileEntity tile = world.getTileEntity(x, y, z);
 		if(tile != null && tile instanceof IInventory) {
@@ -115,7 +116,7 @@ public class BlockHatch extends BlockMultiblockStructure {
 				if(stack == null)
 					continue;
 
-				EntityItem entityitem = new EntityItem(world, x, y, z, stack);
+				@NotNull EntityItem entityitem = new EntityItem(world, x, y, z, stack);
 
 				float mult = 0.05F;
 

@@ -5,6 +5,7 @@ import java.util.List;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import org.jetbrains.annotations.Nullable;
 
 public class MultiInventory implements IInventory {
 
@@ -24,7 +25,7 @@ public class MultiInventory implements IInventory {
 	}
 
 	@Override
-	public ItemStack getStackInSlot(int i) {
+	public @Nullable ItemStack getStackInSlot(int i) {
 		for(IInventory inv : inventories) {
 			if(i >= inv.getSizeInventory()) {
 				i -= inv.getSizeInventory();
@@ -36,7 +37,7 @@ public class MultiInventory implements IInventory {
 	}
 
 	@Override
-	public ItemStack decrStackSize(int i, int j) {
+	public @Nullable ItemStack decrStackSize(int i, int j) {
 		
 		for(IInventory inv : inventories) {
 			if(i >= inv.getSizeInventory()) {
@@ -73,7 +74,7 @@ public class MultiInventory implements IInventory {
 	}
 
 	@Override
-	public String getInventoryName() {
+	public @Nullable String getInventoryName() {
 		return null;
 	}
 

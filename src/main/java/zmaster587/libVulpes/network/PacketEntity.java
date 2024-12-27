@@ -3,6 +3,8 @@ package zmaster587.libVulpes.network;
 import java.io.IOException;
 
 import io.netty.buffer.ByteBuf;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import zmaster587.libVulpes.interfaces.INetworkEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
@@ -19,7 +21,8 @@ public class PacketEntity extends BasePacket {
 
 	INetworkEntity entity;
 
-	NBTTagCompound nbt;
+	@Nullable
+    NBTTagCompound nbt;
 
 	byte packetId;
 
@@ -70,7 +73,7 @@ public class PacketEntity extends BasePacket {
 		read(buffer, true);
 	}
 
-	public void read(PacketBuffer in, boolean server) {
+	public void read(@NotNull PacketBuffer in, boolean server) {
 		//DEBUG:
 		World world;
 		world = DimensionManager.getWorld(in.readInt());
