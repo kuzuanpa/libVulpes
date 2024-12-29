@@ -1,53 +1,16 @@
 package zmaster587.libVulpes.items;
 
+import com.mojang.realmsclient.gui.ChatFormatting;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.registry.LanguageRegistry;
-import gregapi.block.multitileentity.MultiTileEntityBlock;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import gregapi.block.multitileentity.MultiTileEntityRegistry;
 import gregapi.data.LH;
 import gregapi.tileentity.base.TileEntityBase04MultiTileEntities;
-import gregapi.tileentity.base.TileEntityBase05Inventories;
 import gregapi.tileentity.base.TileEntityBase09FacingSingle;
-import gregapi.tileentity.machines.MultiTileEntityBasicMachine;
 import gregapi.tileentity.notick.TileEntityBase03MultiTileEntities;
 import io.netty.buffer.ByteBuf;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map.Entry;
-import java.util.stream.Collectors;
-
-import com.mojang.realmsclient.gui.ChatFormatting;
-
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.inventory.IInventory;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import zmaster587.libVulpes.LibVulpes;
-import zmaster587.libVulpes.api.LibVulpesBlocks;
-import zmaster587.libVulpes.block.BlockMeta;
-import zmaster587.libVulpes.block.BlockTile;
-import zmaster587.libVulpes.block.multiblock.BlockMultiblockMachine;
-import zmaster587.libVulpes.inventory.GuiHandler;
-import zmaster587.libVulpes.inventory.TextureResources;
-import zmaster587.libVulpes.inventory.modules.IButtonInventory;
-import zmaster587.libVulpes.inventory.modules.IModularInventory;
-import zmaster587.libVulpes.inventory.modules.ModuleBase;
-import zmaster587.libVulpes.inventory.modules.ModuleButton;
-import zmaster587.libVulpes.inventory.modules.ModuleContainerPan;
-import zmaster587.libVulpes.network.INetworkItem;
-import zmaster587.libVulpes.network.PacketHandler;
-import zmaster587.libVulpes.network.PacketItemModifcation;
-import zmaster587.libVulpes.tile.TileSchematic;
-import zmaster587.libVulpes.tile.multiblock.DummyTileMultiBlock;
-import zmaster587.libVulpes.tile.multiblock.TileMultiBlock;
-import zmaster587.libVulpes.tile.multiblock.TilePlaceholder;
-import zmaster587.libVulpes.util.BlockPosition;
-import zmaster587.libVulpes.util.Vector3F;
-import zmaster587.libVulpes.util.ZUtils;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
@@ -59,12 +22,36 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.MouseEvent;
 import net.minecraftforge.common.util.ForgeDirection;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import zmaster587.libVulpes.LibVulpes;
+import zmaster587.libVulpes.api.LibVulpesBlocks;
+import zmaster587.libVulpes.block.BlockMeta;
+import zmaster587.libVulpes.block.BlockTile;
+import zmaster587.libVulpes.block.multiblock.BlockMultiblockMachine;
+import zmaster587.libVulpes.inventory.GuiHandler;
+import zmaster587.libVulpes.inventory.TextureResources;
+import zmaster587.libVulpes.inventory.modules.*;
+import zmaster587.libVulpes.network.INetworkItem;
+import zmaster587.libVulpes.network.PacketHandler;
+import zmaster587.libVulpes.network.PacketItemModifcation;
+import zmaster587.libVulpes.tile.TileSchematic;
+import zmaster587.libVulpes.tile.multiblock.DummyTileMultiBlock;
+import zmaster587.libVulpes.tile.multiblock.TileMultiBlock;
+import zmaster587.libVulpes.tile.multiblock.TilePlaceholder;
+import zmaster587.libVulpes.util.BlockPosition;
+import zmaster587.libVulpes.util.Vector3F;
+import zmaster587.libVulpes.util.ZUtils;
+
+import java.util.*;
+import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 public class ItemProjector extends Item implements IModularInventory, IButtonInventory, INetworkItem {
 
-	ArrayList<TileMultiBlock> machineList;
-	ArrayList<BlockTile> blockList;
-	ArrayList<String> descriptionList;
+	final ArrayList<TileMultiBlock> machineList;
+	final ArrayList<BlockTile> blockList;
+	final ArrayList<String> descriptionList;
 	private static final String IDNAME = "machineId";
 
 	public ItemProjector() {
@@ -80,20 +67,18 @@ public class ItemProjector extends Item implements IModularInventory, IButtonInv
 
 		Object[][][] structure = multiblock.getStructure();
 
-		for(int i = 0; i < structure.length; i++) {
-			for(int j = 0; j < structure[i].length; j++) {
-				for(int k = 0; k < structure[i][j].length; k++) {
-					Object o = structure[i][j][k];
-					if(!map.containsKey(o)) {
-						map.put(o, 1);
-					}
-					else
-						map.put(o, map.get(o) + 1);
-				}
-			}
-		}
+        for (Object[][] objects : structure) {
+            for (Object[] object : objects) {
+                for (Object o : object) {
+                    if (!map.containsKey(o)) {
+                        map.put(o, 1);
+                    } else
+                        map.put(o, map.get(o) + 1);
+                }
+            }
+        }
 
-		String str = Item.getItemFromBlock(mainBlock).getItemStackDisplayName(new ItemStack(mainBlock)) + " x1\n";
+		StringBuilder str = new StringBuilder(Item.getItemFromBlock(mainBlock).getItemStackDisplayName(new ItemStack(mainBlock)) + " x1\n");
 
 		for(Entry<Object, Integer> entry : map.entrySet()) {
 
@@ -101,21 +86,21 @@ public class ItemProjector extends Item implements IModularInventory, IButtonInv
 
 			if(blockMeta.isEmpty() || Item.getItemFromBlock(blockMeta.get(0).getBlock()) == null )
 				continue;
-			for(int i = 0; i < blockMeta.size(); i++) {
-				String itemStr = Item.getItemFromBlock(blockMeta.get(i).getBlock()).getItemStackDisplayName(new ItemStack(blockMeta.get(i).getBlock(), 1, blockMeta.get(i).getMeta()));
-				if(!itemStr.contains("tile.")) {
-					str = str + itemStr;
-					str = str + " or ";
-				}
-			}
+            for (BlockMeta meta : blockMeta) {
+                String itemStr = Item.getItemFromBlock(meta.getBlock()).getItemStackDisplayName(new ItemStack(meta.getBlock(), 1, meta.getMeta()));
+                if (!itemStr.contains("tile.")) {
+                    str.append(itemStr);
+                    str.append(" or ");
+                }
+            }
 
-			if(str.endsWith(" or ")) {
-				str = str.substring(0, str.length()-4);
+			if(str.toString().endsWith(" or ")) {
+				str = new StringBuilder(str.substring(0, str.length() - 4));
 			}
-			str = str + " x" + entry.getValue() + "\n";
+			str.append(" x").append(entry.getValue()).append("\n");
 		}
 
-		descriptionList.add(str);
+		descriptionList.add(str.toString());
 	}
 	public void registerDummy(DummyTileMultiBlock multiblock) {
 		machineList.add(multiblock);
@@ -123,44 +108,44 @@ public class ItemProjector extends Item implements IModularInventory, IButtonInv
 
 		Object[][][] stru = multiblock.getStructure();
 
-		for(int i = 0; i < stru.length; i++) {
-			for(int j = 0; j < stru[i].length; j++) {
-				for(int k = 0; k < stru[i][j].length; k++) {
-					String str = "";
-					Object o = stru[i][j][k];
-					List<BlockMeta> blockMeta = multiblock.getAllowableBlocks(o);
+        for (Object[][] objects : stru) {
+            for (Object[] object : objects) {
+                for (Object value : object) {
+                    StringBuilder str = new StringBuilder();
+                    List<BlockMeta> blockMeta = multiblock.getAllowableBlocks(value);
 
-					if(blockMeta.isEmpty() || Item.getItemFromBlock(blockMeta.get(0).getBlock()) == null )
-						continue;
-					for (BlockMeta meta : blockMeta) {
-						String gtTileStr="";
-						if(meta.GTTile instanceof TileEntityBase03MultiTileEntities)gtTileStr= LH.get(MultiTileEntityRegistry.getRegistry(((TileEntityBase03MultiTileEntities) meta.GTTile).getMultiTileEntityRegistryID()).mNameInternal+"."+((TileEntityBase03MultiTileEntities) meta.GTTile).getMultiTileEntityID());
-						if(meta.GTTile instanceof TileEntityBase04MultiTileEntities)gtTileStr= LH.get(MultiTileEntityRegistry.getRegistry(((TileEntityBase04MultiTileEntities) meta.GTTile).getMultiTileEntityRegistryID()).mNameInternal+"."+((TileEntityBase04MultiTileEntities) meta.GTTile).getMultiTileEntityID());
-						String itemStr = !meta.overrideName.equals("") ? meta.overrideName //Override Name
-								//GregTech6 compact
-								: !gtTileStr.equals("") ? gtTileStr
-								//normal behavior
-								: Item.getItemFromBlock(meta.getBlock()).getItemStackDisplayName(new ItemStack(meta.getBlock(), 1, meta.getMeta()));
-						if (itemStr!=null&&!itemStr.contains("tile.")) {
-							str = str + itemStr;
-							str = str + " or ";
-						}
-					}
+                    if (blockMeta.isEmpty() || Item.getItemFromBlock(blockMeta.get(0).getBlock()) == null)
+                        continue;
+                    for (BlockMeta meta : blockMeta) {
+                        String gtTileStr = "";
+                        if (meta.GTTile instanceof TileEntityBase03MultiTileEntities)
+                            gtTileStr = LH.get(MultiTileEntityRegistry.getRegistry(((TileEntityBase03MultiTileEntities) meta.GTTile).getMultiTileEntityRegistryID()).mNameInternal + "." + ((TileEntityBase03MultiTileEntities) meta.GTTile).getMultiTileEntityID());
+                        if (meta.GTTile instanceof TileEntityBase04MultiTileEntities)
+                            gtTileStr = LH.get(MultiTileEntityRegistry.getRegistry(((TileEntityBase04MultiTileEntities) meta.GTTile).getMultiTileEntityRegistryID()).mNameInternal + "." + ((TileEntityBase04MultiTileEntities) meta.GTTile).getMultiTileEntityID());
+                        String itemStr = !meta.overrideName.isEmpty() ? meta.overrideName //Override Name
+                                //GregTech6 compact
+                                : !gtTileStr.isEmpty() ? gtTileStr
+                                //normal behavior
+                                : Item.getItemFromBlock(meta.getBlock()).getItemStackDisplayName(new ItemStack(meta.getBlock(), 1, meta.getMeta()));
+                        if (itemStr != null && !itemStr.contains("tile.")) {
+                            str.append(itemStr);
+                            str.append(" or ");
+                        }
+                    }
 
-					if(str.endsWith(" or ")) {
-						str = str.substring(0, str.length()-4);
-					}
+                    if (str.toString().endsWith(" or ")) {
+                        str = new StringBuilder(str.substring(0, str.length() - 4));
+                    }
 
 
-					if(!map.containsKey(str)) {
-						map.put(str, 1);
-					}
-					else
-						map.put(str, map.get(str) + 1);
-				}
-			}
-		}
-		StringBuilder builder = new StringBuilder("");
+                    if (!map.containsKey(str.toString())) {
+                        map.put(str.toString(), 1);
+                    } else
+                        map.put(str.toString(), map.get(str.toString()) + 1);
+                }
+            }
+        }
+		StringBuilder builder = new StringBuilder();
 		map.forEach((k,v)->builder.append(k).append("x ").append(v).append("\n"));
 		descriptionList.add(builder.toString());
 	}
@@ -197,7 +182,7 @@ public class ItemProjector extends Item implements IModularInventory, IButtonInv
 			structure = machineList.get(prevMachineId).getStructure();
 
 			Vector3F<Integer> basepos = getBasePosition(stack);
-
+			if(basepos == null)return;
 			for(int y = 0; y < structure.length; y++) {
 				for(int z=0 ; z < structure[0].length; z++) {
 					for(int x=0; x < structure[0][0].length; x++) {
@@ -205,24 +190,30 @@ public class ItemProjector extends Item implements IModularInventory, IButtonInv
 						int globalX = basepos.x - x*direction.offsetZ + z*direction.offsetX;
 						int globalZ = basepos.z + (x* direction.offsetX) + (z*direction.offsetZ);
 
-						if(world.getBlock(globalX, basepos.y + y, globalZ) == LibVulpesBlocks.blockPhantom) 
+						if(world.getBlock(globalX, basepos.y + y, globalZ) == LibVulpesBlocks.blockPhantom) {
 							world.setBlockToAir(globalX, basepos.y + y, globalZ);
+							world.removeTileEntity(globalX, basepos.y + y, globalZ);
+						}
 					}
 				}
 			}
 		}
 	}
 
+	boolean doubleClick = false;
 	private void RebuildStructure(@NotNull World world, TileMultiBlock tile, ItemStack stack, int posX, int posY, int posZ, ForgeDirection orientation) {
 
 		int id = getMachineId(stack);
 
 		TileMultiBlock multiblock = machineList.get(id);
-		Object[][] @Nullable [] structure;
+		@Nullable Object[][][] structure;
 
-		clearStructure(world, tile, stack);
+			clearStructure(world, tile, stack);
+
 
 		structure = multiblock.getStructure();
+
+		if(structure == null)return;
 
 		int y = getYLevel(stack);
 		int endNumber, startNumber;
@@ -280,7 +271,6 @@ public class ItemProjector extends Item implements IModularInventory, IButtonInv
 			player.openGui(LibVulpes.instance, GuiHandler.guiId.MODULARNOINV.ordinal(), world, -1, -1, 0);
 			return super.onItemRightClick(stack, world, player);
 		}
-
 		int id = getMachineId(stack);
 		if(!player.isSneaking() && id != -1 && world.isRemote) {
 			ForgeDirection dir = ForgeDirection.getOrientation(ZUtils.getDirectionFacing(player.rotationYaw - 180));
@@ -305,15 +295,17 @@ public class ItemProjector extends Item implements IModularInventory, IButtonInv
 
 						BlockPosition controller = getControllerOffset(structure);
 						dir = BlockMultiblockMachine.getFront(tile2.getBlockMetadata()).getOpposite();
+						int yOffset =0;
+						if (controller != null){
+							controller.y = (short) (structure.length - controller.y);
+							yOffset = controller.y;
 
-						controller.y = (short) (structure.length - controller.y);
-
-						globalX = (-controller.x*dir.offsetZ + controller.z*dir.offsetX);
-						globalZ = ((controller.x* dir.offsetX)  + (controller.z*dir.offsetZ));
-
+							globalX = (-controller.x * dir.offsetZ + controller.z * dir.offsetX);
+							globalZ = ((controller.x * dir.offsetX) + (controller.z * dir.offsetZ));
+						}
 						setDirection(stack, dir.ordinal());
 
-						setBasePosition(stack, pos.blockX - globalX, pos.blockY - controller.y  + 1, pos.blockZ - globalZ);
+						setBasePosition(stack, pos.blockX - globalX, pos.blockY - yOffset  + 1, pos.blockZ - globalZ);
 						PacketHandler.sendToServer(new PacketItemModifcation(this, player, (byte)0));
 						PacketHandler.sendToServer(new PacketItemModifcation(this, player, (byte)2));
 						return super.onItemRightClick(stack, world, player);
@@ -329,7 +321,6 @@ public class ItemProjector extends Item implements IModularInventory, IButtonInv
 
 			PacketHandler.sendToServer(new PacketItemModifcation(this, player, (byte)2));
 		}
-
 		return super.onItemRightClick(stack, world, player);
 	}
 
@@ -354,7 +345,7 @@ public class ItemProjector extends Item implements IModularInventory, IButtonInv
 
 		for(int i=0; i < displayList.size();i++) {
 			TileMultiBlock multiblock = displayList.get(i);
-			btns.add(new ModuleButton(20+ i%2*100, 4 + (int)Math.floor(i/2)*24, i, LibVulpes.proxy.getLocalizedString(multiblock.getMachineName()), this,  zmaster587.libVulpes.inventory.TextureResources.buttonBuild));
+			btns.add(new ModuleButton(20+ i%2*100, 4 + (int) (double) (i / 2) *24, i, LibVulpes.proxy.getLocalizedString(multiblock.getMachineName()), this,  zmaster587.libVulpes.inventory.TextureResources.buttonBuild));
 		}
 
 		ModuleContainerPan panningContainer = new ModuleContainerPan(5, 20, btns, new LinkedList<>(), TextureResources.starryBG, 160, 100, 0, 500);
@@ -452,8 +443,7 @@ public class ItemProjector extends Item implements IModularInventory, IButtonInv
 	private @Nullable Vector3F<Integer> getBasePosition(ItemStack stack) {
 		if(stack.hasTagCompound()) {
 			NBTTagCompound nbt = stack.getTagCompound();
-			Vector3F<Integer> vec = new Vector3F<>(nbt.getInteger("x"), nbt.getInteger("y"), nbt.getInteger("z"));
-			return vec;
+            return new Vector3F<>(nbt.getInteger("x"), nbt.getInteger("y"), nbt.getInteger("z"));
 		}
 		else
 			return null;
@@ -513,8 +503,7 @@ public class ItemProjector extends Item implements IModularInventory, IButtonInv
 
 			String[] strList = str.split("\n");
 
-			for(String s : strList)
-				list.add(s);
+            list.addAll(Arrays.asList(strList));
 		}
 	}
 
@@ -528,6 +517,8 @@ public class ItemProjector extends Item implements IModularInventory, IButtonInv
 		else if(id == 2) {
 
 			Vector3F<Integer> pos = getBasePosition(stack);
+			out.writeBoolean(pos == null);
+			if(pos == null)return;
 			out.writeInt(pos.x);
 			out.writeInt(pos.y);
 			out.writeInt(pos.z);
@@ -544,6 +535,7 @@ public class ItemProjector extends Item implements IModularInventory, IButtonInv
 		else if(packetId == 1)
 			nbt.setInteger("yLevel", in.readInt());
 		else if(packetId == 2) {
+			if(in.readBoolean())return;
 			nbt.setInteger("x", in.readInt());
 			nbt.setInteger("y", in.readInt());
 			nbt.setInteger("z", in.readInt());
@@ -563,15 +555,19 @@ public class ItemProjector extends Item implements IModularInventory, IButtonInv
 		else if(id == 1) {
 			setYLevel(stack, nbt.getInteger("yLevel"));
 			Vector3F<Integer> vec = getBasePosition(stack);
-			RebuildStructure(player.worldObj, this.machineList.get(getMachineId(stack)), stack, vec.x, vec.y, vec.z, ForgeDirection.getOrientation(getDirection(stack)));
+			if(vec != null) RebuildStructure(player.worldObj, this.machineList.get(getMachineId(stack)), stack, vec.x, vec.y, vec.z, ForgeDirection.getOrientation(getDirection(stack)));
 		}
 		else if(id == 2) {
 			int x = nbt.getInteger("x");
 			int y = nbt.getInteger("y");
 			int z = nbt.getInteger("z");
 			int dir = nbt.getInteger("dir");
-			
-			if(getMachineId(stack) != -1)
+
+			doubleClick = !doubleClick;
+			if(doubleClick){
+				clearStructure(player.worldObj, this.machineList.get(getMachineId(stack)), stack);
+			}
+			else if(getMachineId(stack) != -1)
 				RebuildStructure(player.worldObj, this.machineList.get(getMachineId(stack)), stack, x, y, z, ForgeDirection.getOrientation(dir));
 		}
 	}

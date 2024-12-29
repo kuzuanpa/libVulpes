@@ -2,8 +2,8 @@ package zmaster587.libVulpes.recipe;
 
 public class NumberedOreDictStack {
 
-	String ore;
-	int number;
+	final String ore;
+	final int number;
 	
 	public NumberedOreDictStack(String ore, int number) {
 		this.ore = ore;

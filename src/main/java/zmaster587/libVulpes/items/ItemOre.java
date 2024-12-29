@@ -26,6 +26,6 @@ public class ItemOre extends ItemBlockWithMetadata {
 		String translate = "tile." + this.getUnlocalizedNameInefficiently(stack).substring(9) + "." + ((BlockOre)this.field_150939_a).getProduct().name().toLowerCase(Locale.ENGLISH) + ".name";
 		if(StatCollector.canTranslate(translate))
 			return StatCollector.translateToLocal(translate);
-		return ("" + StatCollector.translateToLocal(this.getUnlocalizedNameInefficiently(stack) + ".name") + " " + StatCollector.translateToLocal("type." + ((BlockOre)this.field_150939_a).getProduct().name().toLowerCase(Locale.ENGLISH) + ".name")).trim();
+		return (StatCollector.translateToLocal(this.getUnlocalizedNameInefficiently(stack) + ".name") + " " + StatCollector.translateToLocal("type." + ((BlockOre)this.field_150939_a).getProduct().name().toLowerCase(Locale.ENGLISH) + ".name")).trim();
     }
 }

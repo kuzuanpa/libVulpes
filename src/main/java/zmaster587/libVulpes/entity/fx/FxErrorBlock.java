@@ -2,7 +2,6 @@ package zmaster587.libVulpes.entity.fx;
 
 import org.lwjgl.opengl.GL11;
 
-import zmaster587.libVulpes.render.RenderHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.EntityFX;
 import net.minecraft.client.renderer.Tessellator;
@@ -41,10 +40,10 @@ public class FxErrorBlock extends EntityFX {
 
 		tess.startDrawingQuads();
 		tess.setColorRGBA_F(this.particleRed, this.particleGreen, this.particleBlue, 1f);
-		tess.addVertexWithUV((double)(f11 - y1 * f10 - y2 * f10), (double)(f12 - z1 * f10), (double)(f13 - x2 * f10 - z2 * f10), 1, 1);
-		tess.addVertexWithUV((double)(f11 - y1 * f10 + y2 * f10), (double)(f12 + z1 * f10), (double)(f13 - x2 * f10 + z2 * f10), 1, 0);
-		tess.addVertexWithUV((double)(f11 + y1 * f10 + y2 * f10), (double)(f12 + z1 * f10), (double)(f13 + x2 * f10 + z2 * f10), 0, 0);
-		tess.addVertexWithUV((double)(f11 + y1 * f10 - y2 * f10), (double)(f12 - z1 * f10), (double)(f13 + x2 * f10 - z2 * f10), 0, 1);
+		tess.addVertexWithUV(f11 - y1 * f10 - y2 * f10, f12 - z1 * f10, f13 - x2 * f10 - z2 * f10, 1, 1);
+		tess.addVertexWithUV(f11 - y1 * f10 + y2 * f10, f12 + z1 * f10, f13 - x2 * f10 + z2 * f10, 1, 0);
+		tess.addVertexWithUV(f11 + y1 * f10 + y2 * f10, f12 + z1 * f10, f13 + x2 * f10 + z2 * f10, 0, 0);
+		tess.addVertexWithUV(f11 + y1 * f10 - y2 * f10, f12 - z1 * f10, f13 + x2 * f10 - z2 * f10, 0, 1);
 		tess.draw();
 
 		GL11.glEnable(GL11.GL_DEPTH_TEST);

@@ -1,12 +1,11 @@
 package zmaster587.libVulpes.block;
 
 import gregapi.block.multitileentity.MultiTileEntityBlock;
-import gregapi.tileentity.base.TileEntityBase01Root;
 import net.minecraft.block.Block;
 import net.minecraft.tileentity.TileEntity;
 
 public class BlockMeta {
-	Block block;
+	final Block block;
 	int meta;
 	public TileEntity GTTile;
 	public String overrideName="";

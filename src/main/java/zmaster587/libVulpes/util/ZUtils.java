@@ -108,14 +108,12 @@ public class ZUtils {
 			maxX = buffer;
 		}
 
-		AxisAlignedBB ret = axis.copy().setBounds(minX,
+        return axis.copy().setBounds(minX,
 				axis.minY,
 				minZ,
 				maxX,
 				axis.maxY,
 				maxZ);
-
-		return ret;
 	}
 
 	/**
@@ -303,8 +301,7 @@ public class ZUtils {
 			if(a != null && firstEmtpySlot != -1) {
 				if(a.stackSize != 0)
 					b.setInventorySlotContents(firstEmtpySlot, a.copy());
-				a = null;
-			}
+            }
 		}
 	}
 

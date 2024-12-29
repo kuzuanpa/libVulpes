@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.jetbrains.annotations.NotNull;
 import zmaster587.libVulpes.interfaces.ILinkableTile;
-import zmaster587.libVulpes.tile.IMultiblock;
 import zmaster587.libVulpes.util.BlockPosition;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -16,7 +15,10 @@ import net.minecraft.world.World;
 
 public class ItemLinker extends Item {
 
-	protected int linkX,linkY,linkZ, dimId;
+	protected int linkX;
+    protected int linkY;
+    protected int linkZ;
+    protected final int dimId;
 	private final static int EMPTYSETTING = 0;
 
 	public ItemLinker() {

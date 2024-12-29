@@ -5,7 +5,6 @@ import org.jetbrains.annotations.NotNull;
 import zmaster587.libVulpes.api.IUniversalEnergy;
 import zmaster587.libVulpes.util.UniversalBattery;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.util.ForgeDirection;
 public abstract class TileEntityPowerMachine extends TileEntityMachine implements IEnergyHandler, IUniversalEnergy {
 

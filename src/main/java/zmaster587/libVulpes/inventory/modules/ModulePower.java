@@ -4,7 +4,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.jetbrains.annotations.NotNull;
-import org.lwjgl.opengl.GL11;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -13,12 +12,10 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ICrafting;
-import net.minecraft.inventory.Slot;
-import net.minecraftforge.common.util.ForgeDirection;
 
 public class ModulePower extends ModuleBase {
 
-	IUniversalEnergy tile;
+	final IUniversalEnergy tile;
 	private static final int barXSize = 6;
 	private static final int barYSize = 38;
 	private static final int textureOffsetX = 0;

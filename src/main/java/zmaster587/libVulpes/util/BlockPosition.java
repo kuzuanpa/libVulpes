@@ -3,7 +3,8 @@ package zmaster587.libVulpes.util;
 import org.jetbrains.annotations.NotNull;
 
 public class BlockPosition  {
-	public int x,z;
+	public int x;
+    public int z;
 	public short y;
 	
 	

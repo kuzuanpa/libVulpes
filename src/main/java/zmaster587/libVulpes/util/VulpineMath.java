@@ -1,7 +1,7 @@
 package zmaster587.libVulpes.util;
 
 public class VulpineMath {
-	public static double log2 = Math.log(2);
+	public static final double log2 = Math.log(2);
 	
 	public static double log2(double in) {return Math.log(in)/log2;}
 	

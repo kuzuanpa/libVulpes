@@ -6,6 +6,7 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import org.jetbrains.annotations.NotNull;
 import zmaster587.libVulpes.tile.TilePointer;
 
 //Used to store info about the block previously at the location
@@ -48,7 +49,7 @@ public class TilePlaceholder extends TilePointer {
 	}
 
 	@Override
-	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
+	public void onDataPacket(NetworkManager net, @NotNull S35PacketUpdateTileEntity pkt) {
 		NBTTagCompound nbt = pkt.func_148857_g();
 		readFromNBT(nbt);
 	}

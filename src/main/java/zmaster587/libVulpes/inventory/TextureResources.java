@@ -2,7 +2,6 @@ package zmaster587.libVulpes.inventory;
 
 import zmaster587.libVulpes.client.util.ProgressBarImage;
 import zmaster587.libVulpes.util.IconResource;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.ForgeDirection;
 

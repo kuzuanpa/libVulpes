@@ -3,7 +3,7 @@ package zmaster587.libVulpes.util;
 import net.minecraft.item.ItemStack;
 
 public class ItemStackMapping {
-	ItemStack stack;
+	final ItemStack stack;
 	public ItemStackMapping(ItemStack stack) {
 		this.stack = stack;
 	}

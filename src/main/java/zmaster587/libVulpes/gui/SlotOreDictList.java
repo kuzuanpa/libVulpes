@@ -9,7 +9,7 @@ import net.minecraftforge.oredict.OreDictionary;
 
 public class SlotOreDictList extends Slot {
 
-	Set<String> allowed;
+	final Set<String> allowed;
 
 	public SlotOreDictList(IInventory inv, int slot, int x, int y, Set<String> set) {
 		super(inv, slot, x, y);

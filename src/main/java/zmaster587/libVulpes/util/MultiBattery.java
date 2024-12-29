@@ -2,7 +2,6 @@ package zmaster587.libVulpes.util;
 
 import java.util.LinkedList;
 
-import net.minecraftforge.common.util.ForgeDirection;
 import org.jetbrains.annotations.NotNull;
 import zmaster587.libVulpes.api.IUniversalEnergy;
 
@@ -10,7 +9,7 @@ public class MultiBattery implements IUniversalEnergy {
 
 	//Note: as of writing there should never be a need to save this
 	
-	protected LinkedList<IUniversalEnergy> batteries = new LinkedList<>();
+	protected final LinkedList<IUniversalEnergy> batteries = new LinkedList<>();
 	
 	public void addBattery(IUniversalEnergy battery) {
 		batteries.add(battery);

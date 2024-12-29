@@ -8,7 +8,6 @@ import cofh.api.energy.IEnergyReceiver;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.util.ForgeDirection;
 import org.jetbrains.annotations.NotNull;
 import zmaster587.libVulpes.api.IUniversalEnergy;
@@ -18,7 +17,7 @@ import zmaster587.libVulpes.inventory.modules.ModulePower;
 import zmaster587.libVulpes.util.UniversalBattery;
 
 public abstract class TileEntityForgeProducer extends TileEntity implements IModularInventory,  IEnergyHandler, IUniversalEnergy {
-	protected UniversalBattery energy;
+	protected final UniversalBattery energy;
 
 	protected TileEntityForgeProducer(int energy) {
 		this.energy = new UniversalBattery(energy);

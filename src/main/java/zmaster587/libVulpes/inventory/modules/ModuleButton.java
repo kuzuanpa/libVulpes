@@ -1,31 +1,32 @@
 package zmaster587.libVulpes.inventory.modules;
 
-import java.util.LinkedList;
-import java.util.List;
-
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.util.ResourceLocation;
 import zmaster587.libVulpes.gui.GuiImageButton;
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 public class ModuleButton extends ModuleBase {
 
 	@SideOnly(Side.CLIENT)
 	public GuiImageButton button;
 
-	IButtonInventory tile;
+	final IButtonInventory tile;
 	boolean prevState;
-	public int buttonId;
+	public final int buttonId;
 
 	protected int color;
 
 	protected int bgColor;
 	String text, tooltipText;
-	ResourceLocation[] buttonImages;
+	final ResourceLocation[] buttonImages;
 	protected boolean visible = true, enabled = true;
 	protected String sound;
 
@@ -69,7 +70,7 @@ public class ModuleButton extends ModuleBase {
 	}*/
 
 	public void setImage(ResourceLocation[] images) {
-		((GuiImageButton)button).setButtonTexture(images);
+		button.setButtonTexture(images);
 	}
 
 
@@ -143,7 +144,7 @@ public class ModuleButton extends ModuleBase {
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 		if(button != null)
-			this.enabled = button.enabled = enabled;
+            button.enabled = enabled;
 	}
 
 	/**
@@ -199,12 +200,7 @@ public class ModuleButton extends ModuleBase {
 		if(tooltipText != null) {
 
 			if( isMouseOver(mouseX, mouseY) ) {
-				List<String> list = new LinkedList<>();
-				for(String str : tooltipText.split("\n")) {
-
-					list.add(str);
-
-				}
+                List<String> list = new LinkedList<>(Arrays.asList(tooltipText.split("\n")));
 				this.drawTooltip(gui, list, mouseX, mouseY, zLevel, font);
 			}
 			//}

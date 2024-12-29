@@ -16,9 +16,9 @@ public class PacketChangeKeyState extends BasePacket {
 		this.state = state;
 	}
 	
-	public PacketChangeKeyState() {};
-	
-	@Override
+	public PacketChangeKeyState() {}
+
+    @Override
 	public void write(ByteBuf out) {
 		out.writeInt(key);
 		out.writeBoolean(state);

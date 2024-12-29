@@ -1,11 +1,5 @@
 package zmaster587.libVulpes.block;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.jetbrains.annotations.NotNull;
-import zmaster587.libVulpes.block.multiblock.BlockMultiblockStructure;
-import zmaster587.libVulpes.tile.TileMaterial;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.item.EntityItem;
@@ -18,12 +12,20 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+import org.jetbrains.annotations.NotNull;
+import zmaster587.libVulpes.block.multiblock.BlockMultiblockStructure;
+import zmaster587.libVulpes.tile.TileMaterial;
 
+import java.util.ArrayList;
+import java.util.List;
+
+@SuppressWarnings("Unknown Unused Class")
 public class BlockMaterial extends BlockMultiblockStructure {
 
-	String side, poles;
+	final String side;
+    final String poles;
 	IIcon sideIcon, polesIcon;
-	public zmaster587.libVulpes.api.material.Material @NotNull [] ores = new zmaster587.libVulpes.api.material.Material[16];
+	public final zmaster587.libVulpes.api.material.Material @NotNull [] ores = new zmaster587.libVulpes.api.material.Material[16];
 	
 
 	public BlockMaterial(net.minecraft.block.material.@NotNull Material mat, String side, String poles) {
@@ -86,10 +88,9 @@ public class BlockMaterial extends BlockMultiblockStructure {
 	@Override
 	public ArrayList<ItemStack> getDrops(World world, int x, int y, int z,
 			int metadata, int fortune) {
-		ArrayList<ItemStack> list = new ArrayList<>();
 
 
-		return list;
+        return new ArrayList<>();
 	}
 
 	@Override

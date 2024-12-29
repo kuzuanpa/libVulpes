@@ -6,7 +6,7 @@ import net.minecraft.item.ItemStack;
 
 public class SlotLimitedItem extends Slot {
 	
-	IInventory tile;
+	final IInventory tile;
 	
 	public SlotLimitedItem(IInventory inventory, int slotIndex, int x, int y) {
 		super(inventory, slotIndex, x, y);

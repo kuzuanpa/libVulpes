@@ -1,6 +1,7 @@
 package zmaster587.libVulpes.inventory.modules;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.jetbrains.annotations.NotNull;
@@ -8,11 +9,10 @@ import org.lwjgl.opengl.GL11;
 
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.renderer.Tessellator;
 
 public class ModuleText extends ModuleBase {
 
-	List<String> text;
+	final List<String> text;
 	int color;
 	boolean centered;
 	float scale;
@@ -43,9 +43,7 @@ public class ModuleText extends ModuleBase {
 	public void setText(@NotNull String text) {
 
 		this.text.clear();
-		for(String str : text.split("\\n")) {
-			this.text.add(str);
-		}
+        this.text.addAll(Arrays.asList(text.split("\\n")));
 	}
 
 	public void setAlwaysOnTop(boolean alwaysOnTop) {
@@ -58,10 +56,10 @@ public class ModuleText extends ModuleBase {
 
 	public String getText() {
 
-		String str = "";
+		StringBuilder str = new StringBuilder();
 
 		for(String str2 : this.text) {
-			str += "\n" + str2;
+			str.append("\n").append(str2);
 		}
 
 		return str.substring(1);

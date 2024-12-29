@@ -7,7 +7,6 @@ import java.util.List;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import gregapi.tileentity.base.TileEntityBase09FacingSingle;
 import org.jetbrains.annotations.NotNull;
 import zmaster587.libVulpes.LibVulpes;
 import zmaster587.libVulpes.api.LibVulpesBlocks;
@@ -45,14 +44,14 @@ public class TileMultiBlock extends TileEntity {
 	protected boolean completeStructure, canRender;
 	protected byte timeAlive = 0;
 
-	public boolean isVisibleInProjector = true;
-	protected LinkedList<IInventory> itemInPorts = new LinkedList<>();
-	protected LinkedList<IInventory> itemOutPorts = new LinkedList<>();
+	public final boolean isVisibleInProjector = true;
+	protected final LinkedList<IInventory> itemInPorts = new LinkedList<>();
+	protected final LinkedList<IInventory> itemOutPorts = new LinkedList<>();
 
-	protected LinkedList<IFluidHandler> fluidInPorts = new LinkedList<>();
-	protected LinkedList<IFluidHandler> fluidOutPorts = new LinkedList<>();
+	protected final LinkedList<IFluidHandler> fluidInPorts = new LinkedList<>();
+	protected final LinkedList<IFluidHandler> fluidOutPorts = new LinkedList<>();
 
-	protected static HashMap<Character, List<BlockMeta>> charMapping = new HashMap<>();
+	protected static final HashMap<Character, List<BlockMeta>> charMapping = new HashMap<>();
 
 	public TileMultiBlock() {
 		completeStructure = false;
@@ -236,8 +235,7 @@ public class TileMultiBlock extends TileEntity {
 	}
 
 	public List<BlockMeta> getAllowableWildCardBlocks(Character wildCard) {
-		List<BlockMeta> list = new ArrayList<>();
-		return list;
+        return new ArrayList<>();
 	}
 
 	/**
@@ -323,10 +321,10 @@ public class TileMultiBlock extends TileEntity {
 							continue;
 					}
 					//Make sure the structure is valid
-					if(!(structure[y][z][x] instanceof Character && (Character)structure[y][z][x] == 'c') && !(structure[y][z][x] instanceof Block && (Block)structure[y][z][x] == Blocks.air && worldObj.isAirBlock(globalX, globalY, globalZ)) && !getAllowableBlocks(structure[y][z][x]).contains(new BlockMeta(block,meta))) {
+					if(!(structure[y][z][x] instanceof Character && (Character)structure[y][z][x] == 'c') && !(structure[y][z][x] instanceof Block && structure[y][z][x] == Blocks.air && worldObj.isAirBlock(globalX, globalY, globalZ)) && !getAllowableBlocks(structure[y][z][x]).contains(new BlockMeta(block,meta))) {
 
 						//Can it be replaced?
-						if(block.isReplaceable(worldObj, globalX, globalY, globalZ) && structure[y][z][x] instanceof Block && (Block)structure[y][z][x] == Blocks.air )
+						if(block.isReplaceable(worldObj, globalX, globalY, globalZ) && structure[y][z][x] instanceof Block && structure[y][z][x] == Blocks.air )
 							replacableBlocks.add(new BlockPosition(globalX, globalY, globalZ));
 						else {
 							LibVulpes.proxy.spawnParticle("errorBox", worldObj, globalX, globalY, globalZ, 0, 0, 0);
@@ -378,12 +376,9 @@ public class TileMultiBlock extends TileEntity {
 		}
 		
 		//Replace and drop replaceable blocks
-		for(BlockPosition pos : replacableBlocks) {
-			worldObj.setBlockToAir(pos.x, pos.y, pos.z);
-		}
-		
-		
-		markDirty();
+
+
+        markDirty();
 		worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 
 		return true;
@@ -425,8 +420,7 @@ public class TileMultiBlock extends TileEntity {
 		else if(input instanceof List) {
 			return (List<BlockMeta>)input;
 		}
-		List<BlockMeta> list = new ArrayList<>();
-		return list;
+        return new ArrayList<>();
 	}
 
 	public boolean shouldHideBlock(World world, int x, int y, int z, Block tile) {
@@ -464,9 +458,9 @@ public class TileMultiBlock extends TileEntity {
 		else if(tile instanceof TileFluidHatch) {
 			TileFluidHatch liquidHatch = (TileFluidHatch)tile;
 			if(liquidHatch.isOutputOnly())
-				fluidOutPorts.add((IFluidHandler)liquidHatch);
+				fluidOutPorts.add(liquidHatch);
 			else
-				fluidInPorts.add((IFluidHandler)liquidHatch);
+				fluidInPorts.add(liquidHatch);
 		}
 	}
 

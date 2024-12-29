@@ -10,7 +10,7 @@ import net.minecraft.util.ResourceLocation;
 @SideOnly(Side.CLIENT)
 public class RepeatingSound extends MovingSound {
 
-	TileEntity tile;
+	final TileEntity tile;
 	IToggleableMachine toggle;
 
 	public RepeatingSound(ResourceLocation location, TileEntity tile) {

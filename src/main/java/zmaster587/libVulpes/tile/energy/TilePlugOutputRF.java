@@ -34,7 +34,6 @@ public class TilePlugOutputRF extends TilePlugBase implements IEnergyHandler {
 
 				if(tile instanceof IEnergyReceiver) {
 					IEnergyReceiver handle = (IEnergyReceiver)tile;
-					storage.getEnergyStored();
 					storage.extractEnergy(handle.receiveEnergy(dir.getOpposite(), storage.getEnergyStored(), false), false);
 				}
 			}

@@ -1,6 +1,5 @@
 package zmaster587.libVulpes.common;
 
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
 public class CommonProxy {

@@ -1,16 +1,5 @@
 package zmaster587.libVulpes.inventory.modules;
 
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-
-import org.jetbrains.annotations.NotNull;
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
-
-import zmaster587.libVulpes.LibVulpes;
-import zmaster587.libVulpes.gui.CommonResources;
-import zmaster587.libVulpes.inventory.GuiModular;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.gui.FontRenderer;
@@ -22,6 +11,14 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL12;
+import zmaster587.libVulpes.LibVulpes;
+import zmaster587.libVulpes.gui.CommonResources;
+import zmaster587.libVulpes.inventory.GuiModular;
+
+import java.util.LinkedList;
+import java.util.List;
 
 public abstract class ModuleBase {
 
@@ -31,7 +28,7 @@ public abstract class ModuleBase {
 	protected int sizeX;
 	protected int sizeY;
 	//List of slots contained by this module
-	protected List<Slot> slotList;
+	protected final List<Slot> slotList;
 	//Because each player has it's own instance of the container, in order to send changes to all clients we need to make sure we're running the same tick when calling "isUpdateRequired"
 	protected Long lastTickTime;
 	//is True for the tick all players are being updated
@@ -243,18 +240,14 @@ public abstract class ModuleBase {
 		GL11.glDisable(GL11.GL_LIGHTING);
 		GL11.glDisable(GL11.GL_DEPTH_TEST);
 		int k = 0;
-		@NotNull Iterator iterator = textList.iterator();
 
-		while (iterator.hasNext())
-		{
-			String s = (String)iterator.next();
-			int l = font.getStringWidth(s);
+        for (String s : textList) {
+            int l = font.getStringWidth(s);
 
-			if (l > k)
-			{
-				k = l;
-			}
-		}
+            if (l > k) {
+                k = l;
+            }
+        }
 
 		int j2 = x + 12;
 		int k2 = y - 12;
@@ -277,7 +270,7 @@ public abstract class ModuleBase {
 
 		for (int i2 = 0; i2 < textList.size(); ++i2)
 		{
-			String s1 = (String)textList.get(i2);
+			String s1 = textList.get(i2);
 			font.drawStringWithShadow(s1, j2, k2, -1);
 
 			if (i2 == 0)
@@ -288,8 +281,7 @@ public abstract class ModuleBase {
 			k2 += 10;
 		}
 
-		zLevel = 0.0F;
-		GL11.glEnable(GL11.GL_DEPTH_TEST);
+        GL11.glEnable(GL11.GL_DEPTH_TEST);
 		RenderHelper.enableStandardItemLighting();
 		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
 		GL11.glDisable(GL11.GL_LIGHTING);
@@ -325,11 +317,11 @@ public abstract class ModuleBase {
 		Tessellator tessellator = Tessellator.instance;
 		tessellator.startDrawingQuads();
 		tessellator.setColorRGBA_F(f1, f2, f3, f);
-		tessellator.addVertex((double)x2, (double)y1, (double)zLevel);
-		tessellator.addVertex((double)x1, (double)y1, (double)zLevel);
+		tessellator.addVertex(x2, y1, zLevel);
+		tessellator.addVertex(x1, y1, zLevel);
 		tessellator.setColorRGBA_F(f5, f6, f7, f4);
-		tessellator.addVertex((double)x1, (double)y2, (double)zLevel);
-		tessellator.addVertex((double)x2, (double)y2, (double)zLevel);
+		tessellator.addVertex(x1, y2, zLevel);
+		tessellator.addVertex(x2, y2, zLevel);
 		tessellator.draw();
 		GL11.glShadeModel(GL11.GL_FLAT);
 		GL11.glDisable(GL11.GL_BLEND);

@@ -31,7 +31,7 @@ public class BlockMultiBlockComponentVisible extends BlockMultiblockStructure {
 	public boolean shouldSideBeRendered(IBlockAccess access, int x, int y,
 			int z, int side) {
 		//Yes this is hacky...
-		return side == 0 && this.minY > 0.0D ? true : (side == 1 && this.maxY < 1.0D ? true : (side == 2 && this.minZ > 0.0D ? true : (side == 3 && this.maxZ < 1.0D ? true : (side == 4 && this.minX > 0.0D ? true : (side == 5 && this.maxX < 1.0D ? true : !access.getBlock(x, y, z).isOpaqueCube())))));
+		return side == 0 && this.minY > 0.0D || (side == 1 && this.maxY < 1.0D || (side == 2 && this.minZ > 0.0D || (side == 3 && this.maxZ < 1.0D || (side == 4 && this.minX > 0.0D || (side == 5 && this.maxX < 1.0D || !access.getBlock(x, y, z).isOpaqueCube())))));
 	}
 	
 	@Override

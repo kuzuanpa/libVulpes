@@ -1,25 +1,18 @@
 package zmaster587.libVulpes.api.material;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-
 import org.jetbrains.annotations.NotNull;
-import zmaster587.libVulpes.api.LibVulpesBlocks;
-import zmaster587.libVulpes.api.LibVulpesItems;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.oredict.OreDictionary;
 
 public class Material {
-	String unlocalizedName, tool;
-	String[] oreDictNames;
-	int harvestLevel;
-	int allowedProducts;
-	int color;
+	final String unlocalizedName;
+    final String tool;
+	final String[] oreDictNames;
+	final int harvestLevel;
+	final int allowedProducts;
+	final int color;
 	int index;
 	//Hack assigning in libvulpes preinit
 	public MaterialRegistry registry;

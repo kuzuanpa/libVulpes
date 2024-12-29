@@ -17,15 +17,15 @@ public class PacketMachine extends BasePacket {
 
 	INetworkMachine machine;
 
-	NBTTagCompound nbt;
+	final NBTTagCompound nbt;
 
 	byte packetId;
 
 	public PacketMachine() {
 		nbt = new NBTTagCompound();
-	};
+	}
 
-	public PacketMachine(INetworkMachine machine, byte packetId) {
+    public PacketMachine(INetworkMachine machine, byte packetId) {
 		this();
 		this.machine = machine;
 		this.packetId = packetId;
@@ -61,7 +61,7 @@ public class PacketMachine extends BasePacket {
 
 		TileEntity ent = world.getTileEntity(x, y, z);
 
-		if(ent != null && ent instanceof INetworkMachine) {
+		if(ent instanceof INetworkMachine) {
 			machine = (INetworkMachine)ent;
 			machine.readDataFromNetwork(in, packetId, nbt);
 		}
@@ -86,7 +86,7 @@ public class PacketMachine extends BasePacket {
 		if(chunk != null && chunk.isChunkLoaded) {
 			TileEntity ent = world.getTileEntity(x, y, z);
 
-			if(ent != null && ent instanceof INetworkMachine) {
+			if(ent instanceof INetworkMachine) {
 				machine = (INetworkMachine)ent;
 				machine.readDataFromNetwork(in, packetId, nbt);
 			}

@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
-import net.minecraft.block.Block;
 import org.jetbrains.annotations.NotNull;
 
 public class AllowedProducts {
@@ -44,8 +43,8 @@ public class AllowedProducts {
 	}
 	
 	private static short currentFlagValue = 1;
-	private static HashMap<String, AllowedProducts> map = new HashMap<>();
-	private static List<AllowedProducts> list = new LinkedList<>();
+	private static final HashMap<String, AllowedProducts> map = new HashMap<>();
+	private static final List<AllowedProducts> list = new LinkedList<>();
 	/*DUST,
 	INGOT,
 	CRYSTAL,
@@ -62,7 +61,7 @@ public class AllowedProducts {
 
 	short flagValue = 0;
 	String name;
-	boolean isBlock;
+	final boolean isBlock;
 
 	private AllowedProducts() {
 		this.isBlock = false;

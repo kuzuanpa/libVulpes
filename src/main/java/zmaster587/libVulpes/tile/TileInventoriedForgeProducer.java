@@ -4,13 +4,11 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumFacing;
-import net.minecraftforge.common.util.ForgeDirection;
 import zmaster587.libVulpes.util.EmbeddedInventory;
 
 public abstract class TileInventoriedForgeProducer extends TileEntityForgeProducer implements ISidedInventory {
 
-	protected EmbeddedInventory inventory;
+	protected final EmbeddedInventory inventory;
 
 	protected TileInventoriedForgeProducer(int energy,int invSize) {
 		super(energy);

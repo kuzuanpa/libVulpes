@@ -36,7 +36,7 @@ public abstract class TileMultiblockMachine extends TileMultiPowerConsumer {
 	private List<ItemStack> outputItemStacks;
 	private List<FluidStack> outputFluidStacks;
 
-	boolean smartInventoryUpgrade = true;
+	final boolean smartInventoryUpgrade = true;
 	//When using smart inventories sometimes setInventory content calls need to be made
 	//This flag prevents infinite recursion by having a value of true if any invCheck has started
 	boolean invCheckFlag = false;
@@ -77,12 +77,7 @@ public abstract class TileMultiblockMachine extends TileMultiPowerConsumer {
 		readFromNBT(nbt);
 	}
 
-	@Override
-	public boolean canUpdate() {
-		return true;
-	}
-
-	public void registerRecipes() {
+    public void registerRecipes() {
 		
 	}
 	
@@ -239,26 +234,24 @@ public abstract class TileMultiblockMachine extends TileMultiPowerConsumer {
 	public void consumeItems(IRecipe recipe) {
 		LinkedList<LinkedList<ItemStack>> ingredients = recipe.getIngredients();
 
-		for(int ingredientNum = 0;ingredientNum < ingredients.size(); ingredientNum++) {
+        for (LinkedList<ItemStack> ingredient : ingredients) {
 
-			LinkedList<ItemStack> ingredient = ingredients.get(ingredientNum);
+            ingredientCheck:
 
-			ingredientCheck:
+            for (IInventory hatch : itemInPorts) {
+                for (int i = 0; i < hatch.getSizeInventory(); i++) {
+                    ItemStack stackInSlot = hatch.getStackInSlot(i);
 
-				for(IInventory hatch : itemInPorts) {
-					for(int i = 0; i < hatch.getSizeInventory(); i++) {
-						ItemStack stackInSlot = hatch.getStackInSlot(i);
-
-						for (ItemStack stack : ingredient) {
-							if(stackInSlot != null && stackInSlot.stackSize >= stack.stackSize && stackInSlot.isItemEqual(stack)) {
-								hatch.decrStackSize(i, stack.stackSize);
-								hatch.markDirty();
-								break ingredientCheck;
-							}
-						}
-					}
-				}
-		}
+                    for (ItemStack stack : ingredient) {
+                        if (stackInSlot != null && stackInSlot.stackSize >= stack.stackSize && stackInSlot.isItemEqual(stack)) {
+                            hatch.decrStackSize(i, stack.stackSize);
+                            hatch.markDirty();
+                            break ingredientCheck;
+                        }
+                    }
+                }
+            }
+        }
 
 
 		//Consume fluids
@@ -293,7 +286,7 @@ public abstract class TileMultiblockMachine extends TileMultiPowerConsumer {
 		invCheckFlag = true;
 		List<ItemStack> outputItems = getItemOutputs(recipe);
 
-		boolean itemCheck = outputItems.size() == 0;
+		boolean itemCheck = outputItems.isEmpty();
 
 
 		LinkedList<LinkedList<ItemStack>> ingredients = recipe.getIngredients();
@@ -312,7 +305,7 @@ public abstract class TileMultiblockMachine extends TileMultiPowerConsumer {
 
 							for(ItemStack stack : ingredient) {
 								if(stackInSlot != null && stackInSlot.stackSize >= stack.stackSize && (stackInSlot.isItemEqual(stack) || (stack.getItemDamage() == OreDictionary.WILDCARD_VALUE && stack.getItem() == stackInSlot.getItem()))) {
-									mask |= (1 << ingredientNum);
+									mask |= (short) (1 << ingredientNum);
 									break ingredientCheck;
 								}
 							}
@@ -429,9 +422,9 @@ public abstract class TileMultiblockMachine extends TileMultiPowerConsumer {
 			fluidOutputCounter[i] -= fluidOutPorts.get(i).fill(ForgeDirection.UNKNOWN, recipe.getFluidOutputs().get(i), false);
 		}
 
-		for(int i = 0; i < fluidOutputCounter.length; i++)
-			if(fluidOutputCounter[i] > 0 )
-				return false;
+        for (int j : fluidOutputCounter)
+            if (j > 0)
+                return false;
 
 		return itemCheck;
 	}

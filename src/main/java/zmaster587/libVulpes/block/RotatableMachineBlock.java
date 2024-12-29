@@ -56,11 +56,11 @@ public abstract class RotatableMachineBlock extends RotatableBlock {
 	                        }
 
 	                        itemstack.stackSize -= k1;
-	                        entityitem = new EntityItem(world, (double)((float)x + f), (double)((float)y + f1), (double)((float)z + f2), new ItemStack(itemstack.getItem(), k1, itemstack.getItemDamage()));
+	                        entityitem = new EntityItem(world, (float)x + f, (float)y + f1, (float)z + f2, new ItemStack(itemstack.getItem(), k1, itemstack.getItemDamage()));
 	                        float f3 = 0.05F;
-	                        entityitem.motionX = (double)((float)this.random.nextGaussian() * f3);
-	                        entityitem.motionY = (double)((float)this.random.nextGaussian() * f3 + 0.2F);
-	                        entityitem.motionZ = (double)((float)this.random.nextGaussian() * f3);
+	                        entityitem.motionX = (float)this.random.nextGaussian() * f3;
+	                        entityitem.motionY = (float)this.random.nextGaussian() * f3 + 0.2F;
+	                        entityitem.motionZ = (float)this.random.nextGaussian() * f3;
 
 	                        if (itemstack.hasTagCompound())
 	                        {
@@ -82,7 +82,7 @@ public abstract class RotatableMachineBlock extends RotatableBlock {
     {
         super.onBlockEventReceived(par1World, par2, par3, par4, par5, par6);
         TileEntity tileentity = par1World.getTileEntity(par2, par3, par4);
-        return tileentity != null ? tileentity.receiveClientEvent(par5, par6) : false;
+        return tileentity != null && tileentity.receiveClientEvent(par5, par6);
     }
     
 	@SideOnly(Side.CLIENT)

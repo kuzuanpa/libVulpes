@@ -33,7 +33,7 @@ public class PacketHandler {
 	public static final EnumMap<Side, FMLEmbeddedChannel> channels = Maps.newEnumMap(Side.class);
 
 	private static int discriminatorNumber = 0;
-	static Codec codec = new Codec();
+	static final Codec codec = new Codec();
 	
 	public static void init() {
 		if (!channels.isEmpty()) // avoid duplicate inits..
@@ -51,7 +51,7 @@ public class PacketHandler {
 		}
 	}
 	
-	public static final void addDiscriminator(Class<? extends BasePacket> clazz) {
+	public static void addDiscriminator(Class<? extends BasePacket> clazz) {
 		if(codec != null) {
 			codec.addDiscriminator(discriminatorNumber, clazz);
 			discriminatorNumber++;
@@ -61,13 +61,13 @@ public class PacketHandler {
 	}
 
 
-	public static final void sendToServer(BasePacket packet) {
+	public static void sendToServer(BasePacket packet) {
 		channels.get(Side.CLIENT).attr(FMLOutboundHandler.FML_MESSAGETARGET).set(FMLOutboundHandler.OutboundTarget.TOSERVER);
 		channels.get(Side.CLIENT).writeOutbound(packet);
 	}
 
 	
-	public static final void sendToPlayersTrackingEntity(BasePacket packet, Entity entity) {
+	public static void sendToPlayersTrackingEntity(BasePacket packet, Entity entity) {
 		for( EntityPlayer player : ((WorldServer)entity.worldObj).getEntityTracker().getTrackingPlayers(entity)) {
 
 			channels.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGET).set(FMLOutboundHandler.OutboundTarget.PLAYER);
@@ -76,24 +76,24 @@ public class PacketHandler {
 		}
 	}
 
-	public static final void sendToAll(BasePacket packet) {
+	public static void sendToAll(BasePacket packet) {
 		channels.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGET).set(FMLOutboundHandler.OutboundTarget.ALL);
 		channels.get(Side.SERVER).writeOutbound(packet);
 	}
 	
-	public static final void sendToPlayer(BasePacket packet, EntityPlayer player) {
+	public static void sendToPlayer(BasePacket packet, EntityPlayer player) {
 		channels.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGET).set(FMLOutboundHandler.OutboundTarget.PLAYER);
 		channels.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGETARGS).set(player);
 		channels.get(Side.SERVER).writeOutbound(packet);
 	}
 
-	public static final void sendToDispatcher(BasePacket packet, NetworkManager netman) {
+	public static void sendToDispatcher(BasePacket packet, NetworkManager netman) {
 		channels.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGET).set(FMLOutboundHandler.OutboundTarget.DISPATCHER);
 		channels.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGETARGS).set(NetworkDispatcher.get(netman));
 		channels.get(Side.SERVER).writeOutbound(packet);
 	}
 	
-	public static final void sendToNearby(BasePacket packet,int dimId, int x, int y, int z, double dist) {
+	public static void sendToNearby(BasePacket packet, int dimId, int x, int y, int z, double dist) {
 		channels.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGET).set(FMLOutboundHandler.OutboundTarget.ALLAROUNDPOINT);
 		channels.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGETARGS).set(new NetworkRegistry.TargetPoint(dimId, x, y, z,dist));
 		channels.get(Side.SERVER).writeOutbound(packet);
@@ -103,7 +103,7 @@ public class PacketHandler {
 
 		@Override
 		public void encodeInto(ChannelHandlerContext ctx, BasePacket msg,
-				ByteBuf data) throws Exception {
+				ByteBuf data) {
 			msg.write(data);
 		}
 
@@ -131,8 +131,7 @@ public class PacketHandler {
 	private static final class HandlerClient extends SimpleChannelInboundHandler<BasePacket>
 	{
 		@Override
-		protected void channelRead0(ChannelHandlerContext ctx, BasePacket packet) throws Exception
-		{
+		protected void channelRead0(ChannelHandlerContext ctx, BasePacket packet) {
 			Minecraft mc = Minecraft.getMinecraft();
 			packet.executeClient(mc.thePlayer); //actionClient(mc.theWorld, );
 		}
@@ -141,8 +140,7 @@ public class PacketHandler {
 	private static final class HandlerServer extends SimpleChannelInboundHandler<BasePacket>
 	{
 		@Override
-		protected void channelRead0(ChannelHandlerContext ctx, BasePacket packet) throws Exception
-		{
+		protected void channelRead0(ChannelHandlerContext ctx, BasePacket packet) {
 			if (FMLCommonHandler.instance().getEffectiveSide().isClient())
 			{
 				// nothing on the client thread

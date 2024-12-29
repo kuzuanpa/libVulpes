@@ -7,15 +7,18 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.ResourceLocation;
-import zmaster587.libVulpes.util.IconResource;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class ModuleScaledImage extends ModuleBase {
 	
 	ResourceLocation icon;
-	int sizeX, sizeY;
-	float minX, maxX, minY, maxY;
+	final int sizeX;
+    final int sizeY;
+	final float minX;
+    final float maxX;
+    final float minY;
+    final float maxY;
 	float alpha;
 	
 	public ModuleScaledImage(int locX, int locY, int sizeX, int sizeY, ResourceLocation icon) {
@@ -72,10 +75,10 @@ public class ModuleScaledImage extends ModuleBase {
 		Minecraft.getMinecraft().getTextureManager().bindTexture(icon);
         Tessellator tessellator = Tessellator.instance;
         tessellator.startDrawingQuads();
-        tessellator.addVertexWithUV((double)(x + this.offsetX), (double)(y + this.offsetY + sizeY), (double)0, minX, maxY);
-        tessellator.addVertexWithUV((double)(x + this.offsetX + sizeX), (double)(y + this.offsetY + sizeY), (double)0, maxX, maxY);
-        tessellator.addVertexWithUV((double)(x + this.offsetX + sizeX), (double)(y + this.offsetY), (double)0, maxX, minY);
-        tessellator.addVertexWithUV((double)(x + this.offsetX), (double)(y + this.offsetY), (double)0, minX, minY);
+        tessellator.addVertexWithUV(x + this.offsetX, y + this.offsetY + sizeY, 0, minX, maxY);
+        tessellator.addVertexWithUV(x + this.offsetX + sizeX, y + this.offsetY + sizeY, 0, maxX, maxY);
+        tessellator.addVertexWithUV(x + this.offsetX + sizeX, y + this.offsetY, 0, maxX, minY);
+        tessellator.addVertexWithUV(x + this.offsetX, y + this.offsetY, 0, minX, minY);
         tessellator.draw();
         
         if(alpha < 1f) {

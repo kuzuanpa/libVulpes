@@ -51,7 +51,7 @@ public abstract class BasePacket {
 
 	public final int getPacketId() {
 		if(idMap.inverse().containsKey(getClass())) {
-			return idMap.inverse().get(getClass()).intValue();
+			return idMap.inverse().get(getClass());
 		} else {
 			throw new RuntimeException("Packet " + getClass().getSimpleName() + " is a missing mapping!");
 		}

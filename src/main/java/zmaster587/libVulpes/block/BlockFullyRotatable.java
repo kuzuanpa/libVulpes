@@ -8,6 +8,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+import org.jetbrains.annotations.NotNull;
+
 public class BlockFullyRotatable extends RotatableBlock {
 
 	public BlockFullyRotatable(Material par2Material) {
@@ -15,7 +17,7 @@ public class BlockFullyRotatable extends RotatableBlock {
 	}
 
 	@Override
-	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack) {
+	public void onBlockPlacedBy(@NotNull World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack) {
 		if(Math.abs(entity.rotationPitch) > 60) {
 			world.setBlockMetadataWithNotify(x, y, z, entity.rotationPitch > 0 ? ForgeDirection.UP.ordinal() : ForgeDirection.DOWN.ordinal(), 2);
 		}

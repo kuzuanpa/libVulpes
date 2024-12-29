@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 
 public abstract class TileInventoriedRFConsumerTank extends TileInventoriedRFConsumer implements IFluidHandler {
 
-	protected FluidTank tank;
+	protected final FluidTank tank;
 	
 	protected TileInventoriedRFConsumerTank(int energy, int invSize, int tankSize) {
 		super(energy,invSize);

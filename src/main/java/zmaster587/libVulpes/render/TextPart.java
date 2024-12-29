@@ -1,9 +1,9 @@
 package zmaster587.libVulpes.render;
 
 public class TextPart {
-	public String text;
-	public double size;
-	public int colorRGBA;
+	public final String text;
+	public final double size;
+	public final int colorRGBA;
 	public double offsetX;
 	public double offsetY;
 	

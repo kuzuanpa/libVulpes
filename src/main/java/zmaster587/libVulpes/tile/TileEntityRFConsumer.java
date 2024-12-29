@@ -10,7 +10,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 import cofh.api.energy.IEnergyHandler;
 
 public abstract class TileEntityRFConsumer extends TileEntity implements IEnergyHandler, IUniversalEnergy {
-	protected UniversalBattery energy;
+	protected final UniversalBattery energy;
 
 	protected TileEntityRFConsumer(int energy) {
 		this.energy = new UniversalBattery(energy);

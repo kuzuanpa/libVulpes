@@ -5,8 +5,9 @@ import net.minecraft.inventory.ICrafting;
 
 public class ModuleSync extends ModuleBase {
 
-	IDataSync tile;
-	int id, prevData;
+	final IDataSync tile;
+	final int id;
+    int prevData;
 	public ModuleSync(int id, IDataSync tile) {
 		super(0, 0);
 		this.tile = tile;

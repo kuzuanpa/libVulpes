@@ -13,9 +13,9 @@ import net.minecraft.item.ItemStack;
 
 public class ContainerModular extends Container {
 
-	List<ModuleBase> modules;
+	final List<ModuleBase> modules;
 	int numSlots;
-	IModularInventory modularInventory;
+	final IModularInventory modularInventory;
 
 
 	public ContainerModular(EntityPlayer playerInv, List<ModuleBase> modules, IModularInventory modulularInv, boolean includePlayerInv, boolean includeHotBar) {
@@ -75,9 +75,9 @@ public class ContainerModular extends Container {
 			for(int i = 0; i < module.numberOfChangesToSend(); i++) {
 				if(module.isUpdateRequired(i)) {
 
-					for (int j = 0; j < this.crafters.size(); ++j) {
-						module.sendChanges(this, ((ICrafting)this.crafters.get(j)), moduleIndex, i);
-					}
+                    for (Object crafter : this.crafters) {
+                        module.sendChanges(this, ((ICrafting) crafter), moduleIndex, i);
+                    }
 				}
 				moduleIndex++;
 			}
@@ -125,7 +125,7 @@ public class ContainerModular extends Container {
 
 			if (itemstack1.stackSize == 0)
 			{
-				slot.putStack((ItemStack)null);
+				slot.putStack(null);
 			}
 			else
 			{

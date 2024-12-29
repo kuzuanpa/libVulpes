@@ -1,24 +1,20 @@
 package zmaster587.libVulpes.tile;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import gregapi.tileentity.base.TileEntityBase01Root;
+import gregapi.block.multitileentity.MultiTileEntityRegistry;
 import gregapi.util.ST;
-import net.minecraft.tileentity.TileEntity;
-import org.apache.commons.lang3.ArrayUtils;
-
 import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import org.jetbrains.annotations.NotNull;
 import zmaster587.libVulpes.block.BlockMeta;
 import zmaster587.libVulpes.tile.multiblock.TilePlaceholder;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TileSchematic extends TilePlaceholder {
 
-	private final int ttl = 6000;
-	private int timeAlive = 0;
+    private int timeAlive = 0;
 	List<BlockMeta> possibleBlocks;
 
 	public TileSchematic() {
@@ -80,7 +76,8 @@ public class TileSchematic extends TilePlaceholder {
 		super.updateEntity();
 
 		if(!worldObj.isRemote) {
-			if(timeAlive == ttl) {
+            int ttl = 6000;
+            if(timeAlive == ttl) {
 				worldObj.setBlockToAir(xCoord, yCoord, zCoord);
 			}
 		}
@@ -97,10 +94,16 @@ public class TileSchematic extends TilePlaceholder {
 			NBTTagCompound blockTag = new NBTTagCompound();
 			blockTag.setInteger("id", Block.getIdFromBlock(block.getBlock()));
 			blockTag.setInteger("meta", block.getMeta());
-			if(!block.overrideName.equals(""))blockTag.setString("name", block.overrideName);
+			if(!block.overrideName.isEmpty())blockTag.setString("name", block.overrideName);
 			if(block.GTTile!=null){
 				NBTTagCompound tag = new NBTTagCompound();
 				block.GTTile.writeToNBT(tag);
+				if(tag.hasKey("gt.mte.reg")){
+					//Replace id to name to try to resolve randomly null Registry bug.
+					String mteID = MultiTileEntityRegistry.getRegistryByUnRemappedID(tag.getInteger("gt.mte.reg")).mNameInternal;
+					tag.removeTag("gt.mte.reg");
+					tag.setString("gt.mte.reg", mteID);
+				}
 				blockTag.setTag("GTTile", tag);
 			}
 			nbt.setTag("block."+i,blockTag);
@@ -118,11 +121,23 @@ public class TileSchematic extends TilePlaceholder {
 			BlockMeta block = new BlockMeta(Block.getBlockById(blockTag.getInteger("id")), blockTag.getInteger("meta"));
 			if(blockTag.hasKey("name"))block.overrideName=blockTag.getString("name");
 			if(blockTag.hasKey("GTTile")){
-				block.GTTile= TileEntity.createAndLoadEntity(blockTag.getCompoundTag("GTTile"));
+				NBTTagCompound tag = blockTag.getCompoundTag("GTTile");
+				if(tag.hasKey("gt.mte.reg")){
+					//Replace name to id to try to resolve randomly null Registry bug.
+					String mteName = tag.getString("gt.mte.reg");
+					tag.removeTag("gt.mte.reg");
+					tag.setShort("gt.mte.reg", ST.id(MultiTileEntityRegistry.getRegistry(mteName).mBlock));
+				}
+				block.GTTile= TileEntity.createAndLoadEntity(tag);
 			}
 			possibleBlocks.add(i,block);
 			i++;
 		}
+	}
+
+	@Override
+	public boolean shouldRenderInPass(int pass) {
+		return true;
 	}
 
 	public void onChunkUnload()

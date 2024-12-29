@@ -1,15 +1,15 @@
 package zmaster587.libVulpes.tile;
 
+import org.jetbrains.annotations.NotNull;
 import zmaster587.libVulpes.util.EmbeddedInventory;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 
 public abstract class TileInventoriedRFConsumer extends TileEntityRFConsumer implements ISidedInventory {
 
-	protected EmbeddedInventory inventory;
+	protected final EmbeddedInventory inventory;
 	
 	protected TileInventoriedRFConsumer(int energy,int invSize) {
 		super(energy);
@@ -17,7 +17,7 @@ public abstract class TileInventoriedRFConsumer extends TileEntityRFConsumer imp
 	}
 	
 	@Override
-	public void writeToNBT(NBTTagCompound nbt) {
+	public void writeToNBT(@NotNull NBTTagCompound nbt) {
 		super.writeToNBT(nbt);
 		
 		inventory.writeToNBT(nbt);

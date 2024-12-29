@@ -12,8 +12,8 @@ import org.jetbrains.annotations.Nullable;
 
 public class SlotArmor extends Slot {
 	
-	EntityPlayer player;
-	int armorType;
+	final EntityPlayer player;
+	final int armorType;
 	public SlotArmor(IInventory inv, int slot, int x, int y, EntityPlayer player, int armorType) {
 		super(inv, slot, x, y);
 		this.player = player;

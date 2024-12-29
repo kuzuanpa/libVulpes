@@ -23,7 +23,7 @@ import zmaster587.libVulpes.util.MultiBattery;
 
 public class TileMultiPowerProducer extends TileMultiBlock implements IToggleButton, IModularInventory, INetworkMachine {
 
-	protected MultiBattery batteries = new MultiBattery();
+	protected final MultiBattery batteries = new MultiBattery();
 	protected boolean enabled;
 	private ModuleToggleSwitch toggleSwitch;
 

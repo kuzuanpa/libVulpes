@@ -18,12 +18,7 @@ public class TileMaterial extends TilePointer {
 		super();
 	}
 
-	@Override
-	public boolean canUpdate() {
-		return false;
-	}
-
-	public Material getMaterial() {
+    public Material getMaterial() {
 		return materialType;
 	}
 
@@ -41,7 +36,7 @@ public class TileMaterial extends TilePointer {
 	}
 
 	@Override
-	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
+	public void onDataPacket(NetworkManager net, @NotNull S35PacketUpdateTileEntity pkt) {
 		materialType = MaterialRegistry.getMaterialFromName(pkt.func_148857_g().getString("material"));
 	}
 

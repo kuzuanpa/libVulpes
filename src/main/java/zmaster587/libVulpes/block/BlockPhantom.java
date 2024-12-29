@@ -2,7 +2,6 @@ package zmaster587.libVulpes.block;
 
 import java.util.ArrayList;
 
-import net.minecraft.init.Blocks;
 import org.jetbrains.annotations.NotNull;
 import zmaster587.libVulpes.tile.TileSchematic;
 import zmaster587.libVulpes.tile.multiblock.TilePlaceholder;
@@ -12,7 +11,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.IIcon;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;

@@ -4,9 +4,7 @@ import cofh.api.energy.IEnergyHandler;
 import cofh.api.energy.IEnergyReceiver;
 import org.jetbrains.annotations.NotNull;
 import zmaster587.libVulpes.util.CreativeBattery;
-import zmaster587.libVulpes.util.UniversalBattery;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.util.ForgeDirection;
 
 public class TilePlugCreativeInputRF extends TilePlugBase implements IEnergyHandler {

@@ -16,11 +16,10 @@ import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
 
 public class ModuleSlotButton extends ModuleButton {
 
-	ItemStack stack;
+	final ItemStack stack;
 
 	public ModuleSlotButton(int offsetX, int offsetY, int buttonId, IButtonInventory tile, @NotNull ItemStack slotDisplay) {
 		
@@ -84,11 +83,8 @@ public class ModuleSlotButton extends ModuleButton {
 			GL11.glScalef(1.0F, 1.0F, -1.0F);
 			GL11.glRotatef(210.0F, 1.0F, 0.0F, 0.0F);
 			GL11.glRotated(45.0F + ((System.currentTimeMillis() % 200000)/50F) * 2, 0.0F, 1.0F, 0.0F);
-			l = stack.getItem().getColorFromItemStack(stack, 0);
-			f3 = (float)(l >> 16 & 255) / 255.0F;
-			f4 = (float)(l >> 8 & 255) / 255.0F;
-			f = (float)(l & 255) / 255.0F;
-			
+            stack.getItem().getColorFromItemStack(stack, 0);
+
             renderBlocksRi.renderBlockAsItem(block, k, 1.0F);
             renderBlocksRi.useInventoryTint = true;
 

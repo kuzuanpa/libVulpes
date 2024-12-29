@@ -17,27 +17,27 @@ import net.minecraftforge.client.model.IModelCustom;
 
 public class RendererModelBlock  extends TileEntitySpecialRenderer implements IItemRenderer {
 
-	protected static IModelCustom rocketModel = AdvancedModelLoader.loadModel(new ResourceLocation("advancedrocketry:models/combustion.obj"));
-	protected static IModelCustom advRocketModel = AdvancedModelLoader.loadModel(new ResourceLocation("advancedrocketry:models/advCombustion.obj"));
-	protected static ResourceLocation rocketTexture = new ResourceLocation("advancedrocketry:textures/models/combustion.png");
+	protected static final IModelCustom rocketModel = AdvancedModelLoader.loadModel(new ResourceLocation("advancedrocketry:models/combustion.obj"));
+	protected static final IModelCustom advRocketModel = AdvancedModelLoader.loadModel(new ResourceLocation("advancedrocketry:models/advCombustion.obj"));
+	protected static final ResourceLocation rocketTexture = new ResourceLocation("advancedrocketry:textures/models/combustion.png");
 	
-	protected static IModelCustom middleTankModel = AdvancedModelLoader.loadModel(new ResourceLocation("advancedrocketry:models/middleTank.obj"));
-	protected static ResourceLocation  middleTankTexture = new ResourceLocation("advancedrocketry:textures/models/tank.png");
+	protected static final IModelCustom middleTankModel = AdvancedModelLoader.loadModel(new ResourceLocation("advancedrocketry:models/middleTank.obj"));
+	protected static final ResourceLocation  middleTankTexture = new ResourceLocation("advancedrocketry:textures/models/tank.png");
 
-	protected static IModelCustom endTankModel = AdvancedModelLoader.loadModel(new ResourceLocation("advancedrocketry:models/endTank.obj"));
-	protected static ResourceLocation endTankTexture = new ResourceLocation("advancedrocketry:textures/models/tank.png");
+	protected static final IModelCustom endTankModel = AdvancedModelLoader.loadModel(new ResourceLocation("advancedrocketry:models/endTank.obj"));
+	protected static final ResourceLocation endTankTexture = new ResourceLocation("advancedrocketry:textures/models/tank.png");
 	
-	protected static IModelCustom topTankModel =  AdvancedModelLoader.loadModel(new ResourceLocation("advancedrocketry:models/topTank.obj"));
-	protected static ResourceLocation topTankTexture =new ResourceLocation("advancedrocketry:textures/models/tank.png");
+	protected static final IModelCustom topTankModel =  AdvancedModelLoader.loadModel(new ResourceLocation("advancedrocketry:models/topTank.obj"));
+	protected static final ResourceLocation topTankTexture =new ResourceLocation("advancedrocketry:textures/models/tank.png");
 	
-	protected static IModelCustom motorModel =  AdvancedModelLoader.loadModel(new ResourceLocation("advancedrocketry:models/motor.obj"));
-	protected static ResourceLocation motorTexture = new ResourceLocation("advancedrocketry:textures/models/motor.png");
-	protected static ResourceLocation advMotorTexture = new ResourceLocation("advancedrocketry:textures/models/advancedMotor.png");
-	protected static ResourceLocation enhMotorTexture = new ResourceLocation("advancedrocketry:textures/models/enhancedMotor.png");
-	protected static ResourceLocation eliteMotorTexture = new ResourceLocation("advancedrocketry:textures/models/eliteMotor.png");
+	protected static final IModelCustom motorModel =  AdvancedModelLoader.loadModel(new ResourceLocation("advancedrocketry:models/motor.obj"));
+	protected static final ResourceLocation motorTexture = new ResourceLocation("advancedrocketry:textures/models/motor.png");
+	protected static final ResourceLocation advMotorTexture = new ResourceLocation("advancedrocketry:textures/models/advancedMotor.png");
+	protected static final ResourceLocation enhMotorTexture = new ResourceLocation("advancedrocketry:textures/models/enhancedMotor.png");
+	protected static final ResourceLocation eliteMotorTexture = new ResourceLocation("advancedrocketry:textures/models/eliteMotor.png");
 	
-	protected static IModelCustom sawBladeModel =  AdvancedModelLoader.loadModel(new ResourceLocation("advancedrocketry:models/sawBlade.obj"));
-	protected static ResourceLocation sawBladeTexture = new ResourceLocation("advancedrocketry:textures/models/cuttingMachine.png");
+	protected static final IModelCustom sawBladeModel =  AdvancedModelLoader.loadModel(new ResourceLocation("advancedrocketry:models/sawBlade.obj"));
+	protected static final ResourceLocation sawBladeTexture = new ResourceLocation("advancedrocketry:textures/models/cuttingMachine.png");
 
 	public RendererModelBlock() {
 	}

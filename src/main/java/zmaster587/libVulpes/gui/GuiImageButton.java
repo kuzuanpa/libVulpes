@@ -4,7 +4,6 @@ import org.jetbrains.annotations.NotNull;
 import org.lwjgl.opengl.GL11;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.ISound;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.client.gui.GuiButton;
@@ -83,10 +82,10 @@ public class GuiImageButton extends GuiButton {
 			GL11.glDisable(GL11.GL_ALPHA_TEST);
 			@NotNull Tessellator tessellator = Tessellator.instance;
 			tessellator.startDrawingQuads();
-			tessellator.addVertexWithUV(xPosition, yPosition + height, (double)this.zLevel, 0, 1);
-			tessellator.addVertexWithUV(xPosition + width, yPosition + height, (double)this.zLevel, 1, 1);
-			tessellator.addVertexWithUV(xPosition + width, yPosition, (double)this.zLevel, 1, 0);
-			tessellator.addVertexWithUV(xPosition, yPosition, (double)this.zLevel, 0, 0);
+			tessellator.addVertexWithUV(xPosition, yPosition + height, this.zLevel, 0, 1);
+			tessellator.addVertexWithUV(xPosition + width, yPosition + height, this.zLevel, 1, 1);
+			tessellator.addVertexWithUV(xPosition + width, yPosition, this.zLevel, 1, 0);
+			tessellator.addVertexWithUV(xPosition, yPosition, this.zLevel, 0, 0);
 			tessellator.draw();
 			GL11.glDisable(GL11.GL_BLEND);
 			GL11.glEnable(GL11.GL_ALPHA_TEST);

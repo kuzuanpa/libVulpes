@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class SlotSingleItem extends Slot {
 
-	private ItemStack acceptedItem;
+	private final ItemStack acceptedItem;
 
 	
 	public SlotSingleItem(IInventory par1iInventory, int par2, int par3, int par4, Item item) {

@@ -1,14 +1,5 @@
 package zmaster587.libVulpes.inventory.modules;
 
-import java.util.LinkedList;
-import java.util.List;
-
-import org.jetbrains.annotations.NotNull;
-import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.GL11;
-
-import zmaster587.libVulpes.inventory.GuiModular;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
@@ -20,8 +11,14 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.GuiScreenEvent.ActionPerformedEvent;
-import net.minecraftforge.client.event.MouseEvent;
 import net.minecraftforge.common.MinecraftForge;
+import org.jetbrains.annotations.NotNull;
+import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.GL11;
+import zmaster587.libVulpes.inventory.GuiModular;
+
+import java.util.LinkedList;
+import java.util.List;
 
 public class ModuleContainerPan extends ModuleBase {
 
@@ -32,11 +29,12 @@ public class ModuleContainerPan extends ModuleBase {
 	protected int containerSizeY;
 	protected List<ModuleBase> moduleList;
 	protected List<ModuleBase> staticModuleList;
-	protected List<GuiButton> buttonList, staticButtonList;
+	protected List<GuiButton> buttonList;
+    protected List<GuiButton> staticButtonList;
 	protected List<Slot> slotList;
 	protected int mouseLastX, mouseLastY;
 	boolean outofBounds;
-	ResourceLocation backdrop;
+	final ResourceLocation backdrop;
 	protected int internalOffsetX;
 	protected int internalOffsetY;
 
@@ -311,8 +309,8 @@ public class ModuleContainerPan extends ModuleBase {
 			}
 			else if(mouseLastX != x && mouseLastY != y) {
 
-				int deltaX = (int) ((k - mouseLastX));
-				int deltaY = (int) ((l - mouseLastY));
+				int deltaX = (k - mouseLastX);
+				int deltaY = (l - mouseLastY);
 
 				moveContainerInterior(deltaX, deltaY);
 

@@ -1,25 +1,23 @@
 package zmaster587.libVulpes.inventory;
 
-import java.awt.Rectangle;
-import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
-
-import org.jetbrains.annotations.NotNull;
-import zmaster587.libVulpes.gui.CommonResources;
-import zmaster587.libVulpes.inventory.modules.IModularInventory;
-import zmaster587.libVulpes.inventory.modules.ModuleBase;
-import zmaster587.libVulpes.inventory.modules.ModuleImage;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
+import org.jetbrains.annotations.NotNull;
+import zmaster587.libVulpes.gui.CommonResources;
+import zmaster587.libVulpes.inventory.modules.IModularInventory;
+import zmaster587.libVulpes.inventory.modules.ModuleBase;
+
+import java.awt.*;
+import java.util.LinkedList;
+import java.util.List;
 
 public class GuiModular extends GuiContainer {
 
-	List<ModuleBase> modules;
-	String unlocalizedName;
-	boolean hasSlots;
+	final List<ModuleBase> modules;
+	final String unlocalizedName;
+	final boolean hasSlots;
 
 	public GuiModular(EntityPlayer playerInv, @NotNull List<ModuleBase> modules, IModularInventory modularInv, boolean includePlayerInv, boolean includeHotBar, String name) {
 		super(new ContainerModular(playerInv, modules,modularInv, includePlayerInv, includeHotBar));
@@ -37,9 +35,7 @@ public class GuiModular extends GuiContainer {
 
 		for(ModuleBase module : modules) {
 			List<GuiButton> buttonList = module.addButtons(x, y);
-			if(!buttonList.isEmpty()) {
-				this.buttonList.addAll(buttonList);
-			}
+			if(!buttonList.isEmpty()) this.buttonList.addAll(buttonList);
 		}
 	}
 
@@ -75,7 +71,7 @@ public class GuiModular extends GuiContainer {
 			int b) {
 		super.drawGuiContainerForegroundLayer(a, b);
 
-		this.fontRendererObj.drawString(I18n.format(unlocalizedName, new Object[0]), 8, 6, 4210752);
+		this.fontRendererObj.drawString(I18n.format(unlocalizedName), 8, 6, 4210752);
 
 		for(ModuleBase module : modules)
 			if(module.getVisible())

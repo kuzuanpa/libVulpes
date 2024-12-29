@@ -1,7 +1,9 @@
 package zmaster587.libVulpes.util;
 
 public class Vector3F<E> {
-	public E x,y,z;
+	public E x;
+    public E y;
+    public E z;
 	
 	
 	public Vector3F(E x, E y,E z){

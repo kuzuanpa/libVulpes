@@ -8,7 +8,7 @@ import net.minecraft.item.ItemStack;
 
 public class SlotListAllowed extends Slot {
 
-	Set<ItemStack> allowedItems;
+	final Set<ItemStack> allowedItems;
 	
 	public SlotListAllowed(IInventory inventory, int slotIndex, int x, int y, Set<ItemStack> allowedItems) {
 		super(inventory, slotIndex, x, y);

@@ -6,8 +6,6 @@ import java.util.List;
 import io.netty.buffer.ByteBuf;
 import cpw.mods.fml.relauncher.Side;
 import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.SoundCategory;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -35,7 +33,7 @@ import zmaster587.libVulpes.util.MultiBattery;
 
 public class TileMultiPowerConsumer extends TileMultiBlock implements INetworkMachine, IModularInventory, IProgressBar, IToggleButton, IToggleableMachine {
 
-	protected MultiBattery batteries = new MultiBattery();
+	protected final MultiBattery batteries = new MultiBattery();
 
 	private float timeMultiplier;
 	protected int completionTime, currentTime;
@@ -43,7 +41,7 @@ public class TileMultiPowerConsumer extends TileMultiBlock implements INetworkMa
 	protected boolean enabled;
 	protected ModuleToggleSwitch toggleSwitch;
 	//On server determines change in power state, on client determines last power state on server
-	boolean hadPowerLastTick = true;
+	boolean hadPowerLastTick;
 
 	Object sound;
 
@@ -88,13 +86,8 @@ public class TileMultiPowerConsumer extends TileMultiBlock implements INetworkMa
 		return completionTime > 0 ? currentTime/(float)completionTime : 0f;
 	}
 
-	@Override
-	public boolean canUpdate() {
-		return true;
-	}
 
-
-	public ResourceLocation getSound() {
+    public ResourceLocation getSound() {
 		return null;
 	}
 
@@ -181,9 +174,9 @@ public class TileMultiPowerConsumer extends TileMultiBlock implements INetworkMa
 		}
 	}
 
-	protected void onCreated() {};
+	protected void onCreated() {}
 
-	/**
+    /**
 	 * @return amount of power to allow the machine to run this tick
 	 */
 	protected int requiredPowerPerTick() {

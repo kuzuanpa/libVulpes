@@ -70,7 +70,7 @@ public class GuiHandler implements IGuiHandler {
 		}
 		else if(ID == guiId.MODULARFULLSCREEN.ordinal()) {
 			IModularInventory modularTile = ((IModularInventory)tile);
-			return new GuiModularFullScreen(player,modularTile.getModules(ID, player), modularTile, ID == guiId.MODULAR.ordinal(), false, modularTile.getModularInventoryName());
+			return new GuiModularFullScreen(player,modularTile.getModules(ID, player), modularTile, false, false, modularTile.getModularInventoryName());
 		}
 		return null;
 	}

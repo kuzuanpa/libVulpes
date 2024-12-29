@@ -5,6 +5,7 @@ import java.util.List;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
 import zmaster587.libVulpes.inventory.modules.ModuleBase;
 import zmaster587.libVulpes.inventory.modules.ModuleOutputSlotArray;
 
@@ -32,7 +33,7 @@ public class TileOutputHatch extends TileInventoryHatch {
 	}
 
 	@Override
-	public List<ModuleBase> getModules(int ID, EntityPlayer player) {
+	public @NotNull List<ModuleBase> getModules(int ID, EntityPlayer player) {
 		LinkedList<ModuleBase> modules = new LinkedList<>();
 		modules.add(new ModuleOutputSlotArray(8, 18, this, 0, this.getSizeInventory()));
 		return modules;

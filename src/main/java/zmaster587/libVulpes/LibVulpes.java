@@ -65,9 +65,9 @@ import java.util.logging.Logger;
 
 @Mod(modid="libVulpes",name="Vulpes library",version="@MAJOR@.@MINOR@.@REVIS@.@BUILD@",useMetadata=true, dependencies="before:gregtech;after:CoFHCore;after:BuildCraft|Core")
 public class LibVulpes {
-	public static Logger logger = Logger.getLogger("libVulpes");
+	public static final Logger logger = Logger.getLogger("libVulpes");
 	public static int time = 0;
-	private static HashMap<Class, String> userModifiableRecipes = new HashMap<>();
+	private static final HashMap<Class, String> userModifiableRecipes = new HashMap<>();
 
 	public static final ArrayList<IDummyMultiBlockRegisterer> dummyMultiBlockRegisterers = new ArrayList<>();
 	@Instance(value = "libVulpes")
@@ -76,14 +76,14 @@ public class LibVulpes {
 	@SidedProxy(clientSide="zmaster587.libVulpes.client.ClientProxy", serverSide="zmaster587.libVulpes.common.CommonProxy")
 	public static CommonProxy proxy;
 
-	private static @NotNull CreativeTabs tabMultiblock = new CreativeTabs("multiBlock") {
+	private static final @NotNull CreativeTabs tabMultiblock = new CreativeTabs("multiBlock") {
 		@Override
 		public Item getTabIconItem() {
 			return LibVulpesItems.itemLinker;// AdvancedRocketryItems.itemSatelliteIdChip;
 		}
 	};
 
-	public static CreativeTabs tabLibVulpesOres = new CreativeTabs("advancedRocketryOres") {
+	public static final CreativeTabs tabLibVulpesOres = new CreativeTabs("advancedRocketryOres") {
 
 		@Override
 		public Item getTabIconItem() {
@@ -91,7 +91,7 @@ public class LibVulpes {
 		}
 	};
 
-	public static MaterialRegistry materialRegistry = new MaterialRegistry();
+	public static final MaterialRegistry materialRegistry = new MaterialRegistry();
 
 	public static void registerRecipeHandler(Class clazz, String fileName) {
 		userModifiableRecipes.put(clazz, fileName);
@@ -160,8 +160,7 @@ public class LibVulpes {
 		GameRegistry.registerBlock(LibVulpesBlocks.blockEliteMotor, LibVulpesBlocks.blockEliteMotor.getUnlocalizedName());
 		
 		//populate lists
-		Block[] motors = { LibVulpesBlocks.blockMotor, LibVulpesBlocks.blockAdvancedMotor, LibVulpesBlocks.blockEnhancedMotor, LibVulpesBlocks.blockEliteMotor };
-		LibVulpesBlocks.motors = motors;
+        LibVulpesBlocks.motors = new Block[]{ LibVulpesBlocks.blockMotor, LibVulpesBlocks.blockAdvancedMotor, LibVulpesBlocks.blockEnhancedMotor, LibVulpesBlocks.blockEliteMotor };
 
 		//Register Tile
 		GameRegistry.registerTileEntity(TileOutputHatch.class, "ARoutputHatch");
@@ -325,38 +324,36 @@ public class LibVulpes {
 			try {
 			file.createNewFile();
 			@NotNull BufferedReader inputStream = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/assets/libvulpes/defaultrecipe.xml")));
-			
 
-				if(inputStream != null) {
-					BufferedWriter stream2 = new BufferedWriter(new FileWriter(file));
-					
-					
-					while(inputStream.ready()) {
-						stream2.write(inputStream.readLine() + "\n");
-					}
-					
-					
-					//Write recipes
-					
-					stream2.write("<Recipes useDefault=\"true\">\n");
-					for(IRecipe recipe : RecipesMachine.getInstance().getRecipes(clazz)) {
-						boolean writeable = true;
-						for (ItemStack stack : recipe.getOutput()) {
-							if(stack.hasTagCompound()) {
-								writeable = false;
-								break;
-							}
-						}
-						
-						if(writeable)
-							stream2.write(XMLRecipeLoader.writeRecipe(recipe) + "\n");
-					}
-					stream2.write("</Recipes>");
-					stream2.close();
-					
-					inputStream.close();
-				}
-			} catch (IOException e) {
+
+                BufferedWriter stream2 = new BufferedWriter(new FileWriter(file));
+
+
+                while(inputStream.ready()) {
+                    stream2.write(inputStream.readLine() + "\n");
+                }
+
+
+                //Write recipes
+
+                stream2.write("<Recipes useDefault=\"true\">\n");
+                for(IRecipe recipe : RecipesMachine.getInstance().getRecipes(clazz)) {
+                    boolean writeable = true;
+                    for (ItemStack stack : recipe.getOutput()) {
+                        if(stack.hasTagCompound()) {
+                            writeable = false;
+                            break;
+                        }
+                    }
+
+                    if(writeable)
+                        stream2.write(XMLRecipeLoader.writeRecipe(recipe) + "\n");
+                }
+                stream2.write("</Recipes>");
+                stream2.close();
+
+                inputStream.close();
+            } catch (IOException e) {
 				e.printStackTrace();
 			}
 		} else {
@@ -373,196 +370,190 @@ public class LibVulpes {
 
 	@Mod.EventHandler
 	public void missingMappingEvent(FMLMissingMappingsEvent event) {
-		Iterator<MissingMapping> itr = event.getAll().iterator();
-		while(itr.hasNext()) {
-			MissingMapping mapping = itr.next();
+        for (MissingMapping mapping : event.getAll()) {
+            if (mapping.name.equalsIgnoreCase("advancedRocketry:item.battery"))
+                mapping.remap(LibVulpesItems.itemBattery);
 
-			if(mapping.name.equalsIgnoreCase("advancedRocketry:item.battery"))
-				mapping.remap(LibVulpesItems.itemBattery);
+            if (mapping.name.equalsIgnoreCase("advancedrocketry:" + LibVulpesBlocks.blockPhantom.getUnlocalizedName())) {
+                if (mapping.type == GameRegistry.Type.BLOCK) {
+                    mapping.remap(LibVulpesBlocks.blockPhantom);
+                } else
+                    mapping.remap(Item.getItemFromBlock(LibVulpesBlocks.blockPhantom));
+            }
 
-			if(mapping.name.equalsIgnoreCase("advancedrocketry:" + LibVulpesBlocks.blockPhantom.getUnlocalizedName())) {
-				if(mapping.type == mapping.type.BLOCK) {
-					mapping.remap(LibVulpesBlocks.blockPhantom);
-				}
-				else
-					mapping.remap(Item.getItemFromBlock(LibVulpesBlocks.blockPhantom));
-			}
+            if (mapping.name.equalsIgnoreCase("advancedrocketry:" + LibVulpesItems.itemHoloProjector.getUnlocalizedName())) {
+                mapping.remap(LibVulpesItems.itemHoloProjector);
+            }
 
-			if(mapping.name.equalsIgnoreCase("advancedrocketry:" + LibVulpesItems.itemHoloProjector.getUnlocalizedName())) {
-				mapping.remap(LibVulpesItems.itemHoloProjector);
-			}
+            if (mapping.name.equalsIgnoreCase("advancedrocketry:blockHatch")) {
+                if (mapping.type == GameRegistry.Type.BLOCK) {
+                    mapping.remap(LibVulpesBlocks.blockHatch);
+                } else
+                    mapping.remap(Item.getItemFromBlock(LibVulpesBlocks.blockHatch));
+            }
 
-			if(mapping.name.equalsIgnoreCase("advancedrocketry:blockHatch")) {
-				if(mapping.type == mapping.type.BLOCK) {
-					mapping.remap(LibVulpesBlocks.blockHatch);
-				} else
-					mapping.remap(Item.getItemFromBlock(LibVulpesBlocks.blockHatch));
-			}
+            if (mapping.name.equalsIgnoreCase("advancedrocketry:blockPlaceholder")) {
+                if (mapping.type == GameRegistry.Type.BLOCK) {
+                    mapping.remap(LibVulpesBlocks.blockPlaceHolder);
+                } else
+                    mapping.remap(Item.getItemFromBlock(LibVulpesBlocks.blockPlaceHolder));
+            }
 
-			if(mapping.name.equalsIgnoreCase("advancedrocketry:blockPlaceholder")) {
-				if(mapping.type == mapping.type.BLOCK) {
-					mapping.remap(LibVulpesBlocks.blockPlaceHolder);
-				} else
-					mapping.remap(Item.getItemFromBlock(LibVulpesBlocks.blockPlaceHolder));
-			}
+            if (mapping.name.equalsIgnoreCase("advancedrocketry:blockStructureBlock")) {
+                if (mapping.type == GameRegistry.Type.BLOCK) {
+                    mapping.remap(LibVulpesBlocks.blockStructureBlock);
+                } else
+                    mapping.remap(Item.getItemFromBlock(LibVulpesBlocks.blockStructureBlock));
+            }
 
-			if(mapping.name.equalsIgnoreCase("advancedrocketry:blockStructureBlock")) {
-				if(mapping.type == mapping.type.BLOCK) {
-					mapping.remap(LibVulpesBlocks.blockStructureBlock);
-				} else
-					mapping.remap(Item.getItemFromBlock(LibVulpesBlocks.blockStructureBlock));
-			}
+            if (mapping.name.equalsIgnoreCase("advancedrocketry:rfBattery")) {
+                if (mapping.type == GameRegistry.Type.BLOCK) {
+                    mapping.remap(LibVulpesBlocks.blockRFBattery);
+                } else
+                    mapping.remap(Item.getItemFromBlock(LibVulpesBlocks.blockRFBattery));
+            }
 
-			if(mapping.name.equalsIgnoreCase("advancedrocketry:rfBattery")) {
-				if(mapping.type == mapping.type.BLOCK) {
-					mapping.remap(LibVulpesBlocks.blockRFBattery);
-				} else
-					mapping.remap(Item.getItemFromBlock(LibVulpesBlocks.blockRFBattery));
-			}
+            if (mapping.name.equalsIgnoreCase("advancedrocketry:batteryOutputRF")) {
+                if (mapping.type == GameRegistry.Type.BLOCK) {
+                    mapping.remap(LibVulpesBlocks.blockRFOutput);
+                } else
+                    mapping.remap(Item.getItemFromBlock(LibVulpesBlocks.blockRFOutput));
+            }
 
-			if(mapping.name.equalsIgnoreCase("advancedrocketry:batteryOutputRF")) {
-				if(mapping.type == mapping.type.BLOCK) {
-					mapping.remap(LibVulpesBlocks.blockRFOutput);
-				} else
-					mapping.remap(Item.getItemFromBlock(LibVulpesBlocks.blockRFOutput));
-			}
+            if (mapping.name.equalsIgnoreCase("advancedrocketry:tile.IC2Plug")) {
+                if (LibVulpesBlocks.blockIC2Plug != null) {
+                    if (mapping.type == GameRegistry.Type.BLOCK) {
+                        mapping.remap(LibVulpesBlocks.blockIC2Plug);
+                    } else
+                        mapping.remap(Item.getItemFromBlock(LibVulpesBlocks.blockIC2Plug));
+                }
+            }
 
-			if(mapping.name.equalsIgnoreCase("advancedrocketry:tile.IC2Plug")) {
-				if(LibVulpesBlocks.blockIC2Plug != null) {
-					if(mapping.type == mapping.type.BLOCK) {
-						mapping.remap(LibVulpesBlocks.blockIC2Plug);
-					} else
-						mapping.remap(Item.getItemFromBlock(LibVulpesBlocks.blockIC2Plug));
-				}
-			}
+            if (mapping.name.equalsIgnoreCase("advancedrocketry:metal0")) {
+                if (mapping.type == GameRegistry.Type.BLOCK) {
+                    mapping.remap(Block.getBlockFromItem(MaterialRegistry.getMaterialFromName("Copper").getProduct(AllowedProducts.getProductByName("BLOCK")).getItem()));
+                } else
+                    mapping.remap(MaterialRegistry.getMaterialFromName("Copper").getProduct(AllowedProducts.getProductByName("BLOCK")).getItem());
+            }
 
-			if(mapping.name.equalsIgnoreCase("advancedrocketry:metal0")) {
-				if(mapping.type == mapping.type.BLOCK) {
-					mapping.remap(Block.getBlockFromItem(MaterialRegistry.getMaterialFromName("Copper").getProduct(AllowedProducts.getProductByName("BLOCK")).getItem()));
-				} else
-					mapping.remap(MaterialRegistry.getMaterialFromName("Copper").getProduct(AllowedProducts.getProductByName("BLOCK")).getItem());
-			}
+            if (mapping.name.equalsIgnoreCase("advancedrocketry:coil0")) {
+                if (mapping.type == GameRegistry.Type.BLOCK) {
+                    mapping.remap(Block.getBlockFromItem(MaterialRegistry.getMaterialFromName("Copper").getProduct(AllowedProducts.getProductByName("COIL")).getItem()));
+                } else
+                    mapping.remap(MaterialRegistry.getMaterialFromName("Copper").getProduct(AllowedProducts.getProductByName("COIL")).getItem());
 
-			if(mapping.name.equalsIgnoreCase("advancedrocketry:coil0")) {
-				if(mapping.type == mapping.type.BLOCK) {
-					mapping.remap(Block.getBlockFromItem(MaterialRegistry.getMaterialFromName("Copper").getProduct(AllowedProducts.getProductByName("COIL")).getItem()));
-				} else
-					mapping.remap(MaterialRegistry.getMaterialFromName("Copper").getProduct(AllowedProducts.getProductByName("COIL")).getItem());
+            }
 
-			}
+            if (mapping.name.equalsIgnoreCase("advancedrocketry:ore0")) {
+                if (mapping.type == GameRegistry.Type.BLOCK) {
+                    mapping.remap(Block.getBlockFromItem(MaterialRegistry.getMaterialFromName("Copper").getProduct(AllowedProducts.getProductByName("ORE")).getItem()));
+                } else
+                    mapping.remap(MaterialRegistry.getMaterialFromName("Copper").getProduct(AllowedProducts.getProductByName("ORE")).getItem());
+            }
 
-			if(mapping.name.equalsIgnoreCase("advancedrocketry:ore0")) {
-				if(mapping.type == mapping.type.BLOCK) {
-					mapping.remap(Block.getBlockFromItem(MaterialRegistry.getMaterialFromName("Copper").getProduct(AllowedProducts.getProductByName("ORE")).getItem()));
-				} else
-					mapping.remap(MaterialRegistry.getMaterialFromName("Copper").getProduct(AllowedProducts.getProductByName("ORE")).getItem());
-			}
+            if (mapping.name.equalsIgnoreCase("advancedrocketry:productingot")) {
+                mapping.remap(MaterialRegistry.getMaterialFromName("Copper").getProduct(AllowedProducts.getProductByName("INGOT")).getItem());
+            }
 
-			if(mapping.name.equalsIgnoreCase("advancedrocketry:productingot")) {
-				mapping.remap(MaterialRegistry.getMaterialFromName("Copper").getProduct(AllowedProducts.getProductByName("INGOT")).getItem());
-			}
+            if (mapping.name.equalsIgnoreCase("advancedrocketry:productboule")) {
+                mapping.remap(MaterialRegistry.getMaterialFromName("Silicon").getProduct(AllowedProducts.getProductByName("BOULE")).getItem());
+            }
 
-			if(mapping.name.equalsIgnoreCase("advancedrocketry:productboule")) {
-				mapping.remap(MaterialRegistry.getMaterialFromName("Silicon").getProduct(AllowedProducts.getProductByName("BOULE")).getItem());
-			}
+            if (mapping.name.equalsIgnoreCase("advancedrocketry:productgear")) {
+                mapping.remap(MaterialRegistry.getMaterialFromName("Titanium").getProduct(AllowedProducts.getProductByName("GEAR")).getItem());
+            }
 
-			if(mapping.name.equalsIgnoreCase("advancedrocketry:productgear")) {
-				mapping.remap(MaterialRegistry.getMaterialFromName("Titanium").getProduct(AllowedProducts.getProductByName("GEAR")).getItem());
-			}
+            if (mapping.name.equalsIgnoreCase("advancedrocketry:productplate")) {
+                mapping.remap(MaterialRegistry.getMaterialFromName("Titanium").getProduct(AllowedProducts.getProductByName("PLATE")).getItem());
+            }
 
-			if(mapping.name.equalsIgnoreCase("advancedrocketry:productplate")) {
-				mapping.remap(MaterialRegistry.getMaterialFromName("Titanium").getProduct(AllowedProducts.getProductByName("PLATE")).getItem());
-			}
+            if (mapping.name.equalsIgnoreCase("advancedrocketry:productdust")) {
+                mapping.remap(MaterialRegistry.getMaterialFromName("Titanium").getProduct(AllowedProducts.getProductByName("DUST")).getItem());
+            }
 
-			if(mapping.name.equalsIgnoreCase("advancedrocketry:productdust")) {
-				mapping.remap(MaterialRegistry.getMaterialFromName("Titanium").getProduct(AllowedProducts.getProductByName("DUST")).getItem());
-			}
+            if (mapping.name.equalsIgnoreCase("advancedrocketry:productrod")) {
+                mapping.remap(MaterialRegistry.getMaterialFromName("Titanium").getProduct(AllowedProducts.getProductByName("STICK")).getItem());
+            }
 
-			if(mapping.name.equalsIgnoreCase("advancedrocketry:productrod")) {
-				mapping.remap(MaterialRegistry.getMaterialFromName("Titanium").getProduct(AllowedProducts.getProductByName("STICK")).getItem());
-			}
+            if (mapping.name.equalsIgnoreCase("advancedrocketry:productfan")) {
+                mapping.remap(MaterialRegistry.getMaterialFromName("Steel").getProduct(AllowedProducts.getProductByName("FAN")).getItem());
+            }
 
-			if(mapping.name.equalsIgnoreCase("advancedrocketry:productfan")) {
-				mapping.remap(MaterialRegistry.getMaterialFromName("Steel").getProduct(AllowedProducts.getProductByName("FAN")).getItem());
-			}
+            if (mapping.name.equalsIgnoreCase("advancedrocketry:productcrystal")) {
+                mapping.remap(MaterialRegistry.getMaterialFromName("Dilithium").getProduct(AllowedProducts.getProductByName("CRYSTAL")).getItem());
+            }
 
-			if(mapping.name.equalsIgnoreCase("advancedrocketry:productcrystal")) {
-				mapping.remap(MaterialRegistry.getMaterialFromName("Dilithium").getProduct(AllowedProducts.getProductByName("CRYSTAL")).getItem());
-			}
+            if (mapping.name.equalsIgnoreCase("advancedrocketry:productnugget")) {
+                mapping.remap(MaterialRegistry.getMaterialFromName("Copper").getProduct(AllowedProducts.getProductByName("NUGGET")).getItem());
+            }
 
-			if(mapping.name.equalsIgnoreCase("advancedrocketry:productnugget")) {
-				mapping.remap(MaterialRegistry.getMaterialFromName("Copper").getProduct(AllowedProducts.getProductByName("NUGGET")).getItem());
-			}
-
-			if(mapping.name.equalsIgnoreCase("advancedrocketry:productsheet")) {
-				mapping.remap(MaterialRegistry.getMaterialFromName("Titanium").getProduct(AllowedProducts.getProductByName("SHEET")).getItem());
-			}
+            if (mapping.name.equalsIgnoreCase("advancedrocketry:productsheet")) {
+                mapping.remap(MaterialRegistry.getMaterialFromName("Titanium").getProduct(AllowedProducts.getProductByName("SHEET")).getItem());
+            }
 
 
+            if (mapping.name.equalsIgnoreCase("libVulpes:metal0")) {
+                if (mapping.type == GameRegistry.Type.BLOCK) {
+                    mapping.remap(Block.getBlockFromItem(MaterialRegistry.getMaterialFromName("Copper").getProduct(AllowedProducts.getProductByName("BLOCK")).getItem()));
+                } else
+                    mapping.remap(MaterialRegistry.getMaterialFromName("Copper").getProduct(AllowedProducts.getProductByName("BLOCK")).getItem());
+            }
 
+            if (mapping.name.equalsIgnoreCase("libVulpes:coil0")) {
+                if (mapping.type == GameRegistry.Type.BLOCK) {
+                    mapping.remap(Block.getBlockFromItem(MaterialRegistry.getMaterialFromName("Copper").getProduct(AllowedProducts.getProductByName("COIL")).getItem()));
+                } else
+                    mapping.remap(MaterialRegistry.getMaterialFromName("Copper").getProduct(AllowedProducts.getProductByName("COIL")).getItem());
 
-			if(mapping.name.equalsIgnoreCase("libVulpes:metal0")) {
-				if(mapping.type == mapping.type.BLOCK) {
-					mapping.remap(Block.getBlockFromItem(MaterialRegistry.getMaterialFromName("Copper").getProduct(AllowedProducts.getProductByName("BLOCK")).getItem()));
-				} else
-					mapping.remap(MaterialRegistry.getMaterialFromName("Copper").getProduct(AllowedProducts.getProductByName("BLOCK")).getItem());
-			}
+            }
 
-			if(mapping.name.equalsIgnoreCase("libVulpes:coil0")) {
-				if(mapping.type == mapping.type.BLOCK) {
-					mapping.remap(Block.getBlockFromItem(MaterialRegistry.getMaterialFromName("Copper").getProduct(AllowedProducts.getProductByName("COIL")).getItem()));
-				} else
-					mapping.remap(MaterialRegistry.getMaterialFromName("Copper").getProduct(AllowedProducts.getProductByName("COIL")).getItem());
+            if (mapping.name.equalsIgnoreCase("libVulpes:ore0")) {
+                if (mapping.type == GameRegistry.Type.BLOCK) {
+                    mapping.remap(Block.getBlockFromItem(MaterialRegistry.getMaterialFromName("Copper").getProduct(AllowedProducts.getProductByName("ORE")).getItem()));
+                } else
+                    mapping.remap(MaterialRegistry.getMaterialFromName("Copper").getProduct(AllowedProducts.getProductByName("ORE")).getItem());
+            }
 
-			}
+            if (mapping.name.equalsIgnoreCase("libVulpes:productingot")) {
+                mapping.remap(MaterialRegistry.getMaterialFromName("Copper").getProduct(AllowedProducts.getProductByName("INGOT")).getItem());
+            }
 
-			if(mapping.name.equalsIgnoreCase("libVulpes:ore0")) {
-				if(mapping.type == mapping.type.BLOCK) {
-					mapping.remap(Block.getBlockFromItem(MaterialRegistry.getMaterialFromName("Copper").getProduct(AllowedProducts.getProductByName("ORE")).getItem()));
-				} else
-					mapping.remap(MaterialRegistry.getMaterialFromName("Copper").getProduct(AllowedProducts.getProductByName("ORE")).getItem());
-			}
+            if (mapping.name.equalsIgnoreCase("libVulpes:productboule")) {
+                mapping.remap(MaterialRegistry.getMaterialFromName("Silicon").getProduct(AllowedProducts.getProductByName("BOULE")).getItem());
+            }
 
-			if(mapping.name.equalsIgnoreCase("libVulpes:productingot")) {
-				mapping.remap(MaterialRegistry.getMaterialFromName("Copper").getProduct(AllowedProducts.getProductByName("INGOT")).getItem());
-			}
+            if (mapping.name.equalsIgnoreCase("libVulpes:productgear")) {
+                mapping.remap(MaterialRegistry.getMaterialFromName("Titanium").getProduct(AllowedProducts.getProductByName("GEAR")).getItem());
+            }
 
-			if(mapping.name.equalsIgnoreCase("libVulpes:productboule")) {
-				mapping.remap(MaterialRegistry.getMaterialFromName("Silicon").getProduct(AllowedProducts.getProductByName("BOULE")).getItem());
-			}
+            if (mapping.name.equalsIgnoreCase("libVulpes:productplate")) {
+                mapping.remap(MaterialRegistry.getMaterialFromName("Titanium").getProduct(AllowedProducts.getProductByName("PLATE")).getItem());
+            }
 
-			if(mapping.name.equalsIgnoreCase("libVulpes:productgear")) {
-				mapping.remap(MaterialRegistry.getMaterialFromName("Titanium").getProduct(AllowedProducts.getProductByName("GEAR")).getItem());
-			}
+            if (mapping.name.equalsIgnoreCase("libVulpes:productdust")) {
+                mapping.remap(MaterialRegistry.getMaterialFromName("Titanium").getProduct(AllowedProducts.getProductByName("DUST")).getItem());
+            }
 
-			if(mapping.name.equalsIgnoreCase("libVulpes:productplate")) {
-				mapping.remap(MaterialRegistry.getMaterialFromName("Titanium").getProduct(AllowedProducts.getProductByName("PLATE")).getItem());
-			}
+            if (mapping.name.equalsIgnoreCase("libVulpes:productrod")) {
+                mapping.remap(MaterialRegistry.getMaterialFromName("Titanium").getProduct(AllowedProducts.getProductByName("STICK")).getItem());
+            }
 
-			if(mapping.name.equalsIgnoreCase("libVulpes:productdust")) {
-				mapping.remap(MaterialRegistry.getMaterialFromName("Titanium").getProduct(AllowedProducts.getProductByName("DUST")).getItem());
-			}
+            if (mapping.name.equalsIgnoreCase("libVulpes:productfan")) {
+                mapping.remap(MaterialRegistry.getMaterialFromName("Steel").getProduct(AllowedProducts.getProductByName("FAN")).getItem());
+            }
 
-			if(mapping.name.equalsIgnoreCase("libVulpes:productrod")) {
-				mapping.remap(MaterialRegistry.getMaterialFromName("Titanium").getProduct(AllowedProducts.getProductByName("STICK")).getItem());
-			}
+            if (mapping.name.equalsIgnoreCase("libVulpes:productcrystal")) {
+                mapping.remap(MaterialRegistry.getMaterialFromName("Dilithium").getProduct(AllowedProducts.getProductByName("CRYSTAL")).getItem());
+            }
 
-			if(mapping.name.equalsIgnoreCase("libVulpes:productfan")) {
-				mapping.remap(MaterialRegistry.getMaterialFromName("Steel").getProduct(AllowedProducts.getProductByName("FAN")).getItem());
-			}
+            if (mapping.name.equalsIgnoreCase("libVulpes:productnugget")) {
+                mapping.remap(MaterialRegistry.getMaterialFromName("Copper").getProduct(AllowedProducts.getProductByName("NUGGET")).getItem());
+            }
 
-			if(mapping.name.equalsIgnoreCase("libVulpes:productcrystal")) {
-				mapping.remap(MaterialRegistry.getMaterialFromName("Dilithium").getProduct(AllowedProducts.getProductByName("CRYSTAL")).getItem());
-			}
-
-			if(mapping.name.equalsIgnoreCase("libVulpes:productnugget")) {
-				mapping.remap(MaterialRegistry.getMaterialFromName("Copper").getProduct(AllowedProducts.getProductByName("NUGGET")).getItem());
-			}
-
-			if(mapping.name.equalsIgnoreCase("libVulpes:productsheet")) {
-				mapping.remap(MaterialRegistry.getMaterialFromName("Titanium").getProduct(AllowedProducts.getProductByName("SHEET")).getItem());
-			}
-		}
+            if (mapping.name.equalsIgnoreCase("libVulpes:productsheet")) {
+                mapping.remap(MaterialRegistry.getMaterialFromName("Titanium").getProduct(AllowedProducts.getProductByName("SHEET")).getItem());
+            }
+        }
 	}
 
 	public static void addDummyMultiBlockRegisterer(IDummyMultiBlockRegisterer registerer){

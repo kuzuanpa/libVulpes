@@ -6,8 +6,8 @@ import org.jetbrains.annotations.Nullable;
 
 public class ResourceIcon implements IIcon {
 
-	ResourceLocation location;
-	IIcon subIcon;
+	final ResourceLocation location;
+	final IIcon subIcon;
 
 	public ResourceIcon(ResourceLocation location) {
 		this.location = location;

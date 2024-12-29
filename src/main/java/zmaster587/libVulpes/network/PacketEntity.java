@@ -1,11 +1,8 @@
 package zmaster587.libVulpes.network;
 
-import java.io.IOException;
-
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import io.netty.buffer.ByteBuf;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import zmaster587.libVulpes.interfaces.INetworkEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -14,8 +11,11 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import zmaster587.libVulpes.interfaces.INetworkEntity;
+
+import java.io.IOException;
 
 public class PacketEntity extends BasePacket {
 
@@ -28,16 +28,16 @@ public class PacketEntity extends BasePacket {
 
 	public PacketEntity() {
 		nbt = new NBTTagCompound();
-	};
+	}
 
-	public PacketEntity(INetworkEntity machine, byte packetId) {
+    public PacketEntity(INetworkEntity machine, byte packetId) {
 		this();
 		this.entity = machine;
 		this.packetId = packetId;
 	}
 
 
-	public PacketEntity(INetworkEntity entity, byte packetId, NBTTagCompound nbt) {
+	public PacketEntity(INetworkEntity entity, byte packetId, @Nullable NBTTagCompound nbt) {
 		this(entity, packetId);
 		this.nbt = nbt;
 	}
@@ -54,9 +54,9 @@ public class PacketEntity extends BasePacket {
 		out.writeInt(((Entity)entity).getEntityId());
 		out.writeByte(packetId);
 
-		out.writeBoolean(!nbt.hasNoTags());
+		out.writeBoolean(nbt != null && nbt.hasNoTags());
 
-		if(!nbt.hasNoTags()) {
+		if(nbt != null && !nbt.hasNoTags()) {
 			try {
 				out.writeNBTTagCompoundToBuffer(nbt);
 			} catch (IOException e) {
@@ -95,7 +95,7 @@ public class PacketEntity extends BasePacket {
 			this.nbt = nbt;
 		}
 
-		if(ent != null && ent instanceof INetworkEntity) {
+		if(ent instanceof INetworkEntity) {
 			entity = (INetworkEntity)ent;
 			entity.readDataFromNetwork(in, packetId, nbt);
 		}
@@ -111,12 +111,12 @@ public class PacketEntity extends BasePacket {
 
 	@Override
 	public void executeServer(EntityPlayerMP player) {
-		execute((EntityPlayer)player, Side.SERVER);
+		execute(player, Side.SERVER);
 	}
 
 	@Override
 	public void executeClient(EntityPlayer player) {
-		execute((EntityPlayer)player, Side.CLIENT);
+		execute(player, Side.CLIENT);
 	}
 
 	@Override
@@ -148,7 +148,7 @@ public class PacketEntity extends BasePacket {
 			this.nbt = nbt;
 		}
 
-		if(ent != null && ent instanceof INetworkEntity) {
+		if(ent instanceof INetworkEntity) {
 			entity = (INetworkEntity)ent;
 			entity.readDataFromNetwork(buffer, packetId, nbt);
 		}

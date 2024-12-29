@@ -1,13 +1,13 @@
 package zmaster587.libVulpes.block;
 
-import zmaster587.libVulpes.api.material.MaterialRegistry;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.util.IIcon;
 import net.minecraftforge.common.util.ForgeDirection;
 
 public class BlockCoil extends BlockMetalBlock {
-	String side, poles;
+	final String side;
+    final String poles;
 	IIcon sideIcon, polesIcon;
 	
 	public BlockCoil(Material mat, String side, String poles) {

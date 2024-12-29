@@ -15,7 +15,6 @@ import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
@@ -45,10 +44,10 @@ public class RenderHelper {
 			String token = tokens.nextToken();
 			
 			for(int i = 0 ; i < token.length() && i < horizontalLetter; i++) {
-				tess.addVertexWithUV(text.offsetX + text.size*i, text.offsetY -text.size*line - text.size, 0, (8*(token.charAt(i) % 16) + (token.charAt(i) % 16))/145D, (1/145D) + (8*(1 + (token.charAt(i) / 16)) + (token.charAt(i)/16))/145D);
-				tess.addVertexWithUV(text.offsetX + text.size*i + text.size, text.offsetY - text.size*line - text.size, 0, (8*(1 + (token.charAt(i) % 16)) + (token.charAt(i) % 16))/145D, (1/145D) + (8*(1 + (token.charAt(i) / 16)) + (token.charAt(i)/16))/145D);
-				tess.addVertexWithUV(text.offsetX + text.size*i + text.size, text.offsetY - text.size*line, 0, (8*(1 + (token.charAt(i) % 16)) + (token.charAt(i) % 16))/145D, (8*(token.charAt(i) / 16) + (token.charAt(i)/16))/145D);
-				tess.addVertexWithUV(text.offsetX + text.size*i, text.offsetY - text.size*line, 0, (8*(token.charAt(i) % 16) + (token.charAt(i) % 16))/145D,(8*(token.charAt(i) / 16) + (token.charAt(i)/16))/145D);
+				tess.addVertexWithUV(text.offsetX + text.size*i, text.offsetY -text.size*line - text.size, 0, (8*(token.charAt(i) % 16) + (token.charAt(i) % 16))/145D, (1/145D) + (8*(1 + ((double) token.charAt(i) / 16)) + ((double) token.charAt(i) /16))/145D);
+				tess.addVertexWithUV(text.offsetX + text.size*i + text.size, text.offsetY - text.size*line - text.size, 0, (8*(1 + (token.charAt(i) % 16)) + (token.charAt(i) % 16))/145D, (1/145D) + (8*(1 + ((double) token.charAt(i) / 16)) + ((double) token.charAt(i) /16))/145D);
+				tess.addVertexWithUV(text.offsetX + text.size*i + text.size, text.offsetY - text.size*line, 0, (8*(1 + (token.charAt(i) % 16)) + (token.charAt(i) % 16))/145D, (8*((double) token.charAt(i) / 16) + ((double) token.charAt(i) /16))/145D);
+				tess.addVertexWithUV(text.offsetX + text.size*i, text.offsetY - text.size*line, 0, (8*(token.charAt(i) % 16) + (token.charAt(i) % 16))/145D,(8*((double) token.charAt(i) / 16) + ((double) token.charAt(i) /16))/145D);
 				
 			}
 		}
@@ -100,7 +99,7 @@ public class RenderHelper {
 		{
 			tessellator.setBrightness(renderBlocks.renderMinY > 0.0D ? l : p_147736_1_.getMixedBrightnessForBlock(renderBlocks.blockAccess, p_147736_2_, p_147736_3_ - 1, p_147736_4_));
 			tessellator.setColorRGBA_F(f10, f13, f16, alpha);
-			renderBlocks.renderFaceYNeg(p_147736_1_, (double)p_147736_2_, (double)p_147736_3_, (double)p_147736_4_, renderBlocks.getBlockIcon(p_147736_1_, renderBlocks.blockAccess, p_147736_2_, p_147736_3_, p_147736_4_, 0));
+			renderBlocks.renderFaceYNeg(p_147736_1_, p_147736_2_, p_147736_3_, p_147736_4_, renderBlocks.getBlockIcon(p_147736_1_, renderBlocks.blockAccess, p_147736_2_, p_147736_3_, p_147736_4_, 0));
 			flag = true;
 		}
 
@@ -108,7 +107,7 @@ public class RenderHelper {
 		{
 			tessellator.setBrightness(renderBlocks.renderMaxY < 1.0D ? l : p_147736_1_.getMixedBrightnessForBlock(renderBlocks.blockAccess, p_147736_2_, p_147736_3_ + 1, p_147736_4_));
 			tessellator.setColorRGBA_F(f7, f8, f9,alpha);
-			renderBlocks.renderFaceYPos(p_147736_1_, (double)p_147736_2_, (double)p_147736_3_, (double)p_147736_4_, renderBlocks.getBlockIcon(p_147736_1_, renderBlocks.blockAccess, p_147736_2_, p_147736_3_, p_147736_4_, 1));
+			renderBlocks.renderFaceYPos(p_147736_1_, p_147736_2_, p_147736_3_, p_147736_4_, renderBlocks.getBlockIcon(p_147736_1_, renderBlocks.blockAccess, p_147736_2_, p_147736_3_, p_147736_4_, 1));
 			flag = true;
 		}
 
@@ -119,12 +118,12 @@ public class RenderHelper {
 			tessellator.setBrightness(renderBlocks.renderMinZ > 0.0D ? l : p_147736_1_.getMixedBrightnessForBlock(renderBlocks.blockAccess, p_147736_2_, p_147736_3_, p_147736_4_ - 1));
 			tessellator.setColorRGBA_F(f11, f14, f17, alpha);
 			iicon = renderBlocks.getBlockIcon(p_147736_1_, renderBlocks.blockAccess, p_147736_2_, p_147736_3_, p_147736_4_, 2);
-			renderBlocks.renderFaceZNeg(p_147736_1_, (double)p_147736_2_, (double)p_147736_3_, (double)p_147736_4_, iicon);
+			renderBlocks.renderFaceZNeg(p_147736_1_, p_147736_2_, p_147736_3_, p_147736_4_, iicon);
 
 			if (RenderBlocks.fancyGrass && iicon.getIconName().equals("grass_side") && !renderBlocks.hasOverrideBlockTexture())
 			{
 				tessellator.setColorRGBA_F(f11 * p_147736_5_, f14 * p_147736_6_, f17 * p_147736_7_, alpha);
-				renderBlocks.renderFaceZNeg(p_147736_1_, (double)p_147736_2_, (double)p_147736_3_, (double)p_147736_4_, BlockGrass.getIconSideOverlay());
+				renderBlocks.renderFaceZNeg(p_147736_1_, p_147736_2_, p_147736_3_, p_147736_4_, BlockGrass.getIconSideOverlay());
 			}
 
 			flag = true;
@@ -135,12 +134,12 @@ public class RenderHelper {
 			tessellator.setBrightness(renderBlocks.renderMaxZ < 1.0D ? l : p_147736_1_.getMixedBrightnessForBlock(renderBlocks.blockAccess, p_147736_2_, p_147736_3_, p_147736_4_ + 1));
 			tessellator.setColorRGBA_F(f11, f14, f17, alpha);
 			iicon = renderBlocks.getBlockIcon(p_147736_1_, renderBlocks.blockAccess, p_147736_2_, p_147736_3_, p_147736_4_, 3);
-			renderBlocks.renderFaceZPos(p_147736_1_, (double)p_147736_2_, (double)p_147736_3_, (double)p_147736_4_, iicon);
+			renderBlocks.renderFaceZPos(p_147736_1_, p_147736_2_, p_147736_3_, p_147736_4_, iicon);
 
 			if (RenderBlocks.fancyGrass && iicon.getIconName().equals("grass_side") && !renderBlocks.hasOverrideBlockTexture())
 			{
 				tessellator.setColorRGBA_F(f11 * p_147736_5_, f14 * p_147736_6_, f17 * p_147736_7_,alpha);
-				renderBlocks.renderFaceZPos(p_147736_1_, (double)p_147736_2_, (double)p_147736_3_, (double)p_147736_4_, BlockGrass.getIconSideOverlay());
+				renderBlocks.renderFaceZPos(p_147736_1_, p_147736_2_, p_147736_3_, p_147736_4_, BlockGrass.getIconSideOverlay());
 			}
 
 			flag = true;
@@ -151,12 +150,12 @@ public class RenderHelper {
 			tessellator.setBrightness(renderBlocks.renderMinX > 0.0D ? l : p_147736_1_.getMixedBrightnessForBlock(renderBlocks.blockAccess, p_147736_2_ - 1, p_147736_3_, p_147736_4_));
 			tessellator.setColorRGBA_F(f12, f15, f18,alpha);
 			iicon = renderBlocks.getBlockIcon(p_147736_1_, renderBlocks.blockAccess, p_147736_2_, p_147736_3_, p_147736_4_, 4);
-			renderBlocks.renderFaceXNeg(p_147736_1_, (double)p_147736_2_, (double)p_147736_3_, (double)p_147736_4_, iicon);
+			renderBlocks.renderFaceXNeg(p_147736_1_, p_147736_2_, p_147736_3_, p_147736_4_, iicon);
 
 			if (RenderBlocks.fancyGrass && iicon.getIconName().equals("grass_side") && !renderBlocks.hasOverrideBlockTexture())
 			{
 				tessellator.setColorRGBA_F(f12 * p_147736_5_, f15 * p_147736_6_, f18 * p_147736_7_, alpha);
-				renderBlocks.renderFaceXNeg(p_147736_1_, (double)p_147736_2_, (double)p_147736_3_, (double)p_147736_4_, BlockGrass.getIconSideOverlay());
+				renderBlocks.renderFaceXNeg(p_147736_1_, p_147736_2_, p_147736_3_, p_147736_4_, BlockGrass.getIconSideOverlay());
 			}
 
 			flag = true;
@@ -167,12 +166,12 @@ public class RenderHelper {
 			tessellator.setBrightness(renderBlocks.renderMaxX < 1.0D ? l : p_147736_1_.getMixedBrightnessForBlock(renderBlocks.blockAccess, p_147736_2_ + 1, p_147736_3_, p_147736_4_));
 			tessellator.setColorRGBA_F(f12, f15, f18, alpha);
 			iicon = renderBlocks.getBlockIcon(p_147736_1_, renderBlocks.blockAccess, p_147736_2_, p_147736_3_, p_147736_4_, 5);
-			renderBlocks.renderFaceXPos(p_147736_1_, (double)p_147736_2_, (double)p_147736_3_, (double)p_147736_4_, iicon);
+			renderBlocks.renderFaceXPos(p_147736_1_, p_147736_2_, p_147736_3_, p_147736_4_, iicon);
 
 			if (RenderBlocks.fancyGrass && iicon.getIconName().equals("grass_side") && !renderBlocks.hasOverrideBlockTexture())
 			{
 				tessellator.setColorRGBA_F(f12 * p_147736_5_, f15 * p_147736_6_, f18 * p_147736_7_,alpha);
-				renderBlocks.renderFaceXPos(p_147736_1_, (double)p_147736_2_, (double)p_147736_3_, (double)p_147736_4_, BlockGrass.getIconSideOverlay());
+				renderBlocks.renderFaceXPos(p_147736_1_, p_147736_2_, p_147736_3_, p_147736_4_, BlockGrass.getIconSideOverlay());
 			}
 
 			flag = true;
@@ -222,14 +221,14 @@ public class RenderHelper {
 		if (renderBlocks.renderAllFaces || p_147736_1_.shouldSideBeRendered(renderBlocks.blockAccess, p_147736_2_, p_147736_3_ - 1, p_147736_4_, 0))
 		{
 			tessellator.setColorRGBA_F(f10, f13, f16, alpha);
-			renderBlocks.renderFaceYNeg(p_147736_1_, (double)p_147736_2_, (double)p_147736_3_, (double)p_147736_4_, renderBlocks.getBlockIcon(p_147736_1_, renderBlocks.blockAccess, p_147736_2_, p_147736_3_, p_147736_4_, 0));
+			renderBlocks.renderFaceYNeg(p_147736_1_, p_147736_2_, p_147736_3_, p_147736_4_, renderBlocks.getBlockIcon(p_147736_1_, renderBlocks.blockAccess, p_147736_2_, p_147736_3_, p_147736_4_, 0));
 			flag = true;
 		}
 
 		if (renderBlocks.renderAllFaces || p_147736_1_.shouldSideBeRendered(renderBlocks.blockAccess, p_147736_2_, p_147736_3_ + 1, p_147736_4_, 1))
 		{
 			tessellator.setColorRGBA_F(f7, f8, f9,alpha);
-			renderBlocks.renderFaceYPos(p_147736_1_, (double)p_147736_2_, (double)p_147736_3_, (double)p_147736_4_, renderBlocks.getBlockIcon(p_147736_1_, renderBlocks.blockAccess, p_147736_2_, p_147736_3_, p_147736_4_, 1));
+			renderBlocks.renderFaceYPos(p_147736_1_, p_147736_2_, p_147736_3_, p_147736_4_, renderBlocks.getBlockIcon(p_147736_1_, renderBlocks.blockAccess, p_147736_2_, p_147736_3_, p_147736_4_, 1));
 			flag = true;
 		}
 
@@ -239,12 +238,12 @@ public class RenderHelper {
 		{
 			tessellator.setColorRGBA_F(f11, f14, f17, alpha);
 			iicon = renderBlocks.getBlockIcon(p_147736_1_, renderBlocks.blockAccess, p_147736_2_, p_147736_3_, p_147736_4_, 2);
-			renderBlocks.renderFaceZNeg(p_147736_1_, (double)p_147736_2_, (double)p_147736_3_, (double)p_147736_4_, iicon);
+			renderBlocks.renderFaceZNeg(p_147736_1_, p_147736_2_, p_147736_3_, p_147736_4_, iicon);
 
 			if (RenderBlocks.fancyGrass && iicon.getIconName().equals("grass_side") && !renderBlocks.hasOverrideBlockTexture())
 			{
 				tessellator.setColorRGBA_F(f11 * p_147736_5_, f14 * p_147736_6_, f17 * p_147736_7_, alpha);
-				renderBlocks.renderFaceZNeg(p_147736_1_, (double)p_147736_2_, (double)p_147736_3_, (double)p_147736_4_, BlockGrass.getIconSideOverlay());
+				renderBlocks.renderFaceZNeg(p_147736_1_, p_147736_2_, p_147736_3_, p_147736_4_, BlockGrass.getIconSideOverlay());
 			}
 
 			flag = true;
@@ -254,12 +253,12 @@ public class RenderHelper {
 		{
 			tessellator.setColorRGBA_F(f11, f14, f17, alpha);
 			iicon = renderBlocks.getBlockIcon(p_147736_1_, renderBlocks.blockAccess, p_147736_2_, p_147736_3_, p_147736_4_, 3);
-			renderBlocks.renderFaceZPos(p_147736_1_, (double)p_147736_2_, (double)p_147736_3_, (double)p_147736_4_, iicon);
+			renderBlocks.renderFaceZPos(p_147736_1_, p_147736_2_, p_147736_3_, p_147736_4_, iicon);
 
 			if (RenderBlocks.fancyGrass && iicon.getIconName().equals("grass_side") && !renderBlocks.hasOverrideBlockTexture())
 			{
 				tessellator.setColorRGBA_F(f11 * p_147736_5_, f14 * p_147736_6_, f17 * p_147736_7_,alpha);
-				renderBlocks.renderFaceZPos(p_147736_1_, (double)p_147736_2_, (double)p_147736_3_, (double)p_147736_4_, BlockGrass.getIconSideOverlay());
+				renderBlocks.renderFaceZPos(p_147736_1_, p_147736_2_, p_147736_3_, p_147736_4_, BlockGrass.getIconSideOverlay());
 			}
 
 			flag = true;
@@ -269,12 +268,12 @@ public class RenderHelper {
 		{
 			tessellator.setColorRGBA_F(f12, f15, f18,alpha);
 			iicon = renderBlocks.getBlockIcon(p_147736_1_, renderBlocks.blockAccess, p_147736_2_, p_147736_3_, p_147736_4_, 4);
-			renderBlocks.renderFaceXNeg(p_147736_1_, (double)p_147736_2_, (double)p_147736_3_, (double)p_147736_4_, iicon);
+			renderBlocks.renderFaceXNeg(p_147736_1_, p_147736_2_, p_147736_3_, p_147736_4_, iicon);
 
 			if (RenderBlocks.fancyGrass && iicon.getIconName().equals("grass_side") && !renderBlocks.hasOverrideBlockTexture())
 			{
 				tessellator.setColorRGBA_F(f12 * p_147736_5_, f15 * p_147736_6_, f18 * p_147736_7_, alpha);
-				renderBlocks.renderFaceXNeg(p_147736_1_, (double)p_147736_2_, (double)p_147736_3_, (double)p_147736_4_, BlockGrass.getIconSideOverlay());
+				renderBlocks.renderFaceXNeg(p_147736_1_, p_147736_2_, p_147736_3_, p_147736_4_, BlockGrass.getIconSideOverlay());
 			}
 
 			flag = true;
@@ -284,12 +283,12 @@ public class RenderHelper {
 		{
 			tessellator.setColorRGBA_F(f12, f15, f18, alpha);
 			iicon = renderBlocks.getBlockIcon(p_147736_1_, renderBlocks.blockAccess, p_147736_2_, p_147736_3_, p_147736_4_, 5);
-			renderBlocks.renderFaceXPos(p_147736_1_, (double)p_147736_2_, (double)p_147736_3_, (double)p_147736_4_, iicon);
+			renderBlocks.renderFaceXPos(p_147736_1_, p_147736_2_, p_147736_3_, p_147736_4_, iicon);
 
 			if (RenderBlocks.fancyGrass && iicon.getIconName().equals("grass_side") && !renderBlocks.hasOverrideBlockTexture())
 			{
 				tessellator.setColorRGBA_F(f12 * p_147736_5_, f15 * p_147736_6_, f18 * p_147736_7_,alpha);
-				renderBlocks.renderFaceXPos(p_147736_1_, (double)p_147736_2_, (double)p_147736_3_, (double)p_147736_4_, BlockGrass.getIconSideOverlay());
+				renderBlocks.renderFaceXPos(p_147736_1_, p_147736_2_, p_147736_3_, p_147736_4_, BlockGrass.getIconSideOverlay());
 			}
 
 			flag = true;
@@ -299,11 +298,10 @@ public class RenderHelper {
 	}
 	
 	public static void renderTag(double distanceSq, String displayString, double x, double y, double z, int sizeOnScreen) {
-        double d3 = distanceSq;
 
         Minecraft mc = Minecraft.getMinecraft();
         RenderManager renderManager = RenderManager.instance;
-        if (d3 <= (double)(sizeOnScreen * sizeOnScreen))
+        if (distanceSq <= (double)(sizeOnScreen * sizeOnScreen))
         {
             FontRenderer fontrenderer = mc.fontRenderer;
             float f = 1.6F;
@@ -326,10 +324,10 @@ public class RenderHelper {
             tessellator.startDrawingQuads();
             int j = fontrenderer.getStringWidth(displayString) / 2;
             tessellator.setColorRGBA_F(0.0F, 0.0F, 0.0F, 0.25F);
-            tessellator.addVertex((double)(-j - 1), (double)(-1 + b0), 0.0D);
-            tessellator.addVertex((double)(-j - 1), (double)(8 + b0), 0.0D);
-            tessellator.addVertex((double)(j + 1), (double)(8 + b0), 0.0D);
-            tessellator.addVertex((double)(j + 1), (double)(-1 + b0), 0.0D);
+            tessellator.addVertex(-j - 1, -1 + b0, 0.0D);
+            tessellator.addVertex(-j - 1, 8 + b0, 0.0D);
+            tessellator.addVertex(j + 1, 8 + b0, 0.0D);
+            tessellator.addVertex(j + 1, -1 + b0, 0.0D);
             tessellator.draw();
             GL11.glEnable(GL11.GL_TEXTURE_2D);
             fontrenderer.drawString(displayString, -fontrenderer.getStringWidth(displayString) / 2, b0, 553648127);

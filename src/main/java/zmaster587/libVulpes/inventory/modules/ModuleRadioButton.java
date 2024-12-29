@@ -11,10 +11,11 @@ import org.jetbrains.annotations.NotNull;
 
 public class ModuleRadioButton  extends ModuleBase {
 
-	IToggleButton tile;
-	List<ModuleToggleSwitch> buttons;
+	final IToggleButton tile;
+	final List<ModuleToggleSwitch> buttons;
 	int previousSelection;
-	int enabledColor, disabledColor;
+	final int enabledColor;
+    final int disabledColor;
 	boolean enabled = true;
 
 	public ModuleRadioButton(IToggleButton tile, List<ModuleToggleSwitch> buttons) {

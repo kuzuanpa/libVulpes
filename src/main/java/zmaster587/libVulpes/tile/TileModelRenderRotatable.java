@@ -22,7 +22,7 @@ public class TileModelRenderRotatable extends TileModelRender {
 	}
 	
 	@Override
-	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
+	public void onDataPacket(NetworkManager net, @NotNull S35PacketUpdateTileEntity pkt) {
 		super.onDataPacket(net, pkt);
 		this.rotation = BlockRotatableModel.getFront(this.getBlockMetadata());
 	}

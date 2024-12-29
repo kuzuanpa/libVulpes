@@ -9,8 +9,8 @@ import net.minecraft.world.World;
 
 public class BlockMultiMachineBattery extends BlockMultiblockStructure {
 
-	protected Class<? extends TileEntity> tileClass;
-	protected int guiId;
+	protected final Class<? extends TileEntity> tileClass;
+	protected final int guiId;
 
 	public BlockMultiMachineBattery(Material material, Class<? extends TileEntity> tileClass, int guiId) {
 		super(material);

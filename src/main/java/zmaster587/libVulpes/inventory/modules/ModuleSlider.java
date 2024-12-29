@@ -2,7 +2,6 @@ package zmaster587.libVulpes.inventory.modules;
 
 import zmaster587.libVulpes.client.util.ProgressBarImage;
 import zmaster587.libVulpes.inventory.GuiModular;
-import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.MathHelper;
 
 public class ModuleSlider extends ModuleProgress {

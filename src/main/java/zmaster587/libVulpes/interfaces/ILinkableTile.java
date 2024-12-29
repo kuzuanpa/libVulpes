@@ -15,7 +15,7 @@ public interface ILinkableTile {
 	 * @param world the world
 	 * @return true If link is allowed
 	 */
-	public boolean onLinkStart(ItemStack item, TileEntity entity, EntityPlayer player, World world);
+    boolean onLinkStart(ItemStack item, TileEntity entity, EntityPlayer player, World world);
 	
-	public boolean onLinkComplete(ItemStack item, TileEntity entity,EntityPlayer player, World world);
+	boolean onLinkComplete(ItemStack item, TileEntity entity, EntityPlayer player, World world);
 }

@@ -1,7 +1,6 @@
 package zmaster587.libVulpes.tile.multiblock;
 
 import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
 import zmaster587.libVulpes.api.LibVulpesBlocks;
 import zmaster587.libVulpes.block.BlockMeta;
@@ -9,8 +8,8 @@ import zmaster587.libVulpes.block.BlockMeta;
 import java.util.List;
 
 public class DummyTileMultiBlock extends TileMultiBlock{
-        public Object[][][] structure;
-        public String name;
+        public final Object[][][] structure;
+        public final String name;
 
         public DummyTileMultiBlock(Object[][][] structure, String name){
             this.structure = structure;

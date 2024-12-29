@@ -19,13 +19,8 @@ public class TilePlugInputIC2 extends TilePlugOutputRF implements IEnergySink {
 		return "tile.IC2Plug.name";
 	}
 
-	
-	@Override
-	public boolean canUpdate() {
-		return true;
-	}
 
-	//TODO: find a way of doing this that doesn't tick all the time
+    //TODO: find a way of doing this that doesn't tick all the time
 	@Override
 	public void updateEntity() {
 		if(!worldObj.isRemote && !tickedOnce) {

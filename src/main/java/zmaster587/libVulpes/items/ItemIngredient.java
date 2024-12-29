@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class ItemIngredient extends Item {
 	
-	private int numIngots;
+	private final int numIngots;
 	
 	public ItemIngredient(int num) {
 		super();
@@ -25,7 +25,7 @@ public class ItemIngredient extends Item {
 
 	private IIcon[] icons;
 
-	@SuppressWarnings({"rawtypes", "unchecked"})
+	@SuppressWarnings({"unchecked"})
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List itemList) {
@@ -41,7 +41,7 @@ public class ItemIngredient extends Item {
 	
 	@Override
 	public String getUnlocalizedName(ItemStack itemstack) {
-		return (new StringBuilder()).append("item." + super.getUnlocalizedName().split(":")[1]).append(".").append(itemstack.getItemDamage()).toString();
+		return "item." + super.getUnlocalizedName().split(":")[1] + "." + itemstack.getItemDamage();
 	}
 	
 	@Override

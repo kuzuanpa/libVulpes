@@ -11,7 +11,7 @@ public class BlockMotor extends BlockRotatableModel implements ITimeModifier {
 		this.timeModifier = timeMod;
 	}
 	
-	float timeModifier;
+	final float timeModifier;
 	@Override
 	public float getTimeMult() {
 		return timeModifier;

@@ -27,15 +27,9 @@ public class BlockRotatableModel extends RotatableBlock {
 	public boolean hasTileEntity(int metadata) {
 		return true;
 	}
-	
-	@Override
-	public boolean onBlockActivated(World world, int x, int y, int z,
-			EntityPlayer player, int par6, float par7, float par8, float par9) {
-		return false;
-	}
 
-	
-	@Override
+
+    @Override
 	public void registerBlockIcons(IIconRegister icons)
 	{
 	}

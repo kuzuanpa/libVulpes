@@ -95,7 +95,7 @@ public class BlockMultiblockPlaceHolder extends BlockContainer {
 
 		TileEntity tile = world.getTileEntity(x, y, z);
 
-		if(tile != null && tile instanceof TilePlaceholder) {
+		if(tile instanceof TilePlaceholder) {
 			tile = ((TilePlaceholder)tile).getMasterBlock();
 			if(tile instanceof TileMultiBlock)
 				((TileMultiBlock)tile).deconstructMultiBlock(world,x,y,z,true);

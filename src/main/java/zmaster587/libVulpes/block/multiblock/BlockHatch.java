@@ -108,7 +108,7 @@ public class BlockHatch extends BlockMultiblockStructure {
 	public void breakBlock(@NotNull World world, int x, int y, int z, Block block, int meta) {
 
 		TileEntity tile = world.getTileEntity(x, y, z);
-		if(tile != null && tile instanceof IInventory) {
+		if(tile instanceof IInventory) {
 			IInventory inventory = (IInventory)tile;
 			for(int i = 0; i < inventory.getSizeInventory(); i++) {
 				ItemStack stack = inventory.getStackInSlot(i);
@@ -120,9 +120,9 @@ public class BlockHatch extends BlockMultiblockStructure {
 
 				float mult = 0.05F;
 
-				entityitem.motionX = (double)((float)this.random.nextGaussian() * mult);
-				entityitem.motionY = (double)((float)this.random.nextGaussian() * mult + 0.2F);
-				entityitem.motionZ = (double)((float)this.random.nextGaussian() * mult);
+				entityitem.motionX = (float)this.random.nextGaussian() * mult;
+				entityitem.motionY = (float)this.random.nextGaussian() * mult + 0.2F;
+				entityitem.motionZ = (float)this.random.nextGaussian() * mult;
 
 				world.spawnEntityInWorld(entityitem);
 			}
@@ -136,7 +136,7 @@ public class BlockHatch extends BlockMultiblockStructure {
 		ForgeDirection direction = ForgeDirection.getOrientation(side);
 		boolean isPointer = access.getTileEntity(x - direction.offsetX , y- direction.offsetY, z - direction.offsetZ) instanceof TilePointer;
 		if(isPointer)
-			isPointer = isPointer && !(((TilePointer)access.getTileEntity(x - direction.offsetX , y- direction.offsetY, z- direction.offsetZ)).getMasterBlock() instanceof TileMultiBlock);
+			isPointer = !(((TilePointer)access.getTileEntity(x - direction.offsetX , y- direction.offsetY, z- direction.offsetZ)).getMasterBlock() instanceof TileMultiBlock);
 		return ( isPointer || access.getBlockMetadata(x - direction.offsetX, y- direction.offsetY, z - direction.offsetZ) < 8);
 	}
 
@@ -148,7 +148,7 @@ public class BlockHatch extends BlockMultiblockStructure {
 
 		int meta = world.getBlockMetadata(x, y, z);
 		//Handlue gui through modular system
-		if((meta & 7) < 8 && !world.isRemote)
+		if(!world.isRemote)
 			player.openGui(LibVulpes.instance, GuiHandler.guiId.MODULAR.ordinal(), world, x, y, z);
 
 

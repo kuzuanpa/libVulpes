@@ -1,7 +1,6 @@
 package zmaster587.libVulpes.inventory.modules;
 
 import org.jetbrains.annotations.NotNull;
-import zmaster587.libVulpes.inventory.TextureResources;
 import zmaster587.libVulpes.util.IconResource;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.inventory.GuiContainer;

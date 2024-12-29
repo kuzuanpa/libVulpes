@@ -6,20 +6,15 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 
-import org.lwjgl.input.Keyboard;
-
 import zmaster587.libVulpes.api.IJetPack;
 import zmaster587.libVulpes.api.IModularArmor;
-import zmaster587.libVulpes.network.PacketChangeKeyState;
-import zmaster587.libVulpes.network.PacketHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.gameevent.InputEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerChangedDimensionEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerLoggedOutEvent;
 
 public class InputSyncHandler {
 
-	public static HashMap<EntityPlayer, Boolean> spaceDown = new HashMap<>();
+	public static final HashMap<EntityPlayer, Boolean> spaceDown = new HashMap<>();
 	
 
 	public static boolean isSpaceDown(EntityPlayer player) {

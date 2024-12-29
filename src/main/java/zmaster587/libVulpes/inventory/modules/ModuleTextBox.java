@@ -15,8 +15,8 @@ public class ModuleTextBox extends ModuleBase {
 
 	@SideOnly(Side.CLIENT)
 	GuiTextField textBox;
-	String currentText;
-	IGuiCallback tile;
+	final String currentText;
+	final IGuiCallback tile;
 
 	public ModuleTextBox(IGuiCallback tile, int offsetX, int offsetY, int sizeX, int sizeY, int maxStrLen) {
 		super(offsetX, offsetY);
@@ -67,10 +67,7 @@ public class ModuleTextBox extends ModuleBase {
 	public void onMouseClicked(GuiModular gui, int x, int y, int button) {
 
 		//Make sure we can focus the textboxes
-		if(offsetX < x && offsetY < y && offsetX + textBox.width > x  && offsetY + textBox.height > y )
-			textBox.setFocused(true);
-		else
-			textBox.setFocused(false);
+        textBox.setFocused(offsetX < x && offsetY < y && offsetX + textBox.width > x && offsetY + textBox.height > y);
 
 	}
 

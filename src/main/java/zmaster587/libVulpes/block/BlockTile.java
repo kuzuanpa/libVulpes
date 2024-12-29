@@ -21,11 +21,11 @@ import zmaster587.libVulpes.util.IAdjBlockUpdate;
 public class BlockTile extends RotatableBlock {
 
 	protected IIcon sides_active, front_active, rear_active, bottom_active,top_active;
-	protected Class<? extends TileEntity> tileClass;
+	protected final Class<? extends TileEntity> tileClass;
 	protected String textureSideName, textureFrontName, textureTopName, textureBottomName, textureRearName;
 	protected String textureSideName_active, textureFrontName_active, textureTopName_active, textureBottomName_active, textureRearName_active;
 
-	protected int guiId;
+	protected final int guiId;
 
 	public BlockTile(Class<? extends TileEntity> tileClass, int guiId) {
 		super(Material.rock);
@@ -264,11 +264,11 @@ public class BlockTile extends RotatableBlock {
 						}
 
 						itemstack.stackSize -= j1;
-						entityitem = new EntityItem(world, (double)((float)x + f), (double)((float)y + f1), (double)((float)z + f2), new ItemStack(itemstack.getItem(), j1, itemstack.getItemDamage()));
+						entityitem = new EntityItem(world, (float)x + f, (float)y + f1, (float)z + f2, new ItemStack(itemstack.getItem(), j1, itemstack.getItemDamage()));
 						float f3 = 0.05F;
-						entityitem.motionX = (double)((float)world.rand.nextGaussian() * f3);
-						entityitem.motionY = (double)((float)world.rand.nextGaussian() * f3 + 0.2F);
-						entityitem.motionZ = (double)((float)world.rand.nextGaussian() * f3);
+						entityitem.motionX = (float)world.rand.nextGaussian() * f3;
+						entityitem.motionY = (float)world.rand.nextGaussian() * f3 + 0.2F;
+						entityitem.motionZ = (float)world.rand.nextGaussian() * f3;
 
 						if (itemstack.hasTagCompound())
 						{

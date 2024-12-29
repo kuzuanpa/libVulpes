@@ -1,15 +1,5 @@
 package zmaster587.libVulpes.recipe;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import zmaster587.libVulpes.LibVulpes;
-import zmaster587.libVulpes.interfaces.IRecipe;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -17,9 +7,15 @@ import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.oredict.OreDictionary;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import zmaster587.libVulpes.LibVulpes;
+import zmaster587.libVulpes.interfaces.IRecipe;
+
+import java.util.*;
 
 public class RecipesMachine {
-	public class Recipe implements IRecipe {
+	public static class Recipe implements IRecipe {
 
 		private LinkedList<LinkedList<ItemStack>> input;
 		private Map<Integer, String> inputOreDict;
@@ -178,15 +174,15 @@ public class RecipesMachine {
 		}
 	}
 
-	public HashMap<Class<Object>, List<IRecipe>> recipeList;
+	public final HashMap<Class<Object>, List<IRecipe>> recipeList;
 
-	private static @NotNull RecipesMachine instance = new RecipesMachine();
+	private static final @NotNull RecipesMachine instance = new RecipesMachine();
 
 	public RecipesMachine() {
 		recipeList = new HashMap<>();
 	}
 
-	public static RecipesMachine getInstance() { return instance; }
+	public static @NotNull RecipesMachine getInstance() { return instance; }
 
 	public void clearRecipes(Class clazz) {
 		recipeList.get(clazz).clear();
@@ -235,8 +231,7 @@ public class RecipesMachine {
 						innerList.add((ItemStack)inputs[i]);
 					}
 				}
-				if(!innerList.isEmpty())
-				stack.add(innerList);
+				if(!innerList.isEmpty()) stack.add(innerList);
 			}
 			ArrayList<ItemStack> outputItem = new ArrayList<>();
 			ArrayList<FluidStack> outputFluidStacks = new ArrayList<>();
@@ -259,14 +254,14 @@ public class RecipesMachine {
 
 		} catch(ClassCastException e) {
 			//Custom handling to make sure it logs and can be suppressed by user
-			String message = e.getLocalizedMessage();
+			StringBuilder message = new StringBuilder(e.getLocalizedMessage());
 
 			for(StackTraceElement element : e.getStackTrace()) {
-				message += "\n\t" + element.toString();
+				message.append("\n\t").append(element.toString());
 			}
 
 			LibVulpes.logger.warning("Cannot add recipe!");
-			LibVulpes.logger.warning(message);
+			LibVulpes.logger.warning(message.toString());
 
 		}
 	}

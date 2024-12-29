@@ -1,8 +1,6 @@
 package zmaster587.libVulpes.tile;
 
-import zmaster587.libVulpes.block.BlockTile;
 import zmaster587.libVulpes.inventory.modules.IProgressBar;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 
 public abstract class TileInventoriedForgePowerMachine extends TileInventoriedForgeProducer implements IProgressBar {
@@ -33,9 +31,9 @@ public abstract class TileInventoriedForgePowerMachine extends TileInventoriedFo
 
 	protected void onOperationFinish() {
 		setState(false);
-	};
+	}
 
-	public int getLastAmtGenerated() {
+    public int getLastAmtGenerated() {
 		return lastRFAmount;
 	}
 	

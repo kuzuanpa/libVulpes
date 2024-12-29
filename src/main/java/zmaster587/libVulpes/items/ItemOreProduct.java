@@ -4,9 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 
-import zmaster587.libVulpes.LibVulpes;
 import zmaster587.libVulpes.api.material.Material;
-import zmaster587.libVulpes.api.material.MaterialRegistry;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -17,8 +15,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemOreProduct extends Item {
 
-	HashMap<Integer, Material> properties;
-	String outputType;
+	final HashMap<Integer, Material> properties;
+	final String outputType;
 
 	public ItemOreProduct(String outputType) {
 		super();

@@ -4,13 +4,13 @@ import net.minecraft.tileentity.TileEntity;
 
 public interface IMultiblock {
 	
-	public boolean hasMaster();
+	boolean hasMaster();
 	
-	public TileEntity getMasterBlock();
+	TileEntity getMasterBlock();
 	
-	public void setComplete(int x, int y, int z);
+	void setComplete(int x, int y, int z);
 	
-	public void setIncomplete();
+	void setIncomplete();
 	
-	public void setMasterBlock(int x, int y, int z);
+	void setMasterBlock(int x, int y, int z);
 }

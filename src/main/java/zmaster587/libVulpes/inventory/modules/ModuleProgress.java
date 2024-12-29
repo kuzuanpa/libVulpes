@@ -16,11 +16,11 @@ import net.minecraft.util.MathHelper;
 
 public class ModuleProgress extends ModuleBase {
 
-	ProgressBarImage progressBar;
-	IProgressBar progress;
+	final ProgressBarImage progressBar;
+	final IProgressBar progress;
 	int prevProgress;
 	int prevTotalProgress;
-	int id;
+	final int id;
 	List<String> tooltip;
 
 	public ModuleProgress(int offsetX, int offsetY, int id, ProgressBarImage progressBar, IProgressBar progress) {
@@ -40,7 +40,7 @@ public class ModuleProgress extends ModuleBase {
 		if(tooltip == null || tooltip.isEmpty())
 			this.tooltip.clear();
 		else
-			this.tooltip = (List<String>)Arrays.asList(tooltip.split("\\n"));
+			this.tooltip = Arrays.asList(tooltip.split("\\n"));
 	}
 
 	@Override

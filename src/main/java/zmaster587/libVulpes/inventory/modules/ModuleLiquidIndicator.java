@@ -22,7 +22,7 @@ import net.minecraftforge.fluids.IFluidHandler;
 
 public class ModuleLiquidIndicator extends ModuleBase {
 
-	IFluidHandler tile;
+	final IFluidHandler tile;
 
 	int prevLiquidUUID;
 	int prevLiquidAmt;
@@ -65,7 +65,7 @@ public class ModuleLiquidIndicator extends ModuleBase {
 			else if(value == invalidFluid) {
 				tile.drain(ForgeDirection.UNKNOWN, info[0].capacity, true);
 			}
-			else if(info[0].fluid != null && value != info[0].fluid.getFluidID()) { //Empty the tank then fill it back up with new resource
+			else if(value != info[0].fluid.getFluidID()) { //Empty the tank then fill it back up with new resource
 				FluidStack stack = tile.drain(ForgeDirection.UNKNOWN, info[0].capacity, true);
 				stack = new FluidStack(FluidRegistry.getFluid(stack.getFluidID()), stack.amount);
 

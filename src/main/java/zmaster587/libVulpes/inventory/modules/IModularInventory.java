@@ -10,10 +10,10 @@ public interface IModularInventory {
 	/**
 	 * @return a list of modules to add to the inventory
 	 */
-	public List<ModuleBase> getModules(int id, EntityPlayer player);
+    List<ModuleBase> getModules(int id, EntityPlayer player);
 	
-	public @Nullable String getModularInventoryName();
+	@Nullable String getModularInventoryName();
 	
-	public boolean canInteractWithContainer(EntityPlayer entity);
+	boolean canInteractWithContainer(EntityPlayer entity);
 	
 }

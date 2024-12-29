@@ -11,10 +11,19 @@ import net.minecraftforge.common.util.ForgeDirection;
  *
  */
 public class ProgressBarImage {
-	protected ResourceLocation image;
-	protected int backOffsetX, backOffsetY, foreOffsetX, foreOffsetY, backWidth, backHeight, foreWidth, foreHeight, insetX, insetY;
+	protected final ResourceLocation image;
+	protected final int backOffsetX;
+    protected final int backOffsetY;
+    protected final int foreOffsetX;
+    protected final int foreOffsetY;
+    protected final int backWidth;
+    protected final int backHeight;
+    protected final int foreWidth;
+    protected final int foreHeight;
+    protected final int insetX;
+    protected final int insetY;
 	
-	ForgeDirection direction;
+	final ForgeDirection direction;
 	
 	/**
 	 * @param backOffsetX X Offset of the background on image

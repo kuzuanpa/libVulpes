@@ -175,92 +175,94 @@ public class XMLRecipeLoader {
 	}
 
 	public Object parseItemType(Node node, boolean output) {
-		if(node.getNodeName().equals("itemStack")) {
-			String text = node.getTextContent();
-			String[] splitStr;
-			
-//NBTTag wouldn't contain ; So we use that.
-  		    splitStr = text.split(";");
-			String name="";
-			int size =1;
-			int meta=0;
-			String nbtText ="";
-			switch (splitStr.length) {
-				case 4:
-					nbtText= splitStr[3].trim();
-				case 3:
-					meta= Integer.parseInt(splitStr[2].trim());
-				case 2:
-					size= Integer.parseInt(splitStr[1].trim());
-				case 1:
-					name = splitStr[0].trim();
-			}
-
-			ItemStack stack = null;
-				ItemDescriptor itemDesc = ItemDescriptor.fromString(name+":"+meta,true);
-				if (itemDesc == null) return null;
-				if (!nbtText.equals(""))stack = itemDesc.getItemStackwNBT(size, nbtText);
-				else stack = itemDesc.getItemStack(size);
-
-			return stack;
-		}
-		else if(node.getNodeName().equals("oreDict")) {
-			String text = node.getTextContent();
-			String[] splitStr;
+        switch (node.getNodeName()) {
+            case "itemStack": {
+                String text = node.getTextContent();
+                String[] splitStr;
 
 //NBTTag wouldn't contain ; So we use that.
-			splitStr =text.split(";");
-			String name = splitStr[0].trim();
-			if(OreDictionary.doesOreNameExist(name)) {
+                splitStr = text.split(";");
+                String name = "";
+                int size = 1;
+                int meta = 0;
+                String nbtText = "";
+                switch (splitStr.length) {
+                    case 4:
+                        nbtText = splitStr[3].trim();
+                    case 3:
+                        meta = Integer.parseInt(splitStr[2].trim());
+                    case 2:
+                        size = Integer.parseInt(splitStr[1].trim());
+                    case 1:
+                        name = splitStr[0].trim();
+                }
 
-				Object ret = splitStr[0];
-				int number = 1;
-				if(splitStr.length > 1) {
+                ItemStack stack;
+                ItemDescriptor itemDesc = ItemDescriptor.fromString(name + ":" + meta, true);
+                if (itemDesc == null) return null;
+                if (!nbtText.isEmpty()) stack = itemDesc.getItemStackwNBT(size, nbtText);
+                else stack = itemDesc.getItemStack(size);
 
-					try {
-						number = Integer.parseInt(splitStr[1].trim());
-					} catch (NumberFormatException e) {}
-				}
-
-				if(splitStr.length >= 1) {
-					if(output) {
-						List<ItemStack> list = OreDictionary.getOres(name);
-						if(!list.isEmpty()) {
-							ItemStack oreDict = OreDictionary.getOres(name).get(0);
-							ret = new ItemStack(oreDict.getItem(), number, oreDict.getItemDamage());
-						}
-					}
-					else
-					{
-						if(!OreDictionary.getOres(splitStr[0]).isEmpty())ret = new NumberedOreDictStack(splitStr[0], number);
-						else FMLLog.log(Level.ERROR,"Null Input Found: "+ text);
-					}
-
-				}
-
-				return ret;
-			}
-		}
-		else if(node.getNodeName().equals("fluidStack")) {
-			
-			String text = node.getTextContent();
-			String[] splitStr;
+                return stack;
+            }
+            case "oreDict": {
+                String text = node.getTextContent();
+                String[] splitStr;
 
 //NBTTag wouldn't contain ; So we use that.
-			splitStr =text.split(";");
-			
-			Fluid fluid;
-			if((fluid = FluidRegistry.getFluid(splitStr[0].trim())) != null) {
-				int amount = 1000;
-				if(splitStr.length > 1) {
-					try {
-						amount = Integer.parseInt(splitStr[1].trim());
-					} catch (NumberFormatException e) {}
-				}
+                splitStr = text.split(";");
+                String name = splitStr[0].trim();
+                if (OreDictionary.doesOreNameExist(name)) {
 
-				return new FluidStack(fluid, amount);
-			}
-		}
+                    Object ret = splitStr[0];
+                    int number = 1;
+                    if (splitStr.length > 1) {
+
+                        try {
+                            number = Integer.parseInt(splitStr[1].trim());
+                        } catch (NumberFormatException e) {
+                        }
+                    }
+
+                    if (output) {
+                        List<ItemStack> list = OreDictionary.getOres(name);
+                        if (!list.isEmpty()) {
+                            ItemStack oreDict = OreDictionary.getOres(name).get(0);
+                            ret = new ItemStack(oreDict.getItem(), number, oreDict.getItemDamage());
+                        }
+                    } else {
+                        if (!OreDictionary.getOres(splitStr[0]).isEmpty())
+                            ret = new NumberedOreDictStack(splitStr[0], number);
+                        else FMLLog.log(Level.ERROR, "Null Input Found: " + text);
+                    }
+
+                    return ret;
+                }
+                break;
+            }
+            case "fluidStack": {
+
+                String text = node.getTextContent();
+                String[] splitStr;
+
+//NBTTag wouldn't contain ; So we use that.
+                splitStr = text.split(";");
+
+                Fluid fluid;
+                if ((fluid = FluidRegistry.getFluid(splitStr[0].trim())) != null) {
+                    int amount = 1000;
+                    if (splitStr.length > 1) {
+                        try {
+                            amount = Integer.parseInt(splitStr[1].trim());
+                        } catch (NumberFormatException e) {
+                        }
+                    }
+
+                    return new FluidStack(fluid, amount);
+                }
+                break;
+            }
+        }
 
 		return null;
 	}
@@ -268,35 +270,35 @@ public class XMLRecipeLoader {
 
 	public static String writeRecipe(@NotNull IRecipe recipe) {
 		int index = 0;
-		String string = "\t<Recipe timeRequired=\"" + recipe.getTime() + "\" power =\"" + recipe.getPower() + "\">\n" +
-				"\t\t<input>\n";
+		StringBuilder string = new StringBuilder("\t<Recipe timeRequired=\"" + recipe.getTime() + "\" power =\"" + recipe.getPower() + "\">\n" +
+                "\t\t<input>\n");
 		for(List<ItemStack> stackList : recipe.getIngredients()) {
 			if(!stackList.isEmpty()) {
 				ItemStack stack = stackList.get(0);
 				String oreStr = recipe.getOreDictString(index++);
 				if(oreStr != null) {
-					string += "\t\t\t<oreDict>" + oreStr + (stack.stackSize > 1 ? (";" + stack.stackSize) : "") + "</oreDict>\n";
+					string.append("\t\t\t<oreDict>").append(oreStr).append(stack.stackSize > 1 ? (";" + stack.stackSize) : "").append("</oreDict>\n");
 				}
 				else {
-					string += "\t\t\t<itemStack>" + stack.getItem().delegate.name() + (stack.stackSize > 1 ? (";" + stack.stackSize) : (stack.getItemDamage() > 0 ? ";1" : "") ) + (stack.getItemDamage() > 0 ? (";" + stack.getItemDamage()) : "") +  "</itemStack>\n";
+					string.append("\t\t\t<itemStack>").append(stack.getItem().delegate.name()).append(stack.stackSize > 1 ? (";" + stack.stackSize) : (stack.getItemDamage() > 0 ? ";1" : "")).append(stack.getItemDamage() > 0 ? (";" + stack.getItemDamage()) : "").append("</itemStack>\n");
 				}
 			}
 		}
 		for(FluidStack stack : recipe.getFluidIngredients()) {
-			string += "\t\t\t<fluidStack>" + FluidRegistry.getDefaultFluidName(stack.getFluid()).split(":")[1] + ";" + stack.amount + "</fluidStack>\n";
+			string.append("\t\t\t<fluidStack>").append(FluidRegistry.getDefaultFluidName(stack.getFluid()).split(":")[1]).append(";").append(stack.amount).append("</fluidStack>\n");
 		}
-		string += "\t\t</input>\n\t\t<output>\n";
+		string.append("\t\t</input>\n\t\t<output>\n");
 
 		for(ItemStack stack : recipe.getOutput()) {
-			string += "\t\t\t<itemStack>" + stack.getItem().delegate.name() + (stack.stackSize > 1 ? (";" + stack.stackSize) : (stack.getItemDamage() > 0 ? ";1" : "") ) + (stack.getItemDamage() > 0 ? (";" + stack.getItemDamage()) : "") +  "</itemStack>\n";
+			string.append("\t\t\t<itemStack>").append(stack.getItem().delegate.name()).append(stack.stackSize > 1 ? (";" + stack.stackSize) : (stack.getItemDamage() > 0 ? ";1" : "")).append(stack.getItemDamage() > 0 ? (";" + stack.getItemDamage()) : "").append("</itemStack>\n");
 		}
 
 		for(FluidStack stack : recipe.getFluidOutputs()) {
-			string += "\t\t\t<fluidStack>" + FluidRegistry.getDefaultFluidName(stack.getFluid()).split(":")[1] + ";" + stack.amount + "</fluidStack>\n";
+			string.append("\t\t\t<fluidStack>").append(FluidRegistry.getDefaultFluidName(stack.getFluid()).split(":")[1]).append(";").append(stack.amount).append("</fluidStack>\n");
 		}
 
-		string += "\t\t</output>\n\t</Recipe>";
+		string.append("\t\t</output>\n\t</Recipe>");
 
-		return string;
+		return string.toString();
 	}
 }

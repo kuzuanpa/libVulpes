@@ -10,7 +10,7 @@ import org.lwjgl.opengl.GL11;
 public class GuiToggleButtonImage extends GuiButton {
 	
 	boolean state = false;
-	protected ResourceLocation[] buttonTexture;
+	protected final ResourceLocation[] buttonTexture;
 	/**
 	 * 
 	 * @param id id of the button
@@ -56,10 +56,10 @@ public class GuiToggleButtonImage extends GuiButton {
 			
 			Tessellator tessellator = Tessellator.instance;
 			tessellator.startDrawingQuads();
-			tessellator.addVertexWithUV(xPosition, yPosition + height, (double)this.zLevel, 0, 1);
-			tessellator.addVertexWithUV(xPosition + width, yPosition + height, (double)this.zLevel, 1, 1);
-			tessellator.addVertexWithUV(xPosition + width, yPosition, (double)this.zLevel, 1, 0);
-			tessellator.addVertexWithUV(xPosition, yPosition, (double)this.zLevel, 0, 0);
+			tessellator.addVertexWithUV(xPosition, yPosition + height, this.zLevel, 0, 1);
+			tessellator.addVertexWithUV(xPosition + width, yPosition + height, this.zLevel, 1, 1);
+			tessellator.addVertexWithUV(xPosition + width, yPosition, this.zLevel, 1, 0);
+			tessellator.addVertexWithUV(xPosition, yPosition, this.zLevel, 0, 0);
 			tessellator.draw();
 			
 			this.mouseDragged(minecraft, par2, par3);

@@ -53,8 +53,7 @@ public class BlockMultiblockMachine extends BlockTile {
 		if(tile instanceof TileMultiBlock) {
 			TileMultiBlock tileMulti = (TileMultiBlock)tile;
 			if(tileMulti.isComplete() && !world.isRemote) {
-				if(tile instanceof IModularInventory)
-				player.openGui(LibVulpes.instance, guiId, world, x, y, z);
+				if(tile instanceof IModularInventory) player.openGui(LibVulpes.instance, guiId, world, x, y, z);
 			}
 			else
 				return tileMulti.attemptCompleteStructure();

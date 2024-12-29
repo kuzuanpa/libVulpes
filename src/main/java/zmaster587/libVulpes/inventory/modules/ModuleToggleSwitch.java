@@ -18,7 +18,7 @@ public class ModuleToggleSwitch extends ModuleButton {
 
 	GuiToggleButtonImage enabledButton;
 	boolean currentState, prevState;
-	IToggleButton tile;
+	final IToggleButton tile;
 	boolean enabled = true;
 
 

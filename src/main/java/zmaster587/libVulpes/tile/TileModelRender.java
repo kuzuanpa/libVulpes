@@ -11,9 +11,6 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.model.AdvancedModelLoader;
-import net.minecraftforge.client.model.IModelCustom;
 import net.minecraftforge.common.util.ForgeDirection;
 import org.jetbrains.annotations.NotNull;
 
@@ -30,8 +27,8 @@ public class TileModelRender extends TileEntity {
 		ADVMOTOR,
 		ENHANCEDMOTOR,
 		ELITEMOTOR,
-		ADVROCKET;
-	}
+		ADVROCKET
+    }
 	
 	int type;
 	

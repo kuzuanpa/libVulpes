@@ -7,7 +7,7 @@ import net.minecraftforge.oredict.OreDictionary;
 
 public class SlotOreDict extends Slot {
 	
-	String acceptedNames;
+	final String acceptedNames;
 	
 	public SlotOreDict(IInventory par1iInventory, int par2, int par3, int par4, String allowedNames) {
 		super(par1iInventory, par2, par3, par4);

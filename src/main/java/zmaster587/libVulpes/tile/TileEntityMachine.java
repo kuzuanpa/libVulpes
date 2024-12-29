@@ -85,7 +85,7 @@ public abstract class TileEntityMachine extends TileEntity implements ISidedInve
 		
 		NBTTagList tagList = nbt.getTagList("Inventory", (byte)10);
 		for (int i = 0; i < tagList.tagCount(); i++) {
-			NBTTagCompound tag = (NBTTagCompound) tagList.getCompoundTagAt(i);
+			NBTTagCompound tag = tagList.getCompoundTagAt(i);
 			byte slot = tag.getByte("Slot");
 			if (slot >= 0 && slot < inv.length) {
 				inv[slot] = ItemStack.loadItemStackFromNBT(tag);
@@ -108,8 +108,8 @@ public abstract class TileEntityMachine extends TileEntity implements ISidedInve
 	
 	public void incStackSize(int i, int amt) {
 
-		if(inv[i] == null)
-			return;
+		if(inv[i] == null) {
+        }
 		else if(inv[i].stackSize + amt > inv[i].getMaxStackSize())
 			inv[i].stackSize = inv[i].getMaxStackSize();
 		else

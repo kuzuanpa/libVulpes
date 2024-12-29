@@ -14,8 +14,8 @@ import net.minecraft.util.ResourceLocation;
 public class ModuleTab extends ModuleBase implements IButtonInventory {
 
 	private int tab;
-	IGuiCallback gameObject;
-	private ModuleButton[] buttons;
+	final IGuiCallback gameObject;
+	private final ModuleButton[] buttons;
 	
 	public ModuleTab(int offsetX, int offsetY,int startingId, IGuiCallback object, int numTabs, String[] tabText, ResourceLocation[][] textures) {
 		super(offsetX, offsetY);

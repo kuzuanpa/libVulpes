@@ -14,8 +14,8 @@ import net.minecraft.util.IIcon;
 
 public class BlockOre extends Block implements INamedMetaBlock {
 	
-	public zmaster587.libVulpes.api.material.Material[] ores = new zmaster587.libVulpes.api.material.Material[16];
-	IIcon[] textures = new IIcon[16];
+	public final zmaster587.libVulpes.api.material.Material[] ores = new zmaster587.libVulpes.api.material.Material[16];
+	final IIcon[] textures = new IIcon[16];
 	public byte numBlocks;
 	public AllowedProducts product;
 

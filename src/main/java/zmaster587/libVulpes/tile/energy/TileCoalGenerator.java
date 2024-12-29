@@ -15,8 +15,8 @@ import zmaster587.libVulpes.tile.TileInventoriedForgePowerMachine;
 
 public class TileCoalGenerator extends TileInventoriedForgePowerMachine {
 
-	int powerPerTick;
-	ModuleText textModule;
+	final int powerPerTick;
+	final ModuleText textModule;
 	private static final int INPUT_SLOT = 0;
 	
 	public TileCoalGenerator() {
@@ -58,8 +58,7 @@ public class TileCoalGenerator extends TileInventoriedForgePowerMachine {
 
 	private void setTimeAndAmounts() {
 		timeRemaining = TileEntityFurnace.getItemBurnTime(inventory.getStackInSlot(INPUT_SLOT));
-		if(timeRemaining > 0)
-		inventory.decrStackSize(INPUT_SLOT, 1);
+		if(timeRemaining > 0) inventory.decrStackSize(INPUT_SLOT, 1);
 	}
 
 	@Override

@@ -9,7 +9,6 @@ import java.util.Locale;
 import cpw.mods.fml.common.registry.GameRegistry;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import zmaster587.libVulpes.api.LibVulpesItems;
 import zmaster587.libVulpes.block.BlockCoil;
 import zmaster587.libVulpes.block.BlockMetalBlock;
 import zmaster587.libVulpes.block.BlockOre;
@@ -25,12 +24,12 @@ import net.minecraftforge.oredict.OreDictionary;
 
 public class MaterialRegistry {
 
-	static @NotNull HashMap<Object, MixedMaterial> mixedMaterialList = new HashMap<>();
+	static final @NotNull HashMap<Object, MixedMaterial> mixedMaterialList = new HashMap<>();
 	static HashMap<AllowedProducts, List<Block>> productBlockListMapping;
-	static List<MaterialRegistry> registries = new LinkedList<>();
+	static final List<MaterialRegistry> registries = new LinkedList<>();
 
-	public HashMap<String, zmaster587.libVulpes.api.material.Material> strToMaterial = new HashMap<>();
-	public List<zmaster587.libVulpes.api.material.Material> materialList = new LinkedList<>();
+	public final HashMap<String, zmaster587.libVulpes.api.material.Material> strToMaterial = new HashMap<>();
+	public final List<zmaster587.libVulpes.api.material.Material> materialList = new LinkedList<>();
 	public Item[] oreProducts;
 
 

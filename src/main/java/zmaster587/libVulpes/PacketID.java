@@ -3,7 +3,7 @@ package zmaster587.libVulpes;
 import java.util.ArrayList;
 
 public class PacketID {
-	ArrayList<Byte> idNum;
+	final ArrayList<Byte> idNum;
 	
 	public PacketID() {
 		idNum = new ArrayList<>();

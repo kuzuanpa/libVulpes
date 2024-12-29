@@ -4,7 +4,8 @@ import net.minecraft.item.ItemStack;
 
 public class PoweredTimedItemStack {
 	ItemStack storedItem;
-	int storedPower, storedTime;
+	int storedPower;
+	int storedTime;
 	public PoweredTimedItemStack(ItemStack item, int power, int time) {
 		storedItem = item;
 		storedPower = power;

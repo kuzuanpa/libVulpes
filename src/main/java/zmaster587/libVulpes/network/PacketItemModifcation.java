@@ -1,10 +1,5 @@
 package zmaster587.libVulpes.network;
 
-import java.io.IOException;
-
-import org.jetbrains.annotations.NotNull;
-import zmaster587.libVulpes.interfaces.INetworkEntity;
-import zmaster587.libVulpes.util.INetworkMachine;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import io.netty.buffer.ByteBuf;
@@ -15,10 +10,11 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.common.DimensionManager;
+import org.jetbrains.annotations.NotNull;
+
+import java.io.IOException;
 
 public class PacketItemModifcation extends BasePacket {
 
@@ -31,9 +27,9 @@ public class PacketItemModifcation extends BasePacket {
 
 	public PacketItemModifcation() {
 		nbt = new NBTTagCompound();
-	};
+	}
 
-	public PacketItemModifcation(INetworkItem machine, EntityPlayer entity, byte packetId) {
+    public PacketItemModifcation(INetworkItem machine, EntityPlayer entity, byte packetId) {
 		this();
 		this.machine = machine;
 		this.entity = entity;
@@ -100,7 +96,7 @@ public class PacketItemModifcation extends BasePacket {
 			this.nbt = nbt;
 		}
 
-		if(ent != null && ent instanceof EntityPlayer) {
+		if(ent instanceof EntityPlayer) {
 			ItemStack itemStack = ((EntityPlayer)ent).getHeldItem();
 			if(itemStack != null && itemStack.getItem() instanceof INetworkItem) {
 				((INetworkItem)itemStack.getItem()).readDataFromNetwork(in, packetId, nbt, itemStack);
@@ -126,12 +122,12 @@ public class PacketItemModifcation extends BasePacket {
 
 	@Override
 	public void executeServer(EntityPlayerMP player) {
-		execute((EntityPlayer)player, Side.SERVER);
+		execute(player, Side.SERVER);
 	}
 
 	@Override
 	public void executeClient(EntityPlayer player) {
-		execute((EntityPlayer)player, Side.CLIENT);
+		execute(player, Side.CLIENT);
 	}
 
 	@Override
@@ -162,7 +158,7 @@ public class PacketItemModifcation extends BasePacket {
 			this.nbt = nbt;
 		}
 
-		if(ent != null && ent instanceof EntityPlayer) {
+		if(ent instanceof EntityPlayer) {
 			ItemStack itemStack = ((EntityPlayer)ent).getHeldItem();
 			if(itemStack != null && itemStack.getItem() instanceof INetworkItem) {
 				((INetworkItem)itemStack.getItem()).readDataFromNetwork(in, packetId, nbt, itemStack);
