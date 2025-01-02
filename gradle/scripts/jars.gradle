@@ -14,8 +14,6 @@ buildscript {
 
 def currentJvm = org.gradle.internal.jvm.Jvm.current()
 println "Current Java version = " + currentJvm
- 
-import org.ajoberstar.grgit.*
 
 def gitHash = 'unknown'
 if (new File(projectDir, '.git').exists()) {
@@ -38,7 +36,7 @@ task deobfJar(type: Jar) {
      if (project.hasProperty("bambooshortPlanName") && project.getProperty("bambooshortPlanName") == "BBM-Dev") classifier = "deobf-dev"
      else classifier = "deobf"
      //sets where the jars go to.
-     destinationDir = file 'output'
+    setDestinationDirectory(file 'output')
      manifest = project.manifest {
         from sharedManifest
     }
@@ -50,7 +48,7 @@ jar {
      if (project.hasProperty("bambooshortPlanName") && project.getProperty("bambooshortPlanName") == "BBM-Dev") classifier = "dev-universal"
      else classifier = "universal"
      //sets where the jars go to.
-     destinationDir = file 'output'
+     setDestinationDirectory(file 'output')
      manifest = project.manifest {
         from sharedManifest
      

@@ -12,9 +12,6 @@ output/
 /resourcepacks
 /saves
 screenshots
-/gradle
-/asm
-/blueprints
 *.png
 *.obj
 *.ogg

@@ -92,21 +92,27 @@ public class TileSchematic extends TilePlaceholder {
 		for(int i = 0;  i < possibleBlocks.size();i++) {
 			BlockMeta block = possibleBlocks.get(i);
 			NBTTagCompound blockTag = new NBTTagCompound();
-			blockTag.setInteger("id", Block.getIdFromBlock(block.getBlock()));
-			blockTag.setInteger("meta", block.getMeta());
-			if(!block.overrideName.isEmpty())blockTag.setString("name", block.overrideName);
-			if(block.GTTile!=null){
-				NBTTagCompound tag = new NBTTagCompound();
-				block.GTTile.writeToNBT(tag);
-				if(tag.hasKey("gt.mte.reg")){
-					//Replace id to name to try to resolve randomly null Registry bug.
-					String mteID = MultiTileEntityRegistry.getRegistryByUnRemappedID(tag.getInteger("gt.mte.reg")).mNameInternal;
-					tag.removeTag("gt.mte.reg");
-					tag.setString("gt.mte.reg", mteID);
+
+			try {
+				blockTag.setInteger("id", Block.getIdFromBlock(block.getBlock()));
+				blockTag.setInteger("meta", block.getMeta());
+				if (!block.overrideName.isEmpty()) blockTag.setString("name", block.overrideName);
+				if (block.GTTile != null) {
+					NBTTagCompound tag = new NBTTagCompound();
+					block.GTTile.writeToNBT(tag);
+					if (tag.hasKey("gt.mte.reg")) {
+						//Replace id to name to try to resolve randomly null Registry bug.
+						String mteID = MultiTileEntityRegistry.getRegistryByUnRemappedID(tag.getInteger("gt.mte.reg")).mNameInternal;
+						tag.removeTag("gt.mte.reg");
+						tag.setString("gt.mte.reg", mteID);
+					}
+					blockTag.setTag("GTTile", tag);
 				}
-				blockTag.setTag("GTTile", tag);
+				nbt.setTag("block." + i, blockTag);
+			}catch (Exception e){
+				System.out.println(blockTag);
+				e.printStackTrace();
 			}
-			nbt.setTag("block."+i,blockTag);
 		}
 	}
 
@@ -117,21 +123,26 @@ public class TileSchematic extends TilePlaceholder {
 
 		int i=0;
 		while(nbt.hasKey("block."+i)) {
-			NBTTagCompound blockTag = nbt.getCompoundTag("block."+i);
-			BlockMeta block = new BlockMeta(Block.getBlockById(blockTag.getInteger("id")), blockTag.getInteger("meta"));
-			if(blockTag.hasKey("name"))block.overrideName=blockTag.getString("name");
-			if(blockTag.hasKey("GTTile")){
-				NBTTagCompound tag = blockTag.getCompoundTag("GTTile");
-				if(tag.hasKey("gt.mte.reg")){
-					//Replace name to id to try to resolve randomly null Registry bug.
-					String mteName = tag.getString("gt.mte.reg");
-					tag.removeTag("gt.mte.reg");
-					tag.setShort("gt.mte.reg", ST.id(MultiTileEntityRegistry.getRegistry(mteName).mBlock));
+			try {
+				NBTTagCompound blockTag = nbt.getCompoundTag("block." + i);
+				BlockMeta block = new BlockMeta(Block.getBlockById(blockTag.getInteger("id")), blockTag.getInteger("meta"));
+				if (blockTag.hasKey("name")) block.overrideName = blockTag.getString("name");
+				if (blockTag.hasKey("GTTile")) {
+					NBTTagCompound tag = blockTag.getCompoundTag("GTTile");
+					if (tag.hasKey("gt.mte.reg")) {
+						//Replace name to id to try to resolve randomly null Registry bug.
+						String mteName = tag.getString("gt.mte.reg");
+						tag.removeTag("gt.mte.reg");
+						tag.setShort("gt.mte.reg", ST.id(MultiTileEntityRegistry.getRegistry(mteName).mBlock));
+					}
+					block.GTTile = TileEntity.createAndLoadEntity(tag);
 				}
-				block.GTTile= TileEntity.createAndLoadEntity(tag);
+				possibleBlocks.add(i, block);
+				i++;
+			}catch (Exception e){
+				System.out.println(nbt.getCompoundTag("block." + i).toString());
+				e.printStackTrace();
 			}
-			possibleBlocks.add(i,block);
-			i++;
 		}
 	}
 
