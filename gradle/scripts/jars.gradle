@@ -15,11 +15,11 @@ buildscript {
 def currentJvm = org.gradle.internal.jvm.Jvm.current()
 println "Current Java version = " + currentJvm
 
-def gitHash = 'unknown'
-if (new File(projectDir, '.git').exists()) {
-    def repo = Grgit.open(project.file('.'))
-    gitHash = repo.log().find().abbreviatedId
-}
+//def gitHash = 'unknown'
+//if (new File(projectDir, '.git').exists()) {
+//    def repo = Grgit.open(project.file('.'))
+//    gitHash = repo.log().find().abbreviatedId
+//}
 
 
 ext.sharedManifest = manifest {
@@ -27,7 +27,8 @@ ext.sharedManifest = manifest {
                "Created-By": currentJvm,
                "Implementation-Title": archivesBaseName,
                "Implementation-Version": project.version,
-               "Git-Hash": gitHash)
+               //,"Git-Hash": gitHash
+    )
 }
 
 task deobfJar(type: Jar) {
