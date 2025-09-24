@@ -16,6 +16,5 @@ screenshots
 *.obj
 *.ogg
 *.xcf
-/libs
 /models
 /crash-reports
