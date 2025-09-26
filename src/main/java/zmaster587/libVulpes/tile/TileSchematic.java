@@ -26,8 +26,8 @@ public class TileSchematic extends TilePlaceholder {
 		return true;
 	}
 
-	public void setReplacedBlock(List<BlockMeta> block) {
-		possibleBlocks = block;
+	public void setReplacedBlock(List<BlockMeta> list) {
+		possibleBlocks = list;
 	}
 
 	@Override
@@ -102,7 +102,7 @@ public class TileSchematic extends TilePlaceholder {
 					block.GTTile.writeToNBT(tag);
 					if (tag.hasKey("gt.mte.reg")) {
 						//Replace id to name to try to resolve randomly null Registry bug.
-						String mteID = MultiTileEntityRegistry.getRegistryByUnRemappedID(tag.getInteger("gt.mte.reg")).mNameInternal;
+						String mteID = MultiTileEntityRegistry.getRegistry(tag.getInteger("gt.mte.reg")).mNameInternal;
 						tag.removeTag("gt.mte.reg");
 						tag.setString("gt.mte.reg", mteID);
 					}

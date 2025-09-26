@@ -11,6 +11,7 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraftforge.common.util.ForgeDirection;
 import org.jetbrains.annotations.NotNull;
 
@@ -23,6 +24,7 @@ public class TileModelRender extends TileEntity {
 		TANKEND,
 		TANKTOP,
 		SAWBLADE,
+		SEAT,
 		MOTOR,
 		ADVMOTOR,
 		ENHANCEDMOTOR,
@@ -66,7 +68,12 @@ public class TileModelRender extends TileEntity {
 		nbt.setInteger("type", type);
 		return new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, 0, nbt);
 	}
-	
+
+	@Override
+	public AxisAlignedBB getRenderBoundingBox() {
+		return  AxisAlignedBB.getBoundingBox(xCoord -1, yCoord -1, zCoord -1, xCoord + 2, yCoord + 2, zCoord + 2);
+	}
+
 	@Override
 	public void onDataPacket(NetworkManager net, @NotNull S35PacketUpdateTileEntity pkt) {
 		type = pkt.func_148857_g().getInteger("type");

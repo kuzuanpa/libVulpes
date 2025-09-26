@@ -1,10 +1,5 @@
 package zmaster587.libVulpes.block;
 
-import java.util.ArrayList;
-
-import org.jetbrains.annotations.NotNull;
-import zmaster587.libVulpes.tile.TileSchematic;
-import zmaster587.libVulpes.tile.multiblock.TilePlaceholder;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
@@ -14,6 +9,11 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.NotNull;
+import zmaster587.libVulpes.tile.TileSchematic;
+import zmaster587.libVulpes.tile.multiblock.TilePlaceholder;
+
+import java.util.ArrayList;
 
 public class BlockPhantom extends Block {
 
@@ -37,6 +37,10 @@ public class BlockPhantom extends Block {
 		return new ArrayList<>();
 	}
 
+	@Override
+	public boolean canBeReplacedByLeaves(IBlockAccess world, int x, int y, int z) {
+		return true;
+	}
 
 	@Override
 	public TileEntity createTileEntity(World world, int metadata) {

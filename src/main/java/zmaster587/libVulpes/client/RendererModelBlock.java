@@ -35,9 +35,12 @@ public class RendererModelBlock  extends TileEntitySpecialRenderer implements II
 	protected static final ResourceLocation advMotorTexture = new ResourceLocation("advancedrocketry:textures/models/advancedMotor.png");
 	protected static final ResourceLocation enhMotorTexture = new ResourceLocation("advancedrocketry:textures/models/enhancedMotor.png");
 	protected static final ResourceLocation eliteMotorTexture = new ResourceLocation("advancedrocketry:textures/models/eliteMotor.png");
-	
+
 	protected static final IModelCustom sawBladeModel =  AdvancedModelLoader.loadModel(new ResourceLocation("advancedrocketry:models/sawBlade.obj"));
 	protected static final ResourceLocation sawBladeTexture = new ResourceLocation("advancedrocketry:textures/models/cuttingMachine.png");
+
+	protected static final IModelCustom seatModel =  AdvancedModelLoader.loadModel(new ResourceLocation("advancedrocketry:models/seat.obj"));
+	protected static final ResourceLocation seatTexture = new ResourceLocation("advancedrocketry:textures/models/seat.png");
 
 	public RendererModelBlock() {
 	}
@@ -82,6 +85,10 @@ public class RendererModelBlock  extends TileEntitySpecialRenderer implements II
 		else if(modelNum == TileModelRender.models.SAWBLADE.ordinal()) {
 			textureMgr.bindTexture(sawBladeTexture);
 			sawBladeModel.renderAll();
+		}
+		else if(modelNum == TileModelRender.models.SEAT.ordinal()) {
+			textureMgr.bindTexture(seatTexture);
+			seatModel.renderAll();
 		}
 		else if(modelNum == TileModelRender.models.MOTOR.ordinal()) {
 			textureMgr.bindTexture(motorTexture);

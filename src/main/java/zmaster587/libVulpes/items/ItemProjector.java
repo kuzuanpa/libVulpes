@@ -208,7 +208,7 @@ public class ItemProjector extends Item implements IModularInventory, IButtonInv
 		TileMultiBlock multiblock = machineList.get(id);
 		@Nullable Object[][][] structure;
 
-			clearStructure(world, tile, stack);
+		clearStructure(world, tile, stack);
 
 
 		structure = multiblock.getStructure();
