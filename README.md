@@ -1,6 +1,6 @@
 # LibVulpes-TFRU
 
-LibVulpes for TFRU, contains necessary modificaions for AdvancedRocketry-TFRU to functions properly
+LibVulpes for TFRU, forked form [LibVulpes](https://github.com/Advanced-Rocketry/libVulpes), contains necessary modificaions for AdvancedRocketry-TFRU to functions properly
 
 峦屿梦星群整合专用的LibVulpes, 包含为TFRU的高级火箭正常工作做的必要修改
 # License 协议
