@@ -3,6 +3,18 @@
 LibVulpes for TFRU, forked form [LibVulpes](https://github.com/Advanced-Rocketry/libVulpes), contains necessary modificaions for AdvancedRocketry-TFRU to functions properly
 
 峦屿梦星群整合专用的LibVulpes, 包含为TFRU的高级火箭正常工作做的必要修改
+# Features 特性
+
+Multiblock structure projector for vanilla blocks and gt6
+
+XML reader to build AR planets
+
+Basic structure blocks and motors
+
+Abstract classes to quickly create machines consuming different energies.
+
+Abstract classes to easily create GUI containing complex modules.
+
 # License 协议
 
 This mod is licensed under GNU AGPL v3
